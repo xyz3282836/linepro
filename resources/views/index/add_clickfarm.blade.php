@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('csslib')
+<link href="{{URL::asset('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
+@endsection
+@section('jslib')
+<script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
+<script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js')}}"></script>
+
+@endsection
 @section('content')
     <div class="container">
         <div class="row">
@@ -7,7 +15,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">添加刷单任务</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group">
@@ -264,7 +272,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">刷单开始时间</label>
                                 <div class="col-md-6">
-                                    <input type="datetime-local" placeholder="" class="form-control" name="start_time">
+                                    <input type="text" placeholder="" class="form-control" name="start_time" id="start_time">
                                     <p class="help-block"></p>
                                 </div>
                             </div>
@@ -386,5 +394,16 @@
                 }
             }
         })
+        $(function () {
+            $('#start_time').datetimepicker({
+                format: 'yyyy-mm-dd hh:ii',
+                language:'zh-CN',
+                autoclose:true,
+                todayHighlight: 1,
+            });
+        })
+
+
+
     </script>
 @endsection

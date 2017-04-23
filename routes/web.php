@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index');
 
 
 
-Route::get('/addclickfarm', 'IndexController@getAddClickFarm');
-Route::post('/addclickfarm', 'IndexController@postAddClickFarm');
-Route::get('/clickfarmlist', 'IndexController@listClickFarm');
-Route::get('/getinfo', 'IndexController@getInfo');
+Route::get('addclickfarm', 'IndexController@getAddClickFarm');
+Route::post('addclickfarm', 'IndexController@postAddClickFarm');
+Route::get('clickfarmlist', 'IndexController@listClickFarm');
+Route::get('getinfo', 'IndexController@getInfo');

@@ -36,7 +36,7 @@ class IndexController extends Controller
      * add:post
      */
     public function postAddClickFarm(){
-
+        p($_POST);die;
     }
 
     /**
