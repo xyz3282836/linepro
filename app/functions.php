@@ -37,3 +37,7 @@ function p($arr)
     print_r($arr);
     echo '</pre>';
 }
+
+function get_amount($arr){
+    return 0;
+}

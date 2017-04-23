@@ -24,13 +24,14 @@ class CreateClickFarmsTable extends Migration
             $table->tinyInteger('is_reviews')->default(2);//是否需要reviews 0:no 1:yes 2:Uncertain
             $table->char('specified_asin',24)->nullable();//指定曾经购买的asin
             $table->char('contrast_asin',100)->default('');//对比asin
-            $table->tinyInteger('browse')->default(1);//浏览深度 1:适度浏览 2:深度浏览
+            $table->tinyInteger('brower')->default(1);//浏览深度 1:适度浏览 2:深度浏览
             $table->tinyInteger('priority')->default(1);//优先选择 1:正常随机 2:不刷广告 3:只刷广告
             $table->tinyInteger('flow_port')->default(1);//流量端口 1:pc 2:移动
             $table->tinyInteger('flow_source')->default(1);//流量来源 1:正常 2:进A买B
+            $table->tinyInteger('browse_step')->default(1);//浏览步骤 1:关键词 2:分类挑选 3:其他网站跳转
 
-            $table->string('browse_step',500);//浏览步骤 1:关键词 2:分类挑选 3:其他网站跳转
-            //$table->json('browse_step');//浏览步骤 1:关键词 2:分类挑选 3:其他网站跳转  需要mysql5.7 支持
+            $table->string('mixdata',500);//json
+            //$table->json('mixdata');//json
 
             $table->integer('task_num')->default(1);//刷单件数
             $table->dateTime('start_time');//刷单开始时间

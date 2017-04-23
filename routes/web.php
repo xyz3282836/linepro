@@ -24,4 +24,5 @@ Route::get('/home', 'HomeController@index');
 Route::get('addclickfarm', 'IndexController@getAddClickFarm');
 Route::post('addclickfarm', 'IndexController@postAddClickFarm');
 Route::get('clickfarmlist', 'IndexController@listClickFarm');
+Route::get('viewclickfarm/{id}', 'IndexController@getViewClickFarm');
 Route::get('getinfo', 'IndexController@getInfo');
