@@ -19,6 +19,14 @@ class IndexController extends Controller
     {
         $this->middleware('auth');
     }
+    /**
+     * 刷单任务
+     * add:post
+     */
+    public function listClickFarm(){
+        $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status','1')->orderBy('id','desc')->paginate(10);
+        return view('index.list_clickfarm')->with('list',$list);
+    }
 
     /**
      * 刷单任务

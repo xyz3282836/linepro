@@ -64,7 +64,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{url('clickfarmlist',['type'=>'nodone'])}}">刷单任务列表</a>
+                                    <a href="{{url('clickfarmlist?type=nodone')}}">刷单任务列表</a>
                                 </li>
                             </ul>
                         </li>
@@ -76,7 +76,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{url('clickfarmlist',['type'=>'done'])}}">刷单任务列表</a>
+                                    <a href="{{url('clickfarmlist?type=done')}}">刷单任务列表</a>
                                 </li>
                             </ul>
                         </li>
