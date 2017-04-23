@@ -16,6 +16,7 @@ class IndexController extends Controller
     }
 
     /**
+     * 刷单任务
      * view
      */
     public function getViewClickFarm(){
@@ -23,6 +24,7 @@ class IndexController extends Controller
     }
 
     /**
+     * 刷单任务
      * add:get
      */
     public function getAddClickFarm(){
@@ -30,14 +32,17 @@ class IndexController extends Controller
     }
 
     /**
+     * 刷单任务
      * add:post
      */
     public function postAddClickFarm(){
 
     }
 
+    /**
+     * 运行环境信息
+     */
     public function getInfo(){
-        p(get_order_id());
         phpinfo();
     }
 }
