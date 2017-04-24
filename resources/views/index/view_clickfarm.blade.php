@@ -189,6 +189,14 @@
                                 <label class="col-md-4 control-label">客户留言</label>
                                 <label class="col-md-6 control-label">{{$cf->customer_message}}</label>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">任务订单</label>
+                                <label class="col-md-6 control-label">{{$cf->orderid}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">消费金额</label>
+                                <label class="col-md-6 control-label">{{$cf->amount}}</label>
+                            </div>
                         </form>
                     </div>
                 </div>

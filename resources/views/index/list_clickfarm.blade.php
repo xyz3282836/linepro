@@ -16,6 +16,8 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
+                                    <th>订单号</th>
+                                    <th>消费金额</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -23,6 +25,8 @@
                                 @forelse($list as $v)
                                 <tr>
                                     <td>{{$v->id}}</td>
+                                    <td>{{$v->orderid}}</td>
+                                    <td>{{$v->amount}}</td>
                                     <td><a href="{{url('viewclickfarm/'.$v->id)}}">查看</a></td>
                                 </tr>
                                 @empty
