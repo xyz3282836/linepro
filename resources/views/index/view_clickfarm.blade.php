@@ -79,96 +79,96 @@
                             </div>
 
                             {{--key--}}
-                            <div class="form-group" v-show="keyw.source.indexOf(parseInt(source))>-1 && keyw.step.indexOf(parseInt(step))>-1">
-                                <label class="col-md-4 control-label"></label>
+                            <div class="form-group" v-if="keyw.source.indexOf(parseInt(source))>-1 && keyw.step.indexOf(parseInt(step))>-1">
+                                <label class="col-md-4 control-label">关键词</label>
                                 <label class="col-md-6 control-label">{{$mix['key_word']}}</label>
                             </div>
 
                             {{--low--}}
-                            <div class="form-group" v-show="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">下级分类1</label>
                                 <label class="col-md-6 control-label">{{$mix['lower_classification1']}}</label>
                             </div>
-                            <div class="form-group" v-show="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">下级分类2</label>
                                 <label class="col-md-6 control-label">{{$mix['lower_classification2']}}</label>
                             </div>
-                            <div class="form-group" v-show="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">下级分类3</label>
                                 <label class="col-md-6 control-label">{{$mix['lower_classification3']}}</label>
                             </div>
-                            <div class="form-group" v-show="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="low.source.indexOf(parseInt(source))>-1 && low.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">下级分类4</label>
                                 <label class="col-md-6 control-label">{{$mix['lower_classification4']}}</label>
                             </div>
 
                             {{--wp--}}
-                            <div class="form-group" v-show="wp.source.indexOf(parseInt(source))>-1 && wp.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="wp.source.indexOf(parseInt(source))>-1 && wp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">外部网站</label>
                                 <label class="col-md-6 control-label">{{$mix['outside_website']}}</label>
                             </div>
-                            <div class="form-group" v-show="wp.source.indexOf(parseInt(source))>-1 && wp.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="wp.source.indexOf(parseInt(source))>-1 && wp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">位置</label>
                                 <label class="col-md-6 control-label">{{$mix['place']}}</label>
                             </div>
 
                             {{--crrsp--}}
                             {{--catg--}}
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">大分类</label>
                                 <label class="col-md-6 control-label" v-text="cs[category]"></label>
                             </div>
                             {{--results--}}
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results==''">
                                 <label class="col-md-4 control-label">Show results for(一级属性)</label>
                                 <label class="col-md-6 control-label">{{$mix['first_attribute']}}</label>
                             </div>
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results==''">
                                 <label class="col-md-4 control-label">Show results for(二级属性)</label>
                                 <label class="col-md-6 control-label">{{$mix['second_attribute']}}</label>
                             </div>
                             {{--refine--}}
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
                                 <label class="col-md-4 control-label">Refine by(属性类别1组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute_group1']}}</label>
                             </div>
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
                                 <label class="col-md-4 control-label">Refine by(属性1组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute1']}}</label>
                             </div>
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
                                 <label class="col-md-4 control-label">Refine by(属性类别2组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute_group2']}}</label>
                             </div>
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
                                 <label class="col-md-4 control-label">Refine by(属性2组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute2']}}</label>
                             </div>
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
                                 <label class="col-md-4 control-label">Refine by(属性类别3组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute_group3']}}</label>
                             </div>
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
                                 <label class="col-md-4 control-label">Refine by(属性3组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute3']}}</label>
                             </div>
                             {{--sort--}}
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">sort by</label>
                                 <label class="col-md-6 control-label" v-text="c8[sort_by]"></label>
                             </div>
                             {{--page--}}
-                            <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">page</label>
                                 <label class="col-md-6 control-label" v-text="c9[page]"></label>
                             </div>
 
                             {{--ba--}}
-                            <div class="form-group" v-show="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">B在A中的位置</label>
                                 <label class="col-md-6 control-label" v-text="c10[ba_place]"></label>
                             </div>
-                            <div class="form-group" v-show="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
+                            <div class="form-group" v-if="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">A产品的ASIN</label>
                                 <label class="col-md-6 control-label" v-text="{{$mix['ba_asin']}}"></label>
                             </div>
@@ -221,6 +221,7 @@
                 })
             },
             data: {
+                price:{{json_encode(config('linepro.price'))}},
                 c1:{
                     1:'amazon.com'
                 },
