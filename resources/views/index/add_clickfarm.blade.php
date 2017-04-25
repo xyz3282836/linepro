@@ -3,6 +3,15 @@
 @section('csslib')
 <link href="{{URL::asset('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
 @endsection
+
+@section('css')
+    <style>
+        .color-red{
+            color:red;
+        }
+    </style>
+@endsection
+
 @section('jslib')
 <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
 <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js')}}"></script>
@@ -19,7 +28,7 @@
                             {{ csrf_field() }}
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">平台</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 平台</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="platform_type" required>
                                         <option value="1" selected>amazon.com</option>
@@ -28,14 +37,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">购买的ASIN</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
                                     <input type="text" placeholder="" class="form-control" minlength="24" maxlength="24" name="asin" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">是否FBA发货</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否FBA发货</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline">
                                         <input type="radio" value="0" name="is_fba" checked required> 否
@@ -56,28 +65,44 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">最终价格(包含运费)</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 最终价格(包含运费)</label>
                                 <div class="col-md-6">
                                     <input type="number" placeholder="" required class="form-control" name="final_price">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">是否需要Reviews</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否需要Reviews</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline">
-                                        <input type="radio" value="2" name="is_reviews" checked required> 不确定
+                                        <input type="radio" value="2" name="is_reviews" @click="price_reviews=0" checked required> 不确定
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" value="1" name="is_reviews" required> 是
+                                        <input type="radio" value="1" name="is_reviews" @click="price_reviews=price.reviews" required> 是
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_reviews"></span> 元</p></div>
                             </div>
+
                             <div class="form-group">
-                                <label class="col-md-4 control-label">指定ASIN购买</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 指定ASIN购买</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="指定曾经购买过的ASIN" minlength="24" maxlength="24" class="form-control"
+                                    <label class="radio-inline">
+                                        <input type="radio" value="0" name="is_specified" @click="price_asin=0" checked required> 否
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="is_specified" @click="price_asin=price.asin" required> 是
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_asin"></span> 元</p></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">指定曾经购买过的ASIN</label>
+                                <div class="col-md-6">
+                                    <input type="text" :disabled="price_asin == 0" placeholder="" minlength="24" maxlength="24" class="form-control"
                                            name="specified_asin">
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -105,62 +130,66 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">浏览深度</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 浏览深度</label>
                                 <div class="col-md-6">
-                                    <select class="form-control" name="brower" required>
+                                    <select class="form-control" name="brower" v-model="brower" @change="brower==2?price_deep=price.deep:price_deep=0" required>
                                         <option value="1" selected>适度浏览</option>
                                         <option value="2">深度浏览</option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_deep"></span> 元</p></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">优先选择</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 优先选择</label>
                                 <div class="col-md-6">
-                                    <select class="form-control" name="priority" required>
+                                    <select class="form-control" name="priority" v-model="priority" @change="priority==3?price_ad=price.ad:price_ad=0" required>
                                         <option value="1" selected>正常随机</option>
                                         <option value="2">不刷广告</option>
                                         <option value="3">只刷广告</option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_ad"></span> 元</p></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">流量端口</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 流量端口</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline">
-                                        <input type="radio" value="1" name="flow_port" checked required> PC端
+                                        <input type="radio" value="1" name="flow_port" @click="price_mobile=0" checked required> PC端
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" value="2" name="flow_port" required> 移动端
+                                        <input type="radio" value="2" name="flow_port" @click="price_mobile=price.mobile" required> 移动端
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_mobile"></span> 元</p></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">流量来源</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 流量来源</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline">
-                                        <input type="radio" value="1" v-model="source" name="flow_source" checked required> 正常浏览
+                                        <input type="radio" value="1" v-model="source" name="flow_source" @click="price_ab=0"  checked required> 正常浏览
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" value="2" v-model="source" name="flow_source" required> 进A买B
+                                        <input type="radio" value="2" v-model="source" name="flow_source" @click="price_ab=price.ab" required> 进A买B
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_ab"></span> 元</p></div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">浏览步骤</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 浏览步骤</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline">
-                                        <input type="radio" value="1" v-model="step" name="browse_step" checked required> 关键词搜索
+                                        <input type="radio" value="1" v-model="step" name="browse_step" @click="getpageprice(page)" checked required> 关键词搜索
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" value="2" v-model="step" name="browse_step" required> 分类挑选
+                                        <input type="radio" value="2" v-model="step" name="browse_step" @click="getpageprice(page)" required> 分类挑选
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" value="3" v-model="step" name="browse_step" required> 其他网站跳转
+                                        <input type="radio" value="3" v-model="step" name="browse_step" @click="price_page=0" required> 其他网站跳转
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -330,13 +359,14 @@
                             <div class="form-group" v-show="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
-                                    <select class="form-control" name="page" required>
+                                    <select class="form-control" name="page" v-model="page" @change="getpageprice(page)" required>
                                         <option value="1">1-3</option>
                                         <option value="2">4-9</option>
                                         <option value="3">10-20</option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_page"></span> 元</p></div>
                             </div>
 
                             {{--ba--}}
@@ -364,21 +394,22 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">刷单件数</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 刷单件数</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" class="form-control" name="task_num" required>
+                                    <input type="number" placeholder="" class="form-control" name="task_num" v-model="task" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <div class="col-md-2"><p class="color-red">共计 <span v-text="getprice"></span> 元</p></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">刷单开始时间</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 刷单开始时间</label>
                                 <div class="col-md-6">
                                     <input type="text" placeholder="" class="form-control" name="start_time" id="start_time" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label">刷单间隔</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 刷单间隔</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input type="number" class="form-control" name="interval_time"
@@ -417,7 +448,32 @@
     <script>
         new Vue({
             el: '#app',
+            methods:{
+                getpageprice:function (value) {
+                    this.price_page = this.price.page[value]
+                },
+
+            },
+            mounted: function () {
+                this.$nextTick(()=>{
+                })
+            },
+            computed:{
+                getprice:function () {
+                    var one = Number(this.price_reviews) + Number(this.price_asin) + Number(this.price_deep) + Number(this.price_ad) + Number(this.price_mobile) + Number(this.price_ab) + Number(this.price_page);
+                    return one*Number(this.task);
+                }
+            },
             data: {
+                price_reviews:0,
+                price_asin:0,
+                price_deep:0,
+                price_ad:0,
+                price_mobile:0,
+                price_ab:0,
+                price_page:0,
+
+                price:JSON.parse('{!! json_encode(config('linepro.price')) !!}'),
                 cs: [
                     {val: '0', text: '不选类别直接搜索'},
                     {val: '1', text: 'Alexa Skills'},
@@ -492,9 +548,13 @@
                 wp:{
                     source:[1,2],
                     step:[3]
-                }
+                },
+                brower:1,
+                priority:1,
+                page:1,
+                task:1
             }
-        })
+        });
         $(function () {
             $('#start_time').datetimepicker({
                 format: 'yyyy-mm-dd hh:ii',

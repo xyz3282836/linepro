@@ -221,7 +221,6 @@
                 })
             },
             data: {
-                price:{{json_encode(config('linepro.price'))}},
                 c1:{
                     1:'amazon.com'
                 },
