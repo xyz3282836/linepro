@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 最终价格(包含运费)</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" required class="form-control" name="final_price">
+                                    <input type="number" placeholder="" required class="form-control" name="final_price" v-model="finalprice">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -460,7 +460,7 @@
             },
             computed:{
                 getprice:function () {
-                    var one = Number(this.price_reviews) + Number(this.price_asin) + Number(this.price_deep) + Number(this.price_ad) + Number(this.price_mobile) + Number(this.price_ab) + Number(this.price_page);
+                    var one = Number(this.price_reviews) + Number(this.price_asin) + Number(this.price_deep) + Number(this.price_ad) + Number(this.price_mobile) + Number(this.price_ab) + Number(this.price_page) + Number(this.finalprice);
                     return one*Number(this.task);
                 }
             },
@@ -472,7 +472,7 @@
                 price_mobile:0,
                 price_ab:0,
                 price_page:0,
-
+                finalprice:0,
                 price:JSON.parse('{!! json_encode(config('linepro.price')) !!}'),
                 cs: [
                     {val: '0', text: '不选类别直接搜索'},
