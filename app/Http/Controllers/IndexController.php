@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\ClickFarm;
 use Auth;
+use App\Evaluate;
 use Mockery\Exception;
 use Validator;
 
@@ -19,6 +20,28 @@ class IndexController extends Controller
     {
         $this->middleware('auth');
     }
+
+    /**
+     * 评价任务
+     * add:post
+     */
+    public function listEvaluate(){
+        switch (request('type','nodone')){
+            case 'done':
+                $status = 5;
+                break;
+            case 'nodone':
+                $status = 1;
+                break;
+            default:
+                throw new Exception();
+
+        }
+        $list = Evaluate::where('uid',Auth::getUser()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
+        return view('index.list_evaluate')->with('list',$list);
+    }
+
+
     /**
      * 刷单任务
      * add:post
@@ -53,11 +76,31 @@ class IndexController extends Controller
     }
 
     /**
+     * 评价任务
+     * view
+     */
+    public function getViewEvaluate($id){
+        $el = Evaluate::find($id);
+        if($el->uid != Auth::getUser()->id){
+            throw new Exception();
+        }
+        return view('index.view_evaluate')->with('el',$el);
+    }
+
+    /**
      * 刷单任务
      * add:get
      */
     public function getAddClickFarm(){
         return view('index.add_clickfarm');
+    }
+
+    /**
+     * 评价任务
+     * add:get
+     */
+    public function getAddEvaluate(){
+        return view('index.add_evaluate');
     }
 
     /**
@@ -124,6 +167,7 @@ class IndexController extends Controller
 
         if($validator->fails()){
             p($validator->errors());
+            die;
         }
         $pdata['mixdata'] = json_encode([
             'key_word'=>$pdata['key_word'],
@@ -158,7 +202,7 @@ class IndexController extends Controller
             'ba_asin'=>$pdata['ba_asin'],
         ]);
         $pdata['orderid'] = get_order_id();
-        $pdata['amount'] = get_amount($pdata);
+        $pdata['amount'] = get_amount_clickfarm($pdata);
 
         $cf = new ClickFarm;
         $cf->uid = Auth::getUser()->id;
@@ -185,6 +229,52 @@ class IndexController extends Controller
         $cf->save();
 
         return redirect('clickfarmlist');
+    }
+
+    /**
+     * 评价任务
+     * add:post
+     */
+    public function postAddEvaluate(){
+        $pdata = request()->all();
+        $pdata['cfid'] = request('cfid',null);
+        $pdata['pic'] = implode(',',array_diff($pdata['pic'],[null]));
+        $pdata['video'] = trim($pdata['video'])!=null?trim($pdata['video']):'';
+        $pdata['cfid'] = trim($pdata['cfid'])!=null?trim($pdata['cfid']):0;
+        $validator = Validator::make($pdata,[
+            'platform_type'=>'required',
+            'asin'=>'required',
+            'is_direct'=>'required|integer',
+            'cfid'=>'integer',
+            'start'=>'required|integer',
+
+            'title'=>'required|max:64',
+            'content'=>'required|max:1000',
+
+            'start_time'=>'required|date_format:Y-m-d H:i|after:today',
+
+        ]);
+        if($validator->fails()){
+            p($validator->errors());
+            die;
+        }
+        $model = new Evaluate;
+        $model->uid = Auth::getUser()->id;
+        $model->platform_type = $pdata['platform_type'];
+        $model->asin = $pdata['asin'];
+        $model->is_direct = $pdata['is_direct'];
+        $model->cfid = $pdata['cfid'];
+        $model->star = $pdata['staral'];
+        $model->title = $pdata['title'];
+        $model->content = $pdata['content'];
+        $model->start_time = $pdata['start_time'];
+        $model->pic = $pdata['pic'];
+        $model->video = $pdata['video'];
+        $model->amount = get_amount_evaluate($pdata);
+        $model->orderid = get_order_id();
+        $model->save();
+
+        return redirect('evaluatelist');
     }
 
     /**

@@ -53,6 +53,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="{{url('addclickfarm')}}">刷单任务</a>
+                                    <a href="{{url('addevaluate')}}">评价任务</a>
                                 </li>
                             </ul>
                         </li>
@@ -65,6 +66,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="{{url('clickfarmlist?type=nodone')}}">刷单任务列表</a>
+                                    <a href="{{url('evaluatelist?type=nodone')}}">评价任务列表</a>
                                 </li>
                             </ul>
                         </li>
@@ -77,6 +79,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="{{url('clickfarmlist?type=done')}}">刷单任务列表</a>
+                                    <a href="{{url('evaluatelist?type=done')}}">评价任务列表</a>
                                 </li>
                             </ul>
                         </li>
@@ -120,7 +123,7 @@
     </div>
     {{--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>--}}
     {{--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
-    {{--<script src="https://cdn.bootcss.com/vue/2.2.6/vue.min.js"></script>--}}
+    {{--<script src="https://cdn.bootcss.com/vue/2.2.6/vue.js"></script>--}}
     {{--<script src="https://cdn.bootcss.com/axios/0.16.1/axios.min.js"></script>--}}
     <script src="{{ asset('js/app.js') }}"></script>
 

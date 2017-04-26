@@ -27,6 +27,10 @@ Route::get('clickfarmlist', 'IndexController@listClickFarm');
 Route::get('viewclickfarm/{id}', 'IndexController@getViewClickFarm');
 Route::get('getinfo', 'IndexController@getInfo');
 
+Route::get('addevaluate', 'IndexController@getAddEvaluate');
+Route::post('addevaluate', 'IndexController@postAddEvaluate');
+Route::get('evaluatelist', 'IndexController@listEvaluate');
+Route::get('viewevaluate/{id}', 'IndexController@getViewEvaluate');
 
 Route::get('uppwd', 'HomeController@getUpPwd');
 Route::post('uppwd', 'HomeController@postUpPwd');

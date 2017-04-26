@@ -473,7 +473,7 @@
                 price_ab:0,
                 price_page:0,
                 finalprice:0,
-                price:JSON.parse('{!! json_encode(config('linepro.price')) !!}'),
+                price:JSON.parse('{!! json_encode(config('linepro.clickfarm_price')) !!}'),
                 cs: [
                     {val: '0', text: '不选类别直接搜索'},
                     {val: '1', text: 'Alexa Skills'},
@@ -563,8 +563,5 @@
                 todayHighlight: 1,
             });
         })
-
-
-
     </script>
 @endsection

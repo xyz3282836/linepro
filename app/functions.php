@@ -38,8 +38,8 @@ function p($arr)
     echo '</pre>';
 }
 
-function get_amount($cf){
-    $price = config('linepro.price');
+function get_amount_clickfarm($cf){
+    $price = config('linepro.clickfarm_price');
     $one = 0;
     if($cf['is_reviews'] == 1){
         $one += $price['reviews'];
@@ -66,4 +66,8 @@ function get_amount($cf){
     return $one * $cf['task_num'];
 }
 
+function get_amount_evaluate($el){
+    $price = config('linepro.evaluate_price');
 
+    return $price['platform'][1];
+}

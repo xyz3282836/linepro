@@ -2,7 +2,7 @@
 
 return [
     //价格配置
-    'price'=>[
+    'clickfarm_price'=>[
         'reviews'=>3,//is—review
         'asin'=>1,//指定曾经购买的asin
         'deep'=>2,//深度浏览
@@ -14,7 +14,16 @@ return [
             2=>1,
             3=>2
         ],
+    ],
 
-    ]
+
+    'evaluate_price'=>[
+        'platform'=>[
+            1=>7
+        ],
+    ],
+
+
+
 
 ];
