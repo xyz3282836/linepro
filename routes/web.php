@@ -26,3 +26,7 @@ Route::post('addclickfarm', 'IndexController@postAddClickFarm');
 Route::get('clickfarmlist', 'IndexController@listClickFarm');
 Route::get('viewclickfarm/{id}', 'IndexController@getViewClickFarm');
 Route::get('getinfo', 'IndexController@getInfo');
+
+
+Route::get('uppwd', 'HomeController@getUpPwd');
+Route::post('uppwd', 'HomeController@postUpPwd');
