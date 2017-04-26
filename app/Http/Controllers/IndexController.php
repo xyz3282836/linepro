@@ -24,7 +24,18 @@ class IndexController extends Controller
      * add:post
      */
     public function listClickFarm(){
-        $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status','1')->orderBy('id','desc')->paginate(10);
+        switch (request('type','nodone')){
+            case 'done':
+                $status = 5;
+                break;
+            case 'nodone':
+                $status = 1;
+                break;
+            default:
+            throw new Exception();
+
+        }
+        $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
         return view('index.list_clickfarm')->with('list',$list);
     }
 
@@ -173,7 +184,7 @@ class IndexController extends Controller
         $cf->amount = $pdata['amount'];
         $cf->save();
 
-        return redirect('clickfarmlist?type=nodone');
+        return redirect('clickfarmlist');
     }
 
     /**
