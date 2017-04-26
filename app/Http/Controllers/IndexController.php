@@ -246,7 +246,7 @@ class IndexController extends Controller
             'asin'=>'required',
             'is_direct'=>'required|integer',
             'cfid'=>'integer',
-            'start'=>'required|integer',
+            'star'=>'required|integer',
 
             'title'=>'required|max:64',
             'content'=>'required|max:1000',
@@ -264,7 +264,7 @@ class IndexController extends Controller
         $model->asin = $pdata['asin'];
         $model->is_direct = $pdata['is_direct'];
         $model->cfid = $pdata['cfid'];
-        $model->star = $pdata['staral'];
+        $model->star = $pdata['star'];
         $model->title = $pdata['title'];
         $model->content = $pdata['content'];
         $model->start_time = $pdata['start_time'];
