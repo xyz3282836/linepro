@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 最终价格(包含运费)</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" required class="form-control" name="final_price" v-model="finalprice">
+                                    <input type="number" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -396,7 +396,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 刷单件数</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" class="form-control" name="task_num" v-model="task" required>
+                                    <input type="number" placeholder="" class="form-control" name="task_num" min="1" max="9999" v-model="task" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                                 <div class="col-md-2"><p class="color-red">共计 <span v-text="getprice"></span> 元</p></div>
@@ -413,7 +413,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input type="number" class="form-control" name="interval_time"
-                                               placeholder="每单之间间隔分钟数" required>
+                                               placeholder="每单之间间隔分钟数" min="1" max="100" required>
                                         <div class="input-group-addon">分钟</div>
                                     </div>
                                     <p class="help-block with-errors"></p>

@@ -119,36 +119,36 @@
                                 <label class="col-md-6 control-label" v-text="cs[category]"></label>
                             </div>
                             {{--results--}}
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results!=''">
                                 <label class="col-md-4 control-label">Show results for(一级属性)</label>
                                 <label class="col-md-6 control-label">{{$mix['first_attribute']}}</label>
                             </div>
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && results!=''">
                                 <label class="col-md-4 control-label">Show results for(二级属性)</label>
                                 <label class="col-md-6 control-label">{{$mix['second_attribute']}}</label>
                             </div>
                             {{--refine--}}
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine!=''">
                                 <label class="col-md-4 control-label">Refine by(属性类别1组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute_group1']}}</label>
                             </div>
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine!=''">
                                 <label class="col-md-4 control-label">Refine by(属性1组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute1']}}</label>
                             </div>
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine!=''">
                                 <label class="col-md-4 control-label">Refine by(属性类别2组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute_group2']}}</label>
                             </div>
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine!=''">
                                 <label class="col-md-4 control-label">Refine by(属性2组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute2']}}</label>
                             </div>
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine!=''">
                                 <label class="col-md-4 control-label">Refine by(属性类别3组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute_group3']}}</label>
                             </div>
-                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine==''">
+                            <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1 && refine!=''">
                                 <label class="col-md-4 control-label">Refine by(属性3组)</label>
                                 <label class="col-md-6 control-label">{{$mix['attribute3']}}</label>
                             </div>

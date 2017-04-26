@@ -118,7 +118,7 @@ class IndexController extends Controller
 
             'task_num'=>'required|integer',
             'start_time'=>'required|date_format:Y-m-d H:i|after:today',
-            'interval_time'=>'required|integer',
+            'interval_time'=>'required|integer|max:100',
             'customer_message'=>'max:300',
         ]);
 
