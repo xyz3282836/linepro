@@ -59,6 +59,7 @@ class IndexController extends Controller
         $pdata['results'] = request('results',null);
         $pdata['refine'] = request('refine',null);
         $pdata['customer_message'] = request('customer_message')!=null?:'';
+        $pdata['specified_asin'] = request('specified_asin',null);
         $validator = Validator::make($pdata,[
             'platform_type'=>'required',
             'asin'=>'required',
@@ -172,6 +173,7 @@ class IndexController extends Controller
         $cf->amount = $pdata['amount'];
         $cf->save();
 
+        return redirect('clickfarmlist?type=nodone');
     }
 
     /**

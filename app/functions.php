@@ -38,6 +38,32 @@ function p($arr)
     echo '</pre>';
 }
 
-function get_amount($arr){
-    return 0;
+function get_amount($cf){
+    $price = config('linepro.price');
+    $one = 0;
+    if($cf['is_reviews'] == 1){
+        $one += $price['reviews'];
+    }
+    if($cf['specified_asin'] != null){
+        $one += $price['asin'];
+    }
+    if($cf['brower'] == 2){
+        $one += $price['deep'];
+    }
+    if($cf['priority'] == 3){
+        $one += $price['ad'];
+    }
+    if($cf['flow_port'] == 2){
+        $one += $price['mobile'];
+    }
+    if($cf['flow_source'] == 2){
+        $one += $price['ab'];
+    }
+    if($cf['browse_step'] == 1 || $cf['browse_step'] == 2){
+        $one += $price['page'][$cf['page']];
+    }
+    $one += $cf['final_price'];
+    return $one * $cf['task_num'];
 }
+
+
