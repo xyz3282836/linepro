@@ -170,7 +170,7 @@
                             </div>
                             <div class="form-group" v-if="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">A产品的ASIN</label>
-                                <label class="col-md-6 control-label" v-text="{{$mix['ba_asin']}}"></label>
+                                <label class="col-md-6 control-label">{{$mix['ba_asin']}}</label>
                             </div>
 
                             <div class="form-group">
@@ -292,7 +292,7 @@
                     7:'Automotive Parts & Accessories',
                     8:'Baby',
                     9:'Beauty & Personal Care',
-                    10:'Books', selected: true,
+                    10:'Books',
                     11:'CDs & Vinyl',
                     12:'Cell Phones & Accessories',
                     13:'Clothing, Shoes & Jewelry',
@@ -338,7 +338,6 @@
                 page:"{{$mix['page']}}",//c9
                 sort_by:"{{$mix['sort_by']}}",//c8
                 ba_place:"{{$mix['ba_place']}}",//c10
-                ba_asin:"{{$mix['ba_asin']}}",
                 crrsp:{
                     source:[1,2],
                     step:[1,2]
