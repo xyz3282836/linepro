@@ -6,10 +6,11 @@
 |   Table	|   Desc	|
 |---	|---	|
 |   users	    |   用户	|
+|   password_resets	    |   密码重置	|
 |   click_farms	|   刷单	|
 |   evaluates	|   评价	|
 |   account	|   账户	|
-|   recharge_bills	|   充值交易流水	|
-|   pay_bills	|   支付交易流水	|
+|   recharges	|   充值记录	|
+|   bills	|   交易流水	|
 
 

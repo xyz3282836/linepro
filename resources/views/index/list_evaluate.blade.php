@@ -27,11 +27,12 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->amount}}</td>
+                                    <td>{{$v->created_at}}</td>
                                     <td><a href="{{url('viewevaluate/'.$v->id)}}">查看</a></td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4">no data</td>
+                                    <td colspan="5">no data</td>
                                 </tr>
                             @endforelse
                             </tbody>

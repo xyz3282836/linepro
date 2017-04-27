@@ -44,7 +44,7 @@ class CreateClickFarmsTable extends Migration
             $table->char('logistics_num',50)->default('');//物流订单
 
             $table->char('orderid',24)->default('');//订单号
-            $table->tinyInteger('status')->default(1);//状态 1:待支付 2:已经支付 3:找寻买家中 4:买家找到，等待开始时间到 5:购买完成
+            $table->tinyInteger('status')->default(1);//状态 0:取消订单 1:待支付 2:已经支付 3:找寻买家中 4:买家找到，等待开始时间到 5:购买完成
             $table->decimal('amount',10,2)->default(0.00);//消费金额
             $table->timestamps();
 

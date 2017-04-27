@@ -18,6 +18,7 @@
                                     <th>id</th>
                                     <th>订单号</th>
                                     <th>消费金额</th>
+                                    <th>时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -27,11 +28,12 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->amount}}</td>
+                                    <td>{{$v->created_at}}</td>
                                     <td><a href="{{url('viewclickfarm/'.$v->id)}}">查看</a></td>
                                 </tr>
                                 @empty
                                  <tr>
-                                     <td colspan="4">no data</td>
+                                     <td colspan="5">no data</td>
                                  </tr>
                                 @endforelse
                             </tbody>
