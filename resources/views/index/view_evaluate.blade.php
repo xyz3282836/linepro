@@ -24,12 +24,8 @@
                                 <label class="col-md-4 control-label">购买的ASIN</label>
                                 <label class="col-md-6 control-label">{{$el->asin}}</label>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">是否直评</label>
-                                <label class="col-md-6 control-label" v-text="c2[is_direct]"></label>
-                            </div>
 
-                            <div class="form-group" v-if="is_direct == 0">
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">关联刷单任务ID</label>
                                 <label class="col-md-6 control-label">{{$el->cfid}}</label>
                             </div>
@@ -89,6 +85,9 @@
             el: '#app',
             methods:{
                 getpic:function(){
+                    if(this.pic == ''){
+                        return;
+                    }
                     this.picarr =this.pic.split(',')
                 }
             },
@@ -101,7 +100,6 @@
                 c1:{
                     1:'amazon.com'
                 },
-                is_direct:{{$el->is_direct}},
                 star:{{$el->star}},
                 platform_type:{{ $el->platform_type }},
                 pic:"{{$el->pic}}",

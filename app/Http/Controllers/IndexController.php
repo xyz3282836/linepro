@@ -100,7 +100,7 @@ class IndexController extends Controller
      * add:get
      */
     public function getAddEvaluate(){
-        $list = Evaluate::where('uid',Auth::getUser()->id)->where('status',1)->limit(30)->get();
+        $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status',2)->limit(30)->get();
         return view('index.add_evaluate')->with('list',$list);
     }
 
