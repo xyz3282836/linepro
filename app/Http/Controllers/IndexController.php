@@ -100,7 +100,8 @@ class IndexController extends Controller
      * add:get
      */
     public function getAddEvaluate(){
-        return view('index.add_evaluate');
+        $list = Evaluate::where('uid',Auth::getUser()->id)->where('status',1)->limit(30)->get();
+        return view('index.add_evaluate')->with('list',$list);
     }
 
     /**
@@ -201,7 +202,6 @@ class IndexController extends Controller
             'ba_place'=>$pdata['ba_place'],
             'ba_asin'=>$pdata['ba_asin'],
         ]);
-        $pdata['orderid'] = get_order_id();
         $pdata['amount'] = get_amount_clickfarm($pdata);
 
         $cf = new ClickFarm;
@@ -224,7 +224,6 @@ class IndexController extends Controller
         $cf->start_time = $pdata['start_time'];
         $cf->interval_time = $pdata['interval_time'];
         $cf->customer_message = $pdata['customer_message'];
-        $cf->orderid = $pdata['orderid'];
         $cf->amount = $pdata['amount'];
         $cf->save();
 
@@ -244,7 +243,7 @@ class IndexController extends Controller
         $validator = Validator::make($pdata,[
             'platform_type'=>'required',
             'asin'=>'required',
-            'is_direct'=>'required|integer',
+//            'is_direct'=>'required|integer',
             'cfid'=>'integer',
             'star'=>'required|integer',
 
@@ -262,7 +261,6 @@ class IndexController extends Controller
         $model->uid = Auth::getUser()->id;
         $model->platform_type = $pdata['platform_type'];
         $model->asin = $pdata['asin'];
-        $model->is_direct = $pdata['is_direct'];
         $model->cfid = $pdata['cfid'];
         $model->star = $pdata['star'];
         $model->title = $pdata['title'];
@@ -271,7 +269,6 @@ class IndexController extends Controller
         $model->pic = $pdata['pic'];
         $model->video = $pdata['video'];
         $model->amount = get_amount_evaluate($pdata);
-        $model->orderid = get_order_id();
         $model->save();
 
         return redirect('evaluatelist');

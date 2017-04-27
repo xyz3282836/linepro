@@ -38,36 +38,42 @@ function p($arr)
     echo '</pre>';
 }
 
+//function get_amount_clickfarm($cf){
+//    $price = config('linepro.clickfarm_price');
+//    $one = 0;
+//    if($cf['is_reviews'] == 1){
+//        $one += $price['reviews'];
+//    }
+//    if($cf['specified_asin'] != null){
+//        $one += $price['asin'];
+//    }
+//    if($cf['brower'] == 2){
+//        $one += $price['deep'];
+//    }
+//    if($cf['priority'] == 3){
+//        $one += $price['ad'];
+//    }
+//    if($cf['flow_port'] == 2){
+//        $one += $price['mobile'];
+//    }
+//    if($cf['flow_source'] == 2){
+//        $one += $price['ab'];
+//    }
+//    if($cf['browse_step'] == 1 || $cf['browse_step'] == 2){
+//        $one += $price['page'][$cf['page']];
+//    }
+//    $one += $cf['final_price'];
+//    return $one * $cf['task_num'];
+//}
+
 function get_amount_clickfarm($cf){
-    $price = config('linepro.clickfarm_price');
-    $one = 0;
-    if($cf['is_reviews'] == 1){
-        $one += $price['reviews'];
-    }
-    if($cf['specified_asin'] != null){
-        $one += $price['asin'];
-    }
-    if($cf['brower'] == 2){
-        $one += $price['deep'];
-    }
-    if($cf['priority'] == 3){
-        $one += $price['ad'];
-    }
-    if($cf['flow_port'] == 2){
-        $one += $price['mobile'];
-    }
-    if($cf['flow_source'] == 2){
-        $one += $price['ab'];
-    }
-    if($cf['browse_step'] == 1 || $cf['browse_step'] == 2){
-        $one += $price['page'][$cf['page']];
-    }
-    $one += $cf['final_price'];
-    return $one * $cf['task_num'];
+    return config('linepro.clickfarm_price.fix') + $cf['final_price'] * $cf['task_num'];
 }
 
 function get_amount_evaluate($el){
-    $price = config('linepro.evaluate_price');
+    //TODO 判断是否为vp
 
-    return $price['platform'][1];
+    $price = config('linepro.clickfarm_price.fix') + config('linepro.clickfarm_price.vp') + config('linepro.clickfarm_price.video') + config('linepro.clickfarm_price.pic');
+
+    return $price;
 }

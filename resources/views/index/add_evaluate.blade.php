@@ -35,7 +35,6 @@
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
-                                <div class="col-md-2"><p class="color-red">+ <span v-text="price_platform"></span> 元</p></div>
                             </div>
 
                             <div class="form-group">
@@ -47,23 +46,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否直评</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 关联刷单任务ID</label>
                                 <div class="col-md-6">
-                                    <label class="radio-inline">
-                                        <input type="radio" value="1" name="is_direct" v-model="is_direct" required> 是
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" value="0" name="is_direct" v-model="is_direct" required> 否
-                                    </label>
-                                    <p class="help-block with-errors"></p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">关联刷单任务ID</label>
-                                <div class="col-md-6">
-                                    <input type="number" :disabled="is_direct == 1" placeholder="" min="1" class="form-control"
-                                           name="cfid">
+                                    <select class="form-control" name="cfid" required>
+                                        @foreach($list as $v)
+                                            <option value="{{$v['id']}}">{{$v['orderid']}}</option>
+                                        @endforeach
+                                    </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -162,11 +151,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><span class="color-red">*</span> 总价格</label>
-                                <div class="col-md-6"><p class="color-red">共计 <span v-text="getprice"></span> 元</p></div>
-                            </div>
-
-                            <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         提交
@@ -191,19 +175,12 @@
             },
             mounted: function () {
                 this.$nextTick(()=>{
-                    this.price_platform = this.price.platform[this.platform_type];
+
                 })
             },
             computed:{
-                getprice:function () {
-                    return this.price_platform;
-                }
             },
             data: {
-                platform_type:1,
-                is_direct:1,
-                price:JSON.parse('{!! json_encode(config('linepro.evaluate_price')) !!}'),
-                price_platform:0,
             }
         });
         $(function () {
@@ -212,6 +189,7 @@
                 language:'zh-CN',
                 autoclose:true,
                 todayHighlight: 1,
+                startDate: new Date()
             });
         })
     </script>
