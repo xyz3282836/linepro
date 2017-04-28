@@ -76,6 +76,7 @@
                             layer.msg(data.msg, {icon: 2});
                         }else{
                             layer.msg('操作成功', {icon: 1});
+                            window.location.reload()
                         }
                     })
                 },
