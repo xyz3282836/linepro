@@ -21,7 +21,7 @@ class CreateBillsTable extends Migration
             $table->decimal('in',10,2)->default(0.00);//收入
             $table->decimal('out',10,2)->default(0.00);//支出
             $table->decimal('amount',10,2)->default(0.00);//余额
-            $table->integer('taskid')->default(0);//余额
+            $table->integer('taskid')->default(0);//
             $table->timestamps();
 
             $table->index('uid');

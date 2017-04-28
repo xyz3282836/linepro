@@ -15,6 +15,11 @@
     {{--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--}}
     @yield('csslib')
 
+    <style>
+        .color-red{
+            color:red;
+        }
+    </style>
     @yield('css')
     <!-- Scripts -->
     <script>
@@ -93,6 +98,18 @@
                             <li><a href="{{ route('login') }}">登入</a></li>
                             <li><a href="{{ route('register') }}">注册</a></li>
                         @else
+                            <li><a href="{{ url('billlist') }}">账单</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    余额（<span class="color-red">{{Auth::getUser()->amount}}</span>） <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('recharge') }}">充值</a></li>
+                                    <li><a href="{{ url('rechargelist') }}">充值记录</a></li>
+                                </ul>
+                            </li>
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -121,12 +138,12 @@
 
         @yield('content')
     </div>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.bootcss.com/vue/2.2.6/vue.js"></script>
-    <script src="https://cdn.bootcss.com/axios/0.16.1/axios.min.js"></script>
-    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
-
+    {{--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>--}}
+    {{--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
+    {{--<script src="https://cdn.bootcss.com/vue/2.2.6/vue.js"></script>--}}
+    {{--<script src="https://cdn.bootcss.com/axios/0.16.1/axios.min.js"></script>--}}
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
     @yield('jslib')
     @yield('js')
 </body>

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 
+use App\Bill;
 use App\ClickFarm;
+use App\Recharge;
 use Auth;
 use App\Evaluate;
+use Barryvdh\Debugbar\Middleware\Debugbar;
+use DB;
 use Mockery\Exception;
 use Validator;
 
@@ -29,16 +33,18 @@ class IndexController extends Controller
         switch (request('type','nodone')){
             case 'done':
                 $status = 5;
+                $tname = '已完成评价任务列表';
                 break;
             case 'nodone':
                 $status = 1;
+                $tname = '未完成评价任务列表';
                 break;
             default:
                 throw new Exception();
 
         }
         $list = Evaluate::where('uid',Auth::getUser()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
-        return view('index.list_evaluate')->with('list',$list);
+        return view('index.list_evaluate')->with('tname',$tname)->with('list',$list);
     }
 
 
@@ -50,16 +56,18 @@ class IndexController extends Controller
         switch (request('type','nodone')){
             case 'done':
                 $status = 5;
+                $tname = '已完成刷单任务列表';
                 break;
             case 'nodone':
                 $status = 1;
+                $tname = '未完成刷单任务列表';
                 break;
             default:
             throw new Exception();
 
         }
         $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
-        return view('index.list_clickfarm')->with('list',$list);
+        return view('index.list_clickfarm')->with('tname',$tname)->with('list',$list);
     }
 
     /**
@@ -85,6 +93,18 @@ class IndexController extends Controller
             throw new Exception();
         }
         return view('index.view_evaluate')->with('el',$el);
+    }
+
+    /**
+     * 充值
+     * view
+     */
+    public function getViewRecharge($id){
+        $one = Recharge::find($id);
+        if($one->uid != Auth::getUser()->id){
+            throw new Exception();
+        }
+        return view('pay.view_recharge')->with('one',$one);
     }
 
     /**
@@ -167,7 +187,9 @@ class IndexController extends Controller
         ]);
 
         if($validator->fails()){
-            p($validator->errors());
+            foreach($validator->errors()->getMessages() as $k=>$v){
+                p($k.'=>'.$v[0]);
+            }
             die;
         }
         $pdata['mixdata'] = json_encode([
@@ -225,6 +247,7 @@ class IndexController extends Controller
         $cf->interval_time = $pdata['interval_time'];
         $cf->customer_message = $pdata['customer_message'];
         $cf->amount = $pdata['amount'];
+        $cf->orderid = get_order_id();
         $cf->save();
 
         return redirect('clickfarmlist');
@@ -254,7 +277,9 @@ class IndexController extends Controller
 
         ]);
         if($validator->fails()){
-            p($validator->errors());
+            foreach($validator->errors()->getMessages() as $k=>$v){
+                p($k.'=>'.$v[0]);
+            }
             die;
         }
         $model = new Evaluate;
@@ -269,6 +294,7 @@ class IndexController extends Controller
         $model->pic = $pdata['pic'];
         $model->video = $pdata['video'];
         $model->amount = get_amount_evaluate($pdata);
+        $model->orderid = get_order_id();
         $model->save();
 
         return redirect('evaluatelist');
@@ -280,4 +306,156 @@ class IndexController extends Controller
     public function getInfo(){
         phpinfo();
     }
+
+    /**
+     * get
+     * 充值
+     */
+    public function getRecharge(){
+        return view('pay.recharge');
+    }
+
+    /**
+     * post
+     * 充值
+     */
+    public function postRecharge(){
+        $pdata = request()->all();
+        $validator = Validator::make($pdata,[
+            'name'=>'required|min:1|max:6',
+            'mobile'=>'required|regex:/^1[345789][0-9]{9}/',
+            'orderid'=>'required|integer',
+            'amount'=>'required|numeric|min:1',
+            'recharge_time'=>'required|date_format:Y-m-d H:i',
+        ]);
+        if($validator->fails()){
+            foreach($validator->errors()->getMessages() as $k=>$v){
+                p($k.'=>'.$v[0]);
+            }
+            die;
+        }
+        $model = new Recharge;
+        $model->uid = Auth::getUser()->id;
+        $model->name = $pdata['name'];
+        $model->mobile = $pdata['mobile'];
+        $model->orderid = $pdata['orderid'];
+        $model->amount = $pdata['amount'];
+        $model->recharge_time = $pdata['recharge_time'];
+        $model->save();
+
+        return redirect('recharge')->with('status','充值成功');
+    }
+
+    /**
+     * list
+     * 充值
+     */
+    public function listRecharge(){
+        $list = Recharge::where('uid',Auth::getUser()->id)->orderBy('id','desc')->paginate(10);
+        return view('pay.list_recharge')->with('tname','充值记录列表')->with('list',$list);
+    }
+
+    public function postCancle(){
+        $id = request('id',0);
+        $table = request('type','');
+        if(!in_array($table,['click_farms','evaluates'])){
+            return error(MODEL_NOT_FOUNT);
+        }
+        $model = DB::table($table)->find($id);
+        if(!$model){
+            return error(MODEL_NOT_FOUNT);
+        }
+        if($model->uid != Auth::getUser()->id){
+            return error(NO_ACCESS);
+        }
+        if($model->status != 1){
+            return error(NO_ACCESS);
+        }
+
+        DB::table($table)->where('id',$id)->update(['status'=>0]);
+
+        return success();
+    }
+
+    public function postPay(){
+        $id = request('id',0);
+        $table = request('type','');
+        if(!in_array($table,['click_farms','evaluates'])){
+            return error(MODEL_NOT_FOUNT);
+        }
+        $model = DB::table($table)->find($id);
+        if(!$model){
+            return error(MODEL_NOT_FOUNT);
+        }
+        $uid = Auth::getUser()->id;
+        if($model->uid != $uid){
+            return error(NO_ACCESS);
+        }
+        if($model->status != 1){
+            return error(NO_ACCESS);
+        }
+        $amount = Auth::getUser()->amount;
+        if( $amount < $model->amount){
+            return error(NO_ENOUGH_MONEY);
+        }
+        switch ($table){
+            case 'click_farms':
+                $type = 2;
+                break;
+            case 'evaluates':
+                $type = 3;
+                break;
+        }
+        $money = $amount - $model->amount;
+
+        DB::beginTransaction();
+        try{
+            if(DB::table($table)->where('id',$id)->value('status') != 1){
+                throw new Exception();
+            }
+
+            Bill::create([
+                'uid'=>$uid,
+                'type'=>$type,
+                'orderid'=>$model->orderid,
+                'out'=>$model->amount,
+                'amount'=>$money,
+                'taskid'=>$model->id
+            ]);
+            DB::table('users')->where('id',$uid)->update(['amount'=>$money]);
+            DB::table($table)->where('id',$id)->update(['status'=>2]);
+            DB::commit();
+        }catch (Exception $e){
+            DB::rollBack();
+            return error(ERROR_IDEMPOTENCE);
+        }
+
+        return success();
+    }
+
+    /**
+     * 流水账单
+     */
+    public function listBill(){
+        $list = Bill::where('uid',Auth::getUser()->id)->orderBy('id','desc')->paginate(10);
+        return view('pay.list_bill')->with('tname','账单列表')->with('list',$list);
+    }
+
+
+    public function billDesc(){
+        $type = request('type');
+        $taskid = request('taskid');
+
+        switch ($type){
+            case 1:
+                return redirect('viewrecharge/'.$taskid);
+            case 2:
+                return redirect('viewclickfarm/'.$taskid);
+            case 3:
+                return redirect('viewevaluate/'.$taskid);
+            default:
+                throw new Exception();
+        }
+    }
+
 }

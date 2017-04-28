@@ -13,5 +13,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClickFarm extends Model
 {
+    const STATUS_0 = '取消订单';
+    const STATUS_1 = '待支付';
+    const STATUS_2 = '已经支付';
+    const STATUS_3 = '找寻买家中';
+    const STATUS_4 = '买家找到';
+    const STATUS_5 = '购买完成';
+    public function getStatusTextAttribute()
+    {
+        $text=[
+            0=>ClickFarm::STATUS_0,
+            1=>ClickFarm::STATUS_1,
+            2=>ClickFarm::STATUS_2,
+            3=>ClickFarm::STATUS_3,
+            4=>ClickFarm::STATUS_4,
+            5=>ClickFarm::STATUS_5,
+        ];
+        return $text[$this->status];
+    }
 
+    protected $appends = ['status_text'];
 }

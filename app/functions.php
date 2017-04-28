@@ -5,6 +5,16 @@
  * Date: 2017/4/23
  * Time: 上午9:51
  */
+
+
+const MODEL_NOT_FOUNT = '';
+const NO_ACCESS = '无权限';
+const NO_ENOUGH_MONEY = '没有足够的余额，请先充值';
+const ERROR_IDEMPOTENCE = '重复操作';
+
+
+
+
 //订购日期
 function get_order_id(){
 
@@ -76,4 +86,23 @@ function get_amount_evaluate($el){
     $price = config('linepro.clickfarm_price.fix') + config('linepro.clickfarm_price.vp') + config('linepro.clickfarm_price.video') + config('linepro.clickfarm_price.pic');
 
     return $price;
+}
+
+
+function success($data=''){
+    $arr = [
+        'code'=>1,
+        'msg'=>'ok',
+        'data'=>$data
+    ];
+    return json_encode($arr);
+}
+
+function error($msg){
+    $arr = [
+        'code'=>0,
+        'msg'=>$msg,
+        'data'=>''
+    ];
+    return json_encode($arr);
 }

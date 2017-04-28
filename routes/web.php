@@ -34,3 +34,15 @@ Route::get('viewevaluate/{id}', 'IndexController@getViewEvaluate');
 
 Route::get('uppwd', 'HomeController@getUpPwd');
 Route::post('uppwd', 'HomeController@postUpPwd');
+
+Route::get('recharge', 'IndexController@getRecharge');
+Route::get('viewrecharge/{id}', 'IndexController@getViewRecharge');
+Route::post('recharge', 'IndexController@postRecharge');
+Route::get('rechargelist', 'IndexController@listRecharge');
+
+Route::post('cancle', 'IndexController@postCancle');
+Route::post('pay', 'IndexController@postPay');
+
+Route::get('billlist', 'IndexController@listBill');
+
+Route::get('getbilldesc', 'IndexController@billDesc');
