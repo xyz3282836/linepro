@@ -47,6 +47,9 @@ class Handler extends ExceptionHandler
         if(config('app.debug')){
             return parent::render($request, $exception);
         }else{
+            if($request->ajax()){
+                return error(ERROR_SYSTEM);
+            }
             return response()->view('layouts.error');
         }
 

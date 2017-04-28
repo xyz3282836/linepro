@@ -14,3 +14,13 @@
 |   bills	|   交易流水	|
 
 
+部署：
+php >= 5.6.4 推荐7+
+mysql或者mariadb
+nginx或者apache
+nginx配置
+```
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+```

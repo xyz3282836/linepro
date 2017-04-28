@@ -23,6 +23,13 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('recharge') }}">
                             {{ csrf_field() }}
                             <div class="form-group">
+                                <label class="col-md-4 control-label"> 支付宝二维码</label>
+                                <div class="col-md-6">
+                                    <img src="{{URL::asset('img/pay.png')}}" alt="">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 姓名</label>
                                 <div class="col-md-6">
                                     <input type="text" placeholder="" class="form-control" minlength="2" maxlength="6" name="name" required>
@@ -67,7 +74,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary ladda-button" data-style="contract">
                                         提交
                                     </button>
                                 </div>

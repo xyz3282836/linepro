@@ -40,8 +40,8 @@
                                     <td>{{$v->created_at}}</td>
                                     <td>
                                         @if($v->status == 1)
-                                            <button class="btn btn-error btn-sm" @click="cancle({{$v->id}})">取消订单</button>
-                                            <button class="btn btn-success btn-sm" @click="pay({{$v->id}})">支付</button>
+                                            <button class="btn btn-danger btn-sm ladda-button" data-style="contract" @click="cancle({{$v->id}})">取消订单</button>
+                                            <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$v->id}})">支付</button>
                                         @endif
                                     </td>
                                     <td><a href="{{url('viewclickfarm/'.$v->id)}}">查看</a></td>
@@ -73,9 +73,9 @@
                     axios.post('pay',{type:'click_farms',id:id}).then(function (d) {
                         var data = d.data;
                         if(!data.code){
-                            layer.msg(data.msg);
+                            layer.msg(data.msg, {icon: 2});
                         }else{
-                            layer.msg('操作成功');
+                            layer.msg('操作成功', {icon: 1});
                         }
                     })
                 },
@@ -83,9 +83,9 @@
                     axios.post('cancle',{type:'click_farms',id:id}).then(function (d) {
                         var data = d.data;
                         if(!data.code){
-                            layer.msg(data.msg);
+                            layer.msg(data.msg, {icon: 2});
                         }else{
-                            layer.msg('操作成功');
+                            layer.msg('操作成功', {icon: 1});
                         }
                     })
                 }

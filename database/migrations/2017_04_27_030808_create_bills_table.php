@@ -25,6 +25,7 @@ class CreateBillsTable extends Migration
             $table->timestamps();
 
             $table->index('uid');
+            $table->unique(['type','orderid']);
         });
     }
 

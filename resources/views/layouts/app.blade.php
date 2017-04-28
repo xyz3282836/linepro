@@ -13,11 +13,22 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--}}
+    <link href="https://cdn.bootcss.com/Ladda/1.0.0/ladda-themeless.min.css" rel="stylesheet">
+
     @yield('csslib')
 
     <style>
         .color-red{
             color:red;
+        }
+        .ladda-button[data-style=contract] {
+            width: auto;
+        }
+        .btn-sm.ladda-button[data-style=contract][data-loading] {
+            width: 30px;
+        }
+        .ladda-button[data-style=contract][data-loading][type=submit] {
+            width: 36px;
         }
     </style>
     @yield('css')
@@ -144,7 +155,16 @@
     {{--<script src="https://cdn.bootcss.com/axios/0.16.1/axios.min.js"></script>--}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+    <script src="https://cdn.bootcss.com/Ladda/1.0.0/spin.min.js"></script>
+    <script src="https://cdn.bootcss.com/Ladda/1.0.0/ladda.min.js"></script>
     @yield('jslib')
+
+    <script>
+        $(function () {
+            Ladda.bind( 'table .btn', { timeout: 1500 } );
+            Ladda.bind( 'form .btn[type=submit]', { timeout: 3000 } );
+        })
+    </script>
     @yield('js')
 </body>
 </html>

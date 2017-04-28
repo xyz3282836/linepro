@@ -11,6 +11,7 @@ const MODEL_NOT_FOUNT = '';
 const NO_ACCESS = '无权限';
 const NO_ENOUGH_MONEY = '没有足够的余额，请先充值';
 const ERROR_IDEMPOTENCE = '重复操作';
+const ERROR_SYSTEM = '系统错误';
 
 
 

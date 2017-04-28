@@ -50,7 +50,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary ladda-button" data-style="contract">
                                     登入
                                 </button>
 
