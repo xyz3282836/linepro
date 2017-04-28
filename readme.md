@@ -1,4 +1,19 @@
-**.env 环境配置文件**
+# 开发：
+## .env必填部分
+|   name	|   Desc	|
+|---	|---	|
+|   DB_HOST	    |   数据库地址	|
+|   DB_PORT	    |   数据库端口	|
+|   DB_DATABASE	    |   数据库库名	|
+|   DB_USERNAME	|   数据库用户名	|
+|   DB_PASSWORD	|   数据库密码 |
+|   MAIL_DRIVER	|   电子邮箱配置方式	|
+|   MAIL_HOST	|   电子邮箱配置地址	|
+|   MAIL_PORT	|   电子邮箱配置端口	|
+|   MAIL_USERNAME	|   电子邮箱	|
+|   MAIL_FROM_ADDRESS	|   电子邮箱	|
+|   MAIL_FROM_NAME	|   电子邮箱别名	|
+|   MAIL_PASSWORD	|   电子邮箱密码	|
 
 1. 下载依赖，执行命令  composer install 
 2. 数据库迁移，执行命令  php artisan migrate
@@ -14,7 +29,7 @@
 |   bills	|   交易流水	|
 
 
-部署：
+# 部署：
 1. php >= 5.6.4 推荐7+
 2. mysql或者mariadb
 3. nginx或者apache
@@ -25,3 +40,4 @@ location / {
     try_files $uri $uri/ /index.php?$query_string;
 }
 ```
+
