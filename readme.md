@@ -15,11 +15,12 @@
 
 
 部署：
-php >= 5.6.4 推荐7+
-mysql或者mariadb
-nginx或者apache
-nginx配置
+1. php >= 5.6.4 推荐7+
+2. mysql或者mariadb
+3. nginx或者apache
+
 ```
+nginx配置
 location / {
     try_files $uri $uri/ /index.php?$query_string;
 }
