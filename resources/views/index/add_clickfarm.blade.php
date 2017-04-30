@@ -59,7 +59,10 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 最终价格(包含运费)</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
+                                    <div class="input-group">
+                                        <input type="number" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
+                                        <div class="input-group-addon">元</div>
+                                    </div>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>

@@ -437,8 +437,24 @@ class IndexController extends Controller
      * 流水账单
      */
     public function listBill(){
-        $list = Bill::where('uid',Auth::getUser()->id)->orderBy('id','desc')->paginate(10);
-        return view('pay.list_bill')->with('tname','账单列表')->with('list',$list);
+        $start = request('start');
+        $end = request('end');
+        $type = request('type',0);
+
+        $table = Bill::where('uid',Auth::getUser()->id);
+        if($start != null && $end != null){
+            $table->whereBetween('created_at', [$start, $end]);
+        }
+
+        if($type){
+           $table->where('type',$type);
+        }
+        $list = $table->orderBy('id','desc')->paginate(10);
+        return view('pay.list_bill')->with('tname','账单列表')->with('list',$list)->with([
+            'start'=>$start,
+            'end'=>$end,
+            'type'=>$type
+        ]);
     }
 
 

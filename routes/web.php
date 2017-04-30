@@ -43,6 +43,7 @@ Route::get('rechargelist', 'IndexController@listRecharge');
 Route::post('cancle', 'IndexController@postCancle');
 Route::post('pay', 'IndexController@postPay');
 
-Route::get('billlist', 'IndexController@listBill');
+Route::any('billlist', 'IndexController@listBill');
 
 Route::get('getbilldesc', 'IndexController@billDesc');
+
