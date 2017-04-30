@@ -41,6 +41,7 @@
 </head>
 <body>
     <div id="app">
+        @section('body')
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -60,6 +61,7 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    @if (!Auth::guest())
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
@@ -101,6 +103,7 @@
                         </li>
 
                     </ul>
+                    @endif
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -148,6 +151,8 @@
         </nav>
 
         @yield('content')
+
+        @show
     </div>
     {{--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>--}}
     {{--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
