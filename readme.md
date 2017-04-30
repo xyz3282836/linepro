@@ -30,6 +30,7 @@
 
 
 # 部署：
+## 环境要求
 1. php >= 5.6.4 推荐7+
 2. mysql或者mariadb
 3. nginx或者apache
@@ -39,5 +40,13 @@ nginx配置
 location / {
     try_files $uri $uri/ /index.php?$query_string;
 }
+```
+
+## 安装
+1. 解压zip包到web目录
+2. 将解压目录中.env文件进行编辑
+3. 在项目目录根目录下执行以下命令，初始化数据库
+```
+php artisan migrate
 ```
 
