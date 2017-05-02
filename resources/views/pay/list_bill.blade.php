@@ -22,7 +22,8 @@
                     <div class="panel-heading">{{$tname}}</div>
                     <div class="panel-body">
 
-                        <form class="form-inline margin-bottom-30" action="{{url('billlist')}}" method="get">
+                        <form class="form-inline margin-bottom-30" action="{{url('billlist')}}" method="post">
+                            {{csrf_field()}}
                             <div class="form-group">
                                 <div class="input-daterange input-group" id="datepicker">
                                     <input type="text" class="form-control" name="start" value="{{$start}}" />
