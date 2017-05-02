@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('level')->default(1); // 1 普通用户 2 年费用户
             $table->decimal('amount',10,2)->default(0.00);//总金额
+            $table->char('shop_id',20)->default('');//店铺id
             $table->rememberToken();
             $table->timestamps();
 

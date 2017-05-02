@@ -38,6 +38,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('shop_id') ? ' has-error' : '' }}">
+                            <label for="shop_id" class="col-md-4 control-label">店铺ID</label>
+
+                            <div class="col-md-6">
+                                <input id="shop_id" type="text" class="form-control" name="shop_id" value="{{ old('shop_id') }}" required>
+
+                                @if ($errors->has('shop_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('shop_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">密码</label>
 

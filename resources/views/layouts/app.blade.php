@@ -65,7 +65,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 添加任务 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -78,7 +78,7 @@
 
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 未完成任务列表 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -91,7 +91,7 @@
 
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 已完成任务列表 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -114,8 +114,8 @@
                         @else
                             <li><a href="{{ url('billlist') }}">账单</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    余额（<span class="color-red">{{Auth::getUser()->amount}}</span>） <span class="caret"></span>
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    余额（<span class="color-red">{{Auth::user()->amount}}</span>） <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -123,9 +123,9 @@
                                     <li><a href="{{ url('rechargelist') }}">充值记录</a></li>
                                 </ul>
                             </li>
-
+                            <li><a href="javascript:;">店铺ID(<span class="color-red">{{Auth::user()->shop_id}}</span>)</a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 

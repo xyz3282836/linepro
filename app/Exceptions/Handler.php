@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if(config('app.debug')){
+        if(config('app.debug') || $exception instanceof AuthenticationException){
             return parent::render($request, $exception);
         }else{
             if($request->ajax()){
