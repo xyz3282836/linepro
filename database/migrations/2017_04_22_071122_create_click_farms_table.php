@@ -16,6 +16,7 @@ class CreateClickFarmsTable extends Migration
         Schema::create('click_farms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('uid')->default(0);//用户id
+            $table->char('shop_id',20)->default('');//店铺id
             $table->tinyInteger('platform_type')->default(1);//平台
             $table->char('asin',24)->default('');//购买的asin
             $table->tinyInteger('is_fba');//是否FBA发货

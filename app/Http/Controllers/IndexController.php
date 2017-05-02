@@ -43,7 +43,7 @@ class IndexController extends Controller
                 throw new Exception();
 
         }
-        $list = Evaluate::where('uid',Auth::getUser()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
+        $list = Evaluate::where('uid',Auth::user()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
         return view('index.list_evaluate')->with('tname',$tname)->with('list',$list);
     }
 
@@ -66,7 +66,7 @@ class IndexController extends Controller
             throw new Exception();
 
         }
-        $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
+        $list = ClickFarm::where('uid',Auth::user()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
         return view('index.list_clickfarm')->with('tname',$tname)->with('list',$list);
     }
 
@@ -76,7 +76,7 @@ class IndexController extends Controller
      */
     public function getViewClickFarm($id){
         $cf = ClickFarm::find($id);
-        if($cf->uid != Auth::getUser()->id){
+        if($cf->uid != Auth::user()->id){
             throw new Exception();
         }
         $cf->mixdata = json_decode($cf->mixdata,true);
@@ -89,7 +89,7 @@ class IndexController extends Controller
      */
     public function getViewEvaluate($id){
         $el = Evaluate::find($id);
-        if($el->uid != Auth::getUser()->id){
+        if($el->uid != Auth::user()->id){
             throw new Exception();
         }
         return view('index.view_evaluate')->with('el',$el);
@@ -101,7 +101,7 @@ class IndexController extends Controller
      */
     public function getViewRecharge($id){
         $one = Recharge::find($id);
-        if($one->uid != Auth::getUser()->id){
+        if($one->uid != Auth::user()->id){
             throw new Exception();
         }
         return view('pay.view_recharge')->with('one',$one);
@@ -120,7 +120,7 @@ class IndexController extends Controller
      * add:get
      */
     public function getAddEvaluate(){
-        $list = ClickFarm::where('uid',Auth::getUser()->id)->where('status',2)->limit(30)->get();
+        $list = ClickFarm::where('uid',Auth::user()->id)->where('status',2)->limit(30)->get();
         return view('index.add_evaluate')->with('list',$list);
     }
 
@@ -227,7 +227,8 @@ class IndexController extends Controller
         $pdata['amount'] = get_amount_clickfarm($pdata);
 
         $cf = new ClickFarm;
-        $cf->uid = Auth::getUser()->id;
+        $cf->uid = Auth::user()->id;
+        $cf->shop_id = Auth::user()->shop_id;
         $cf->platform_type = $pdata['platform_type'];
         $cf->asin = $pdata['asin'];
         $cf->is_fba = $pdata['is_fba'];
@@ -283,7 +284,8 @@ class IndexController extends Controller
             die;
         }
         $model = new Evaluate;
-        $model->uid = Auth::getUser()->id;
+        $model->uid = Auth::user()->id;
+        $model->shop_id = Auth::user()->shop_id;
         $model->platform_type = $pdata['platform_type'];
         $model->asin = $pdata['asin'];
         $model->cfid = $pdata['cfid'];
@@ -335,7 +337,7 @@ class IndexController extends Controller
             die;
         }
         $model = new Recharge;
-        $model->uid = Auth::getUser()->id;
+        $model->uid = Auth::user()->id;
         $model->name = $pdata['name'];
         $model->mobile = $pdata['mobile'];
         $model->orderid = $pdata['orderid'];
@@ -351,7 +353,7 @@ class IndexController extends Controller
      * 充值
      */
     public function listRecharge(){
-        $list = Recharge::where('uid',Auth::getUser()->id)->orderBy('id','desc')->paginate(10);
+        $list = Recharge::where('uid',Auth::user()->id)->orderBy('id','desc')->paginate(10);
         return view('pay.list_recharge')->with('tname','充值记录列表')->with('list',$list);
     }
 
@@ -365,7 +367,7 @@ class IndexController extends Controller
         if(!$model){
             return error(MODEL_NOT_FOUNT);
         }
-        if($model->uid != Auth::getUser()->id){
+        if($model->uid != Auth::user()->id){
             return error(NO_ACCESS);
         }
         if($model->status != 1){
@@ -387,14 +389,14 @@ class IndexController extends Controller
         if(!$model){
             return error(MODEL_NOT_FOUNT);
         }
-        $uid = Auth::getUser()->id;
+        $uid = Auth::user()->id;
         if($model->uid != $uid){
             return error(NO_ACCESS);
         }
         if($model->status != 1){
             return error(NO_ACCESS);
         }
-        $amount = Auth::getUser()->amount;
+        $amount = Auth::user()->amount;
         if( $amount < $model->amount){
             return error(NO_ENOUGH_MONEY);
         }
@@ -441,7 +443,7 @@ class IndexController extends Controller
         $end = request('end');
         $type = request('type',0);
 
-        $table = Bill::where('uid',Auth::getUser()->id);
+        $table = Bill::where('uid',Auth::user()->id);
         if($start != null && $end != null){
             $table->whereBetween('created_at', [$start, $end]);
         }

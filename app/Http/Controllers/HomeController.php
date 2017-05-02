@@ -35,7 +35,7 @@ class HomeController extends Controller
     }
 
     public function postUpPwd(Request $request){
-        if(!Hash::check($request->input('opassword'),Auth::getUser()->getAuthPassword())){
+        if(!Hash::check($request->input('opassword'),Auth::user()->getAuthPassword())){
             return redirect('uppwd')
                 ->withErrors(['opassword'=>'密码错误']);
         }

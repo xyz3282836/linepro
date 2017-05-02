@@ -15,7 +15,10 @@
                     <div class="panel-heading">评价任务详细信息</div>
                     <div class="panel-body">
                         <form class="form-horizontal">
-
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">商铺ID</label>
+                                <label class="col-md-6 control-label">{{$el->shop_id}}</label>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">平台</label>
                                 <label class="col-md-6 control-label" v-text="c1[platform_type]"></label>
