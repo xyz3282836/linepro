@@ -18,6 +18,7 @@
                                 <th>id</th>
                                 <th>订单号</th>
                                 <th>消费金额</th>
+                                <th>评价id</th>
                                 <th>状态</th>
                                 <th>时间</th>
                                 <th>操作</th>
@@ -30,6 +31,7 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->amount}}</td>
+                                    <td>{{$v->eid}}</td>
                                     <td>{{$v->status_text}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td>
