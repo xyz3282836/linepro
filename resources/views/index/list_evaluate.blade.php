@@ -63,7 +63,7 @@
             el: '#app',
             methods: {
                 pay:function (id) {
-                    axios.post('pay',{type:'evaluates',id:id}).then(function (d) {
+                    axios.post("{{url('pay')}}"{type:'evaluates',id:id}).then(function (d) {
                         var data = d.data;
                         if(!data.code){
                             layer.msg(data.msg, {icon: 2});
@@ -75,12 +75,13 @@
 
                 },
                 cancle:function (id) {
-                    axios.post('cancle',{type:'evaluates',id:id}).then(function (d) {
+                    axios.post("{{url('cancle')}}",{type:'evaluates',id:id}).then(function (d) {
                         var data = d.data;
                         if(!data.code){
                             layer.msg(data.msg, {icon: 2});
                         }else{
                             layer.msg('操作成功', {icon: 1});
+                            window.location.reload()
                         }
                     })
                 }

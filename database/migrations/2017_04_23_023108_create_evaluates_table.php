@@ -20,7 +20,7 @@ class CreateEvaluatesTable extends Migration
             $table->tinyInteger('platform_type')->default(1);//平台
             $table->char('asin',24)->default('');//购买的asin
             $table->tinyInteger('is_direct')->default(0);//是否直评
-            $table->integer('cfid')->default(0);//任务id
+            $table->integer('cfid')->nullable();//任务id
             $table->tinyInteger('star')->default(1);//星级
             $table->char('title',64)->default('');//标题
             $table->string('content',1024)->default('');//正文

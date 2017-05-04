@@ -14,7 +14,15 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">刷单任务详细信息</div>
                     <div class="panel-body">
+                        @if($cf->status == 1)
+                            <button class="btn btn-danger btn-sm ladda-button" data-style="contract" @click="cancle({{$cf->id}})">取消订单</button>
+                            <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$cf->id}})">支付</button>
+                        @endif
                         <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">订单状态</label>
+                                <label class="col-md-6 control-label">{{$cf->status_text}}</label>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">商铺ID</label>
                                 <label class="col-md-6 control-label">{{$cf->shop_id}}</label>
@@ -44,6 +52,14 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">是否需要Reviews</label>
                                 <label class="col-md-6 control-label" v-text="c2[is_reviews]"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">是否刷关联</label>
+                                <label class="col-md-6 control-label" v-text="c2[is_link]"></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">是否刷sellerrank</label>
+                                <label class="col-md-6 control-label" v-text="c2[is_sellerrank]"></label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">指定ASIN购买</label>
@@ -158,18 +174,18 @@
                             {{--sort--}}
                             <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">sort by</label>
-                                <label class="col-md-6 control-label" v-text="c8[sort_by]"></label>
+                                <label class="col-md-6 control-label" v-text="sortc[sort_by]"></label>
                             </div>
                             {{--page--}}
                             <div class="form-group" v-if="crrsp.source.indexOf(parseInt(source))>-1 && crrsp.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">page</label>
-                                <label class="col-md-6 control-label" v-text="c9[page]"></label>
+                                <label class="col-md-6 control-label" v-text="pagec[page]"></label>
                             </div>
 
                             {{--ba--}}
                             <div class="form-group" v-if="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">B在A中的位置</label>
-                                <label class="col-md-6 control-label" v-text="c10[ba_place]"></label>
+                                <label class="col-md-6 control-label" v-text="placec[ba_place]"></label>
                             </div>
                             <div class="form-group" v-if="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label">A产品的ASIN</label>
@@ -216,6 +232,28 @@
             methods:{
                 getca:function(){
                     this.contrast_asin =this.cas.split(',')
+                },
+                pay:function (id) {
+                    axios.post("{{url('pay')}}",{type:'click_farms',id:id}).then(function (d) {
+                        var data = d.data;
+                        if(!data.code){
+                            layer.msg(data.msg, {icon: 2});
+                        }else{
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.reload()
+                        }
+                    })
+                },
+                cancle:function (id) {
+                    axios.post("{{url('cancle')}}",{type:'click_farms',id:id}).then(function (d) {
+                        var data = d.data;
+                        if(!data.code){
+                            layer.msg(data.msg, {icon: 2});
+                        }else{
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.reload()
+                        }
+                    })
                 }
             },
             mounted: function () {
@@ -254,29 +292,11 @@
                     2:'分类挑选',
                     3:'其他网站跳转',
                 },
-                c8:{
-                    1:'Price: Low to High',
-                    2:'Price: High to Low',
-                    3:'Avg. Customer Review',
-                    4:'Newest Arrivals',
-                },
-                c9:{
-                    1:'1-3',
-                    2:'4-9',
-                    3:'10-20',
-                },
-                c10:{
-                    1:'Frequently Bought Together',
-                    2:'Sponsored Products Related To This Item',
-                    3:'Customers Who Bought This Item Also Bought',
-                    4:'Customers Also Shopped For',
-                    5:'What Other Items Do Customers Buy After Viewing This Item?',
-                    6:'Compare to Similar Items',
-                    7:'customers who viewd this item also viewd',
-                },
                 platform_type:{{ $cf->platform_type }},
                 is_fba:{{$cf->is_fba}},
                 is_reviews:{{$cf->is_reviews}},
+                is_link:{{$cf->is_link}},
+                is_sellerrank:{{$cf->is_sellerrank}},
                 contrast_asin:[],
                 cas:"{{$cf->contrast_asin}}",
                 brower:{{$cf->brower}},
@@ -284,57 +304,10 @@
                 flow_port:{{$cf->flow_port}},
                 source:{{$cf->flow_source}},
                 step:{{$cf->browse_step}},
-                cs: {
-                    0:'不选类别直接搜索',
-                    1:'Alexa Skills',
-                    2:'Amazon Video',
-                    3:'Amazon Warehouse Deals',
-                    4:'Appliances',
-                    5:'Apps & Games',
-                    6:'Arts, Crafts & Sewing',
-                    7:'Automotive Parts & Accessories',
-                    8:'Baby',
-                    9:'Beauty & Personal Care',
-                    10:'Books',
-                    11:'CDs & Vinyl',
-                    12:'Cell Phones & Accessories',
-                    13:'Clothing, Shoes & Jewelry',
-                    14:'Women',
-                    15:'Men',
-                    16:'Girls',
-                    17:'Boys',
-                    18:'Baby',
-                    19:'Collectibles & Fine Art',
-                    20:'Computers',
-                    21:'Courses',
-                    22:'Credit and Payment Cards',
-                    23:'Digital Music',
-                    24:'Electronics',
-                    25:'Gift Cards',
-                    26:'Grocery & Gourmet Food',
-                    27:'Handmade',
-                    28:'Health, Household & Baby Care',
-                    29:'Home & Business Services',
-                    30:'Home & Kitchen',
-                    31:'Industrial & Scientific',
-                    32:'Kindle Store',
-                    33:'Luggage & Travel Gear',
-                    34:'Luxury Beauty',
-                    35:'Magazine Subscriptions',
-                    36:'Movies & TV',
-                    37:'Musical Instruments',
-                    38:'Office Products',
-                    39:'Patio, Lawn & Garden',
-                    40:'Pet Supplies',
-                    41:'Prime Pantry',
-                    42:'Software',
-                    43:'Sports & Outdoors',
-                    44:'Tools & Home Improvement',
-                    45:'Toys & Games',
-                    46:'Vehicles',
-                    47:'Video Games',
-                    48:'Wine',
-                },
+                cs: JSON.parse('{!! json_encode(config('linepro.bigc')) !!}'),
+                sortc:JSON.parse('{!! json_encode(config('linepro.sortc')) !!}'),
+                placec:JSON.parse('{!! json_encode(config('linepro.placec')) !!}'),
+                pagec:JSON.parse('{!! json_encode(config('linepro.pagec')) !!}'),
                 results:"{{$mix['results']}}",
                 refine:"{{$mix['refine']}}",
                 category:"{{$mix['category']}}",//cs

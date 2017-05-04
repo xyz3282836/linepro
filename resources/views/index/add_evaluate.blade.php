@@ -23,7 +23,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 平台</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="platform_type" required>
-                                        <option value="1">amazon.com</option>
+                                        <option v-for="(v,k) in platformc" v-text="v" :value="k"></option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="" class="form-control" minlength="24" maxlength="24" name="asin" required>
+                                    <input type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -41,6 +41,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 关联刷单任务ID</label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="cfid" required>
+                                        <option value="0">不关联</option>
                                         @foreach($list as $v)
                                             <option value="{{$v['id']}}">{{$v['orderid']}}</option>
                                         @endforeach
@@ -173,6 +174,7 @@
             computed:{
             },
             data: {
+                platformc:JSON.parse('{!! json_encode(config('linepro.platformc')) !!}'),
             }
         });
         $(function () {

@@ -14,14 +14,22 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">评价任务详细信息</div>
                     <div class="panel-body">
+                        @if($el->status == 1)
+                            <button class="btn btn-danger btn-sm ladda-button" data-style="contract" @click="cancle({{$el->id}})">取消订单</button>
+                            <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$el->id}})">支付</button>
+                        @endif
                         <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">订单状态</label>
+                                <label class="col-md-6 control-label">{{$el->status_text}}</label>
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">商铺ID</label>
                                 <label class="col-md-6 control-label">{{$el->shop_id}}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">平台</label>
-                                <label class="col-md-6 control-label" v-text="c1[platform_type]"></label>
+                                <label class="col-md-6 control-label" v-text="platformc[platform_type]"></label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">购买的ASIN</label>
@@ -92,6 +100,29 @@
                         return;
                     }
                     this.picarr =this.pic.split(',')
+                },
+                pay:function (id) {
+                    axios.post("{{url('pay')}}",{type:'evaluates',id:id}).then(function (d) {
+                        var data = d.data;
+                        if(!data.code){
+                            layer.msg(data.msg, {icon: 2});
+                        }else{
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.reload()
+                        }
+                    })
+
+                },
+                cancle:function (id) {
+                    axios.post("{{url('cancle')}}",{type:'evaluates',id:id}).then(function (d) {
+                        var data = d.data;
+                        if(!data.code){
+                            layer.msg(data.msg, {icon: 2});
+                        }else{
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.reload()
+                        }
+                    })
                 }
             },
             mounted: function () {
@@ -100,9 +131,7 @@
                 })
             },
             data: {
-                c1:{
-                    1:'amazon.com'
-                },
+                platformc:JSON.parse('{!! json_encode(config('linepro.platformc')) !!}'),
                 star:{{$el->star}},
                 platform_type:{{ $el->platform_type }},
                 pic:"{{$el->pic}}",

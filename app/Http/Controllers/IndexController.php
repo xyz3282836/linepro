@@ -36,7 +36,7 @@ class IndexController extends Controller
                 $tname = '已完成评价任务列表';
                 break;
             case 'nodone':
-                $status = [1,2,3,4];
+                $status = [0,1,2,3,4];
                 $tname = '未完成评价任务列表';
                 break;
             default:
@@ -59,7 +59,7 @@ class IndexController extends Controller
                 $tname = '已完成刷单任务列表';
                 break;
             case 'nodone':
-                $status = [1,2,3,4];
+                $status = [0,1,2,3,4];
                 $tname = '未完成刷单任务列表';
                 break;
             default:
@@ -141,6 +141,8 @@ class IndexController extends Controller
             'is_fba'=>'required|integer',
             'final_price'=>'required|integer',
             'is_reviews'=>'required|integer',
+            'is_link'=>'required|integer',
+            'is_sellerrank'=>'required|integer',
             'specified_asin'=>'nullable|size:24',
             'contrast_asin'=>'',
             'brower'=>'required|integer',
@@ -235,6 +237,8 @@ class IndexController extends Controller
         $cf->discount_code = $pdata['discount_code'];
         $cf->final_price = $pdata['final_price'];
         $cf->is_reviews = $pdata['is_reviews'];
+        $cf->is_link = $pdata['is_link'];
+        $cf->is_sellerrank = $pdata['is_sellerrank'];
         $cf->specified_asin = $pdata['specified_asin'];
         $cf->contrast_asin = $pdata['contrast_asin'];
         $cf->brower = $pdata['brower'];
@@ -263,7 +267,6 @@ class IndexController extends Controller
         $pdata['cfid'] = request('cfid',null);
         $pdata['pic'] = implode(',',array_diff($pdata['pic'],[null]));
         $pdata['video'] = trim($pdata['video'])!=null?trim($pdata['video']):'';
-        $pdata['cfid'] = trim($pdata['cfid'])!=null?trim($pdata['cfid']):0;
         $validator = Validator::make($pdata,[
             'platform_type'=>'required',
             'asin'=>'required',
@@ -288,7 +291,9 @@ class IndexController extends Controller
         $model->shop_id = Auth::user()->shop_id;
         $model->platform_type = $pdata['platform_type'];
         $model->asin = $pdata['asin'];
-        $model->cfid = $pdata['cfid'];
+        if($pdata['cfid'] != 0){
+            $model->cfid = $pdata['cfid'];
+        }
         $model->star = $pdata['star'];
         $model->title = $pdata['title'];
         $model->content = $pdata['content'];

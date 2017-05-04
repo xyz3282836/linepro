@@ -67,13 +67,39 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否需要Reviews</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否刷Reviews</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline">
-                                        <input type="radio" value="2" name="is_reviews" checked required> 不确定
+                                        <input type="radio" value="0" name="is_reviews" checked required> 否
                                     </label>
                                     <label class="radio-inline">
                                         <input type="radio" value="1" name="is_reviews" required> 是
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否刷关联</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="0" name="is_link" checked required> 否
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="is_link" required> 是
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 是否刷sellerrank</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="0" name="is_sellerrank" checked required> 否
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" value="1" name="is_sellerrank" required> 是
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -95,7 +121,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">指定曾经购买过的ASIN</label>
                                 <div class="col-md-6">
-                                    <input type="text" :disabled="is_specified == 0" placeholder="" minlength="24" maxlength="24" class="form-control"
+                                    <input type="text" :disabled="is_specified == 0" placeholder="" minlength="1" maxlength="24" class="form-control"
                                            name="specified_asin">
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -103,21 +129,21 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">对比asin</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="ASIN1" class="form-control" name="contrast_asin[]" minlength="24" maxlength="24">
+                                    <input type="text" placeholder="ASIN1" class="form-control" name="contrast_asin[]" minlength="1" maxlength="24">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">对比asin</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="ASIN1" class="form-control" name="contrast_asin[]" minlength="24" maxlength="24">
+                                    <input type="text" placeholder="ASIN1" class="form-control" name="contrast_asin[]" minlength="1" maxlength="24">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">对比asin</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="ASIN1" class="form-control" name="contrast_asin[]" minlength="24" maxlength="24">
+                                    <input type="text" placeholder="ASIN1" class="form-control" name="contrast_asin[]" minlength="1" maxlength="24">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -245,7 +271,7 @@
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="category" id="category" required>
-                                        <option v-for="c in cs" v-text="c.text" :value="c.val"></option>
+                                        <option v-for="(v,k) in cs" v-text="v" :value="k"></option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -336,10 +362,7 @@
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="sort_by" required>
-                                        <option value="1">Price: Low to High</option>
-                                        <option value="2">Price: High to Low</option>
-                                        <option value="3">Avg. Customer Review</option>
-                                        <option value="4">Newest Arrivals</option>
+                                        <option v-for="(v,k) in sortc" v-text="v" :value="k"></option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -349,9 +372,7 @@
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="page" required>
-                                        <option value="1">1-3</option>
-                                        <option value="2">4-9</option>
-                                        <option value="3">10-20</option>
+                                        <option v-for="(v,k) in pagec" v-text="v" :value="k"></option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -362,13 +383,7 @@
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="ba_place" required>
-                                        <option value="1">Frequently Bought Together</option>
-                                        <option value="2">Sponsored Products Related To This Item</option>
-                                        <option value="3">Customers Who Bought This Item Also Bought</option>
-                                        <option value="4">Customers Also Shopped For</option>
-                                        <option value="5">What Other Items Do Customers Buy After Viewing This Item?</option>
-                                        <option value="6">Compare to Similar Items</option>
-                                        <option value="7">customers who viewd this item also viewd</option>
+                                        <option v-for="(v,k) in placec" v-text="v" :value="k"></option>
                                     </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -376,7 +391,7 @@
                             <div class="form-group" v-show="ba.source.indexOf(parseInt(source))>-1 && ba.step.indexOf(parseInt(step))>-1">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="A产品ASIN" class="form-control" name="ba_asin" minlength="24" maxlength="24">
+                                    <input type="text" placeholder="A产品ASIN" class="form-control" name="ba_asin" minlength="1" maxlength="24">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -456,57 +471,10 @@
                 step:1,
                 results:false,
                 refine:false,
-                cs: [
-                    {val: '0', text: '不选类别直接搜索'},
-                    {val: '1', text: 'Alexa Skills'},
-                    {val: '2', text: 'Amazon Video'},
-                    {val: '3', text: 'Amazon Warehouse Deals'},
-                    {val: '4', text: 'Appliances'},
-                    {val: '5', text: 'Apps & Games'},
-                    {val: '6', text: 'Arts, Crafts & Sewing'},
-                    {val: '7', text: 'Automotive Parts & Accessories'},
-                    {val: '8', text: 'Baby'},
-                    {val: '9', text: 'Beauty & Personal Care'},
-                    {val: '10', text: 'Books'},
-                    {val: '11', text: 'CDs & Vinyl'},
-                    {val: '12', text: 'Cell Phones & Accessories'},
-                    {val: '13', text: 'Clothing, Shoes & Jewelry'},
-                    {val: '14', text: 'Women'},
-                    {val: '15', text: 'Men'},
-                    {val: '16', text: 'Girls'},
-                    {val: '17', text: 'Boys'},
-                    {val: '18', text: 'Baby'},
-                    {val: '19', text: 'Collectibles & Fine Art'},
-                    {val: '20', text: 'Computers'},
-                    {val: '21', text: 'Courses'},
-                    {val: '22', text: 'Credit and Payment Cards'},
-                    {val: '23', text: 'Digital Music'},
-                    {val: '24', text: 'Electronics'},
-                    {val: '25', text: 'Gift Cards'},
-                    {val: '26', text: 'Grocery & Gourmet Food'},
-                    {val: '27', text: 'Handmade'},
-                    {val: '28', text: 'Health, Household & Baby Care'},
-                    {val: '29', text: 'Home & Business Services'},
-                    {val: '30', text: 'Home & Kitchen'},
-                    {val: '31', text: 'Industrial & Scientific'},
-                    {val: '32', text: 'Kindle Store'},
-                    {val: '33', text: 'Luggage & Travel Gear'},
-                    {val: '34', text: 'Luxury Beauty'},
-                    {val: '35', text: 'Magazine Subscriptions'},
-                    {val: '36', text: 'Movies & TV'},
-                    {val: '37', text: 'Musical Instruments'},
-                    {val: '38', text: 'Office Products'},
-                    {val: '39', text: 'Patio, Lawn & Garden'},
-                    {val: '40', text: 'Pet Supplies'},
-                    {val: '41', text: 'Prime Pantry'},
-                    {val: '42', text: 'Software'},
-                    {val: '43', text: 'Sports & Outdoors'},
-                    {val: '44', text: 'Tools & Home Improvement'},
-                    {val: '45', text: 'Toys & Games'},
-                    {val: '46', text: 'Vehicles'},
-                    {val: '47', text: 'Video Games'},
-                    {val: '48', text: 'Wine'},
-                ],
+                cs: JSON.parse('{!! json_encode(config('linepro.bigc')) !!}'),
+                sortc:JSON.parse('{!! json_encode(config('linepro.sortc')) !!}'),
+                placec:JSON.parse('{!! json_encode(config('linepro.placec')) !!}'),
+                pagec:JSON.parse('{!! json_encode(config('linepro.pagec')) !!}'),
                 crrsp:{
                     source:[1,2],
                     step:[1,2]
