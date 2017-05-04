@@ -115,7 +115,7 @@
                             <li><a href="{{ url('billlist') }}">账单</a></li>
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{Auth::user()->level_text}}(<span class="color-red">{{Auth::user()->amount}}</span>) <span class="caret"></span>
+                                    {{Auth::user()->level_text}}(<span class="color-red">{{Auth::user()->amount}}元</span>) <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
