@@ -65,7 +65,7 @@
             el: '#app',
             methods: {
                 pay:function (id) {
-                    axios.post("{{url('pay')}}"{type:'evaluates',id:id}).then(function (d) {
+                    axios.post("{{url('pay')}}",{type:'evaluates',id:id}).then(function (d) {
                         var data = d.data;
                         if(!data.code){
                             layer.msg(data.msg, {icon: 2});

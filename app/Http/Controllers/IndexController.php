@@ -139,7 +139,7 @@ class IndexController extends Controller
             'platform_type'=>'required',
             'asin'=>'required',
             'is_fba'=>'required|integer',
-            'final_price'=>'required|integer',
+            'final_price'=>'required',
             'is_reviews'=>'required|integer',
             'is_link'=>'required|integer',
             'is_sellerrank'=>'required|integer',

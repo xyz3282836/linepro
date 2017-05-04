@@ -14,9 +14,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">评价任务详细信息</div>
                     <div class="panel-body">
+
                         @if($el->status == 1)
-                            <button class="btn btn-danger btn-sm ladda-button" data-style="contract" @click="cancle({{$el->id}})">取消订单</button>
-                            <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$el->id}})">支付</button>
+                            <div class="text-center">
+                                <button class="btn btn-danger btn-sm ladda-button" data-style="contract" @click="cancle({{$el->id}})">取消订单</button>
+                                <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$el->id}})">支付</button>
+                            </div>
                         @endif
                         <form class="form-horizontal">
                             <div class="form-group">
