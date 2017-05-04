@@ -1,5 +1,10 @@
 @extends('layouts.app')
-@section('csslib')
+@section('css')
+    <style type="text/css">
+        .col-md-6.control-label{
+            text-align: left;
+        }
+    </style>
 @endsection
 
 @section('jslib')
@@ -19,6 +24,18 @@
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('upmy') }}">
                             {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="mobile" class="col-md-4 control-label">昵称</label>
+                                <label for="mobile" class="col-md-6 control-label">{{ Auth::user()->name }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-md-4 control-label">Email</label>
+                                <label for="mobile" class="col-md-6 control-label">{{ Auth::user()->email }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-md-4 control-label">会员状态</label>
+                                <label for="mobile" class="col-md-6 control-label">{{ Auth::user()->level_text }}</label>
+                            </div>
                             <div class="form-group">
                                 <label for="mobile" class="col-md-4 control-label">手机号</label>
                                 <div class="col-md-6">
