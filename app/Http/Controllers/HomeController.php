@@ -7,6 +7,7 @@ use Auth;
 use DB;
 use Hash;
 use Illuminate\Http\Request;
+use Storage;
 
 class HomeController extends Controller
 {
@@ -64,5 +65,25 @@ class HomeController extends Controller
         DB::table('users')->where('id',Auth::user()->id)->update($pdata);
         return redirect('upmy')
             ->with(['status'=>'资料修改成功']);
+    }
+
+    public function upload(Request $request)
+    {
+        switch (request('type')){
+            case 'img':
+                $file = $request->file('upimg');
+                $ext = $file->getClientOriginalExtension();
+                $filename = time().rand(100000,999999).'.'.$ext;
+                $file->move('../public/upfile/img/',$filename);
+                break;
+            case 'video':
+                $file = $request->file('upvideo');
+                $ext = $file->getClientOriginalExtension();
+                $filename = time().rand(100000,999999).'.'.$ext;
+                $file->move('../public/upfile/video/',$filename);
+                break;
+        }
+
+        return success('/upfile/img/'.$filename);
     }
 }

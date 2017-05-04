@@ -62,12 +62,16 @@
 
                             <div class="form-group" v-for="(one,index) in picarr">
                                 <label class="col-md-4 control-label" >图片 <span v-text="index + 1"></span></label>
-                                <label class="col-md-6 control-label" v-text="one"></label>
+                                <div class="col-md-6">
+                                    <img :scr="'http://localhost'+one" alt="">
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">视频</label>
-                                <label class="col-md-6 control-label">{{$el->video}}</label>
+                                <div class="col-md-6">
+                                    <video src="http://localhost{{$el->video}}"></video>
+                                </div>
                             </div>
 
                             <div class="form-group">

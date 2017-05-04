@@ -49,3 +49,6 @@ Route::any('billlist', 'IndexController@listBill');
 
 Route::get('getbilldesc', 'IndexController@billDesc');
 
+
+Route::post('upload', 'HomeController@upload');
+

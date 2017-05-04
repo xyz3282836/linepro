@@ -265,8 +265,8 @@ class IndexController extends Controller
     public function postAddEvaluate(){
         $pdata = request()->all();
         $pdata['cfid'] = request('cfid',null);
-        $pdata['pic'] = implode(',',array_diff($pdata['pic'],[null]));
         $pdata['video'] = trim($pdata['video'])!=null?trim($pdata['video']):'';
+        $pdata['pic'] = trim($pdata['pic'])!=null?trim($pdata['pic']):'';
         $validator = Validator::make($pdata,[
             'platform_type'=>'required',
             'asin'=>'required',
