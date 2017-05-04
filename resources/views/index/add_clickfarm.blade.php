@@ -61,7 +61,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input type="number" step="0.01" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
-                                        <div class="input-group-addon">美元</div>
+                                        <div class="input-group-addon">元</div>
                                     </div>
                                     <p class="help-block with-errors"></p>
                                 </div>
