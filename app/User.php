@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password',
+        'name', 'email', 'shop_id', 'password','mobile','addr','management_type'
     ];
 
     /**
@@ -26,4 +26,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    const STATUS_1 = '普通会员';
+    const STATUS_2 = '年费会员';
+    public function getLevelTextAttribute()
+    {
+        $text=[
+            1=>User::STATUS_1,
+            2=>User::STATUS_2,
+        ];
+        return $text[$this->level];
+    }
 }

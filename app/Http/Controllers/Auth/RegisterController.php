@@ -52,6 +52,9 @@ class RegisterController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'shop_id' => 'required',
+            'mobile'=>'required|regex:/^1[345789][0-9]{9}/',
+            'addr' => 'required|min:5|max:50',
+            'management_type' => 'required|integer',
         ]);
     }
 
@@ -67,6 +70,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'shop_id' => $data['shop_id'],
+            'mobile' => $data['mobile'],
+            'addr' => $data['addr'],
+            'management_type' => $data['management_type'],
             'password' => bcrypt($data['password']),
         ]);
     }

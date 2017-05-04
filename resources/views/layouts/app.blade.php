@@ -115,7 +115,7 @@
                             <li><a href="{{ url('billlist') }}">账单</a></li>
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    余额（<span class="color-red">{{Auth::user()->amount}}</span>） <span class="caret"></span>
+                                    {{Auth::user()->level_text}}(<span class="color-red">{{Auth::user()->amount}}</span>) <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -130,6 +130,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('upmy') }}">个人设置</a></li>
                                     <li><a href="{{ url('uppwd') }}">修改密码</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"

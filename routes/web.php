@@ -33,7 +33,9 @@ Route::get('evaluatelist', 'IndexController@listEvaluate');
 Route::get('viewevaluate/{id}', 'IndexController@getViewEvaluate');
 
 Route::get('uppwd', 'HomeController@getUpPwd');
+Route::get('upmy', 'HomeController@getUpMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
+Route::post('upmy', 'HomeController@postUpMy');
 
 Route::get('recharge', 'IndexController@getRecharge');
 Route::get('viewrecharge/{id}', 'IndexController@getViewRecharge');

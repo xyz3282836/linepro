@@ -22,7 +22,10 @@ class CreateClickFarmsTable extends Migration
             $table->tinyInteger('is_fba');//是否FBA发货
             $table->char('discount_code',24)->nullable();//优惠码
             $table->decimal('final_price',10,2)->default(0.00);//最终价格
-            $table->tinyInteger('is_reviews')->default(2);//是否需要reviews 0:no 1:yes 2:Uncertain
+            $table->tinyInteger('is_reviews')->default(0);//是否需要reviews 0:no 1:yes 2:Uncertain
+            $table->tinyInteger('is_link')->default(0);//是否需要reviews 0:no 1:yes 2:Uncertain
+            $table->tinyInteger('is_sellerrank')->default(0);//是否需要reviews 0:no 1:yes 2:Uncertain
+
             $table->char('specified_asin',24)->nullable();//指定曾经购买的asin
             $table->char('contrast_asin',100)->default('');//对比asin
             $table->tinyInteger('brower')->default(1);//浏览深度 1:适度浏览 2:深度浏览

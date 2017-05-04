@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="" class="form-control" minlength="24" maxlength="24" name="asin" required>
+                                    <input type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -49,9 +49,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"></label>
+                                <label class="col-md-4 control-label">优惠码</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="优惠码" maxlength="24" class="form-control" name="discount_code">
+                                    <input type="text" placeholder="" maxlength="24" class="form-control" name="discount_code">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -60,8 +60,8 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 最终价格(包含运费)</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="number" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
-                                        <div class="input-group-addon">元</div>
+                                        <input type="number" step="0.01" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
+                                        <div class="input-group-addon">美元</div>
                                     </div>
                                     <p class="help-block with-errors"></p>
                                 </div>

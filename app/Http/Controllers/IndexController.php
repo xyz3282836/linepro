@@ -32,18 +32,18 @@ class IndexController extends Controller
     public function listEvaluate(){
         switch (request('type','nodone')){
             case 'done':
-                $status = 5;
+                $status = [5];
                 $tname = '已完成评价任务列表';
                 break;
             case 'nodone':
-                $status = 1;
+                $status = [1,2,3,4];
                 $tname = '未完成评价任务列表';
                 break;
             default:
                 throw new Exception();
 
         }
-        $list = Evaluate::where('uid',Auth::user()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
+        $list = Evaluate::where('uid',Auth::user()->id)->whereIn('status',$status)->orderBy('id','desc')->paginate(10);
         return view('index.list_evaluate')->with('tname',$tname)->with('list',$list);
     }
 
@@ -55,18 +55,18 @@ class IndexController extends Controller
     public function listClickFarm(){
         switch (request('type','nodone')){
             case 'done':
-                $status = 5;
+                $status = [5];
                 $tname = '已完成刷单任务列表';
                 break;
             case 'nodone':
-                $status = 1;
+                $status = [1,2,3,4];
                 $tname = '未完成刷单任务列表';
                 break;
             default:
             throw new Exception();
 
         }
-        $list = ClickFarm::where('uid',Auth::user()->id)->where('status',$status)->orderBy('id','desc')->paginate(10);
+        $list = ClickFarm::where('uid',Auth::user()->id)->whereIn('status',$status)->orderBy('id','desc')->paginate(10);
         return view('index.list_clickfarm')->with('tname',$tname)->with('list',$list);
     }
 

@@ -15,13 +15,15 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('mobile')->nullable();
+            $table->char('name',15);
+            $table->char('email',50)->unique();
             $table->string('password');
             $table->tinyInteger('level')->default(1); // 1 普通用户 2 年费用户
             $table->decimal('amount',10,2)->default(0.00);//总金额
             $table->char('shop_id',20)->default('');//店铺id
+            $table->char('mobile',15)->default('');
+            $table->char('addr',50)->default('');
+            $table->tinyInteger('management_type')->default(0);
             $table->rememberToken();
             $table->timestamps();
 
