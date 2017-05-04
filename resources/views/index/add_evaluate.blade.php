@@ -1,15 +1,13 @@
 @extends('layouts.app')
 
 @section('csslib')
-    <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/css/fileinput.min.css" rel="stylesheet">
-
+    <link href="{{URL::asset('bootstrap-fileinput/css/fileinput.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('jslib')
-    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/fileinput.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.3.9/js/locales/zh.min.js"></script>
-
+    <script src="{{URL::asset('bootstrap-fileinput/js/fileinput.js')}}"></script>
+    <script src="{{URL::asset('bootstrap-fileinput/js/locales/zh.js')}}"></script>
     <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
@@ -99,7 +97,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">视频</label>
                                 <div class="col-md-6">
-                                    <input id="videoarr" type="file" class="file-loading" accept="audio/*" name="upvideo">
+                                    <input id="videoarr" type="file" class="file-loading" accept="video/*" name="upvideo">
                                 </div>
                             </div>
                             <input type="hidden" name="video" id="video">
@@ -147,6 +145,8 @@
             }
         });
         var picarr = [];
+        var picarrid = [];
+        var picarrwith = [];
         $(function () {
             $('#start_time').datetimepicker({
                 format: 'yyyy-mm-dd hh:ii',
@@ -155,6 +155,41 @@
                 todayHighlight: 1,
                 startDate: new Date()
             });
+
+            function chkimgs(img,id) {
+                if(picarr.length>=6){
+                    return false;
+                }else{
+                    picarrwith[id] = img;
+                    picarr.push(img);
+                    picarrid.push(id);
+                    getc();
+                    return true;
+                }
+
+            }
+            function delimgs(id) {
+                console.log(id);
+                var index = picarrid.indexOf(id);
+                console.log('id');
+                console.log(index);
+                if(index > -1){
+                    var iindex = picarr.indexOf(picarrwith[id]);
+                    console.log('img')
+                    console.log(iindex)
+                    if(iindex > -1){
+                        picarr.splice(iindex,1);
+                    }
+                    picarrid.splice(index,1);
+                }
+
+                getc()
+            }
+            function getc() {
+                console.log(picarr)
+                console.log(picarrid)
+                console.log(picarrwith)
+            }
             $("#picarr").fileinput({
                 language: 'zh',
                 allowedFileExtensions: ['jpeg', 'jpg', 'png', 'gif'],//接收的文件后缀
@@ -165,17 +200,22 @@
                 uploadExtraData: {
                     _token: "{{csrf_token()}}",
                 },
-                fileActionSettings:{
-                    showRemove:false
-                },
                 elErrorContainer:false
             }).on("fileuploaded", function(event, data,previewId, index) {
                 if(data.response.code){
-                    picarr.push(data.response.data)
+                    if(!chkimgs(data.response.data,previewId)){
+                        layer.msg('超过6张图片了', {icon: 2});
+                    }
                 }
                 $('#pic').val(picarr)
             }).on('fileclear', function(event) {
                 picarr = [];
+                picarrid = [];
+                picarrwith = [];
+                $('#pic').val('')
+            }).on('filesuccessremove', function(event, id) {
+                delimgs(id)
+                $('#pic').val(picarr)
             });
 
             $("#videoarr").fileinput({
@@ -183,13 +223,10 @@
                 allowedFileExtensions: ['mp4'],//接收的文件后缀
                 uploadUrl: "{{url('upload?type=video')}}", //上传的地址
                 maxFileCount: 1,
-                maxFileSize: 100000,
+                maxFileSize: 20000,
                 allowedFileTypes: ['video'],
                 uploadExtraData: {
-                    _token: "{{csrf_token()}}",
-                },
-                fileActionSettings:{
-                    showRemove:false
+                    _token: "{{csrf_token()}}"
                 },
                 elErrorContainer:false
             }).on("fileuploaded", function(event, data,previewId, index) {
@@ -197,6 +234,8 @@
                     $('#video').val(data.response.data)
                 }
             }).on('fileclear', function(event) {
+                $('#video').val('')
+            }).on('filesuccessremove', function(event, id) {
                 $('#video').val('')
             });
 

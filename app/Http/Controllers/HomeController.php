@@ -75,15 +75,17 @@ class HomeController extends Controller
                 $ext = $file->getClientOriginalExtension();
                 $filename = time().rand(100000,999999).'.'.$ext;
                 $file->move('../public/upfile/img/',$filename);
+                $fullname = '/upfile/img/'.$filename;
                 break;
             case 'video':
                 $file = $request->file('upvideo');
                 $ext = $file->getClientOriginalExtension();
                 $filename = time().rand(100000,999999).'.'.$ext;
                 $file->move('../public/upfile/video/',$filename);
+                $fullname = '/upfile/video/'.$filename;
                 break;
         }
 
-        return success('/upfile/img/'.$filename);
+        return success($fullname);
     }
 }

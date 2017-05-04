@@ -21,6 +21,7 @@
                                 <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$el->id}})">支付</button>
                             </div>
                         @endif
+
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-md-4 control-label">订单状态</label>
@@ -63,17 +64,16 @@
                             <div class="form-group" v-for="(one,index) in picarr">
                                 <label class="col-md-4 control-label" >图片 <span v-text="index + 1"></span></label>
                                 <div class="col-md-6">
-                                    <img :scr="'http://localhost'+one" alt="">
+                                    <img :src="one" alt="" width="200">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">视频</label>
                                 <div class="col-md-6">
-                                    <video src="http://localhost{{$el->video}}"></video>
+                                    <video src="{{$el->video}}" controls="controls" width="500"></video>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label class="col-md-4 control-label">刷单开始时间</label>
                                 <label class="col-md-6 control-label">{{$el->start_time}}</label>
