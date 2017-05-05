@@ -68,12 +68,14 @@
                                 </div>
                             </div>
 
+                            @if($el->video != null)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">视频</label>
                                 <div class="col-md-6">
                                     <video src="{{$el->video}}" controls="controls" width="500"></video>
                                 </div>
                             </div>
+                            @endif
                             <div class="form-group">
                                 <label class="col-md-4 control-label">刷单开始时间</label>
                                 <label class="col-md-6 control-label">{{$el->start_time}}</label>
