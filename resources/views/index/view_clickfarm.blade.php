@@ -262,6 +262,7 @@
             mounted: function () {
                 this.$nextTick(()=>{
                     this.getca();
+                    Ladda.bind( '.btn', { timeout: 1500 } );
                 })
             },
             data: {

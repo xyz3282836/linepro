@@ -135,6 +135,7 @@
             mounted: function () {
                 this.$nextTick(()=>{
                     this.getpic();
+                    Ladda.bind( '.btn', { timeout: 1500 } );
                 })
             },
             data: {
