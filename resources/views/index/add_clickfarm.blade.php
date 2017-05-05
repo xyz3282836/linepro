@@ -461,7 +461,9 @@
             computed:{
                 getprice:function () {
                     var one = this.finalprice;
-                    return one*Number(this.task) + {{config('linepro.clickfarm_price.fix')}};
+                    var all = one*Number(this.task) + {{config('linepro.clickfarm_price.fix')}};
+                    all = all.toFixed(2)
+                    return all;
                 }
             },
             data: {
