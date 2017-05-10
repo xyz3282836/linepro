@@ -417,6 +417,8 @@ class IndexController extends Controller
 
         DB::beginTransaction();
         try{
+            DB::table('users')->where('id',$uid)->update(['amount'=>$money]);
+//            DB::table('users')->where('id',$uid)->decrement('amount',$model->amount);
             if(DB::table($table)->where('id',$id)->value('status') != 1){
                 throw new Exception();
             }
@@ -429,7 +431,6 @@ class IndexController extends Controller
                 'amount'=>$money,
                 'taskid'=>$model->id
             ]);
-            DB::table('users')->where('id',$uid)->update(['amount'=>$money]);
             DB::table($table)->where('id',$id)->update(['status'=>2]);
             DB::commit();
         }catch (Exception $e){
