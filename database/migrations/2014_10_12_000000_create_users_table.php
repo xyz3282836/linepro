@@ -18,12 +18,17 @@ class CreateUsersTable extends Migration
             $table->char('name',15);
             $table->char('email',50)->unique();
             $table->string('password');
-            $table->tinyInteger('level')->default(1); // 1 普通用户 2 年费用户
+            $table->tinyInteger('level')->default(1); // 1 普通会员 2 认证会员
             $table->decimal('amount',10,2)->default(0.00);//总金额
-            $table->char('shop_id',20)->default('');//店铺id
+            $table->integer('quota')->default(0);//平均配额
             $table->char('mobile',15)->default('');
             $table->char('addr',50)->default('');
+            $table->char('shipping_addr',50)->default('');//收货地址
+            $table->char('real_name',6)->default('');//真实姓名
+            $table->char('idcardno',18)->default('');//身份证号码
+            $table->char('idcardpic',50)->default('');//身份证图片 正反
             $table->tinyInteger('management_type')->default(0);
+            $table->dateTime('validity')->nullable();//认证会员有效期
             $table->rememberToken();
             $table->timestamps();
 
