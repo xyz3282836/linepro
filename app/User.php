@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password','mobile','addr','management_type'
+        'name', 'email', 'shop_id', 'password','mobile','addr','management_type','shipping_addr','real_name','idcardpic','idcardno'
     ];
 
     /**
@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     const STATUS_1 = '普通会员';
-    const STATUS_2 = '年费会员';
+    const STATUS_2 = '认证会员';
     public function getLevelTextAttribute()
     {
         $text=[

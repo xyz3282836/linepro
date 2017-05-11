@@ -20,35 +20,35 @@ Auth::routes();
 Route::get('home', 'HomeController@index');
 
 
+//cf
+Route::get('addclickfarm', 'CfController@getAddClickFarm');
+Route::post('addclickfarm', 'CfController@postAddClickFarm');
 
-Route::get('addclickfarm', 'IndexController@getAddClickFarm');
-Route::post('addclickfarm', 'IndexController@postAddClickFarm');
-Route::get('clickfarmlist', 'IndexController@listClickFarm');
-Route::get('viewclickfarm/{id}', 'IndexController@getViewClickFarm');
+Route::get('clickfarmlist', 'CfController@listClickFarm');
+Route::get('viewclickfarm/{id}', 'CfController@getViewClickFarm');
+Route::post('cancle', 'IndexController@postCancle');
 Route::get('getinfo', 'IndexController@getInfo');
 
-Route::get('addevaluate', 'IndexController@getAddEvaluate');
-Route::post('addevaluate', 'IndexController@postAddEvaluate');
-Route::get('evaluatelist', 'IndexController@listEvaluate');
-Route::get('viewevaluate/{id}', 'IndexController@getViewEvaluate');
 
+//my
 Route::get('uppwd', 'HomeController@getUpPwd');
 Route::get('upmy', 'HomeController@getUpMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
 Route::post('upmy', 'HomeController@postUpMy');
 
+//recharge
 Route::get('recharge', 'IndexController@getRecharge');
 Route::get('viewrecharge/{id}', 'IndexController@getViewRecharge');
 Route::post('recharge', 'IndexController@postRecharge');
 Route::get('rechargelist', 'IndexController@listRecharge');
 
-Route::post('cancle', 'IndexController@postCancle');
+//pay
 Route::post('pay', 'IndexController@postPay');
 
+//资金流水
 Route::any('billlist', 'IndexController@listBill');
-
 Route::get('getbilldesc', 'IndexController@billDesc');
 
-
+//upfile
 Route::post('upload', 'HomeController@upload');
 

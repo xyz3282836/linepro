@@ -64,6 +64,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
+                            <label for="shipping_addr" class="col-md-4 control-label">发货地址</label>
+
+                            <div class="col-md-6">
+                                <input id="shipping_addr" type="text" class="form-control" name="shipping_addr" value="{{ old('shipping_addr') }}" minlength="5" maxlength="50" required>
+
+                                @if ($errors->has('shipping_addr'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('shipping_addr') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('management_type') ? ' has-error' : '' }}">
                             <label for="shop_id" class="col-md-4 control-label">经营类目</label>
 
@@ -76,20 +90,6 @@
                                 @if ($errors->has('management_type'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('management_type') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('shop_id') ? ' has-error' : '' }}">
-                            <label for="shop_id" class="col-md-4 control-label">店铺ID</label>
-
-                            <div class="col-md-6">
-                                <input id="shop_id" type="text" class="form-control" name="shop_id" value="{{ old('shop_id') }}" required>
-
-                                @if ($errors->has('shop_id'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('shop_id') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -163,32 +163,18 @@
                     picarrwith[id] = img;
                     picarr.push(img);
                     picarrid.push(id);
-                    getc();
                     return true;
                 }
-
             }
             function delimgs(id) {
-                console.log(id);
                 var index = picarrid.indexOf(id);
-                console.log('id');
-                console.log(index);
                 if(index > -1){
                     var iindex = picarr.indexOf(picarrwith[id]);
-                    console.log('img')
-                    console.log(iindex)
                     if(iindex > -1){
                         picarr.splice(iindex,1);
                     }
                     picarrid.splice(index,1);
                 }
-
-                getc()
-            }
-            function getc() {
-                console.log(picarr)
-                console.log(picarrid)
-                console.log(picarrwith)
             }
             $("#picarr").fileinput({
                 language: 'zh',

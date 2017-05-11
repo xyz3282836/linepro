@@ -77,16 +77,8 @@ function p($arr)
 //    return $one * $cf['task_num'];
 //}
 
-function get_amount_clickfarm($cf){
-    return config('linepro.clickfarm_price.fix') + $cf['final_price'] * $cf['task_num'];
-}
-
-function get_amount_evaluate($el){
-    //TODO 判断是否为vp
-
-    $price = config('linepro.clickfarm_price.fix') + config('linepro.clickfarm_price.vp') + config('linepro.clickfarm_price.video') + config('linepro.clickfarm_price.pic');
-
-    return $price;
+function get_amount_clickfarm($model){
+    return (config('linepro.clickfarm_price.service_charge') + $model['final_price']*config('linepro.us_exchange_rate') ) * $model['task_num'];
 }
 
 

@@ -22,11 +22,11 @@ class CreateUsersTable extends Migration
             $table->decimal('amount',10,2)->default(0.00);//总金额
             $table->integer('quota')->default(0);//平均配额
             $table->char('mobile',15)->default('');
-            $table->char('addr',50)->default('');
-            $table->char('shipping_addr',50)->default('');//收货地址
+            $table->char('addr',50)->default('');//联系地址
+            $table->char('shipping_addr',50)->default('');//发货地址
             $table->char('real_name',6)->default('');//真实姓名
             $table->char('idcardno',18)->default('');//身份证号码
-            $table->char('idcardpic',50)->default('');//身份证图片 正反
+            $table->char('idcardpic',100)->default('');//身份证图片 正反
             $table->tinyInteger('management_type')->default(0);
             $table->dateTime('validity')->nullable();//认证会员有效期
             $table->rememberToken();

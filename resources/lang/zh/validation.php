@@ -137,5 +137,12 @@ return [
         'time'                  => '时间',
         'available'             => '可用的',
         'size'                  => '大小',
+
+        'idcardno'              => '身份证号码',
+        'idcardpic'             => '身份证',
+        'amazon_url'            => '亚马孙产品url',
+        'amazon_pic'            => '亚马逊产品图片url',
+
+
     ],
 ];

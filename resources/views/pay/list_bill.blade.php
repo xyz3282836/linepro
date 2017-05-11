@@ -7,13 +7,7 @@
     <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 @endsection
-@section('css')
-    <style type="text/css">
-        .margin-bottom-30{
-            margin-bottom: 30px;
-        }
-    </style>
-@endsection
+
 @section('content')
     <div class="container">
         <div class="row">

@@ -16,8 +16,8 @@ class ClickFarm extends Model
     const STATUS_0 = '取消订单';
     const STATUS_1 = '待支付';
     const STATUS_2 = '已经支付';
-    const STATUS_3 = '找寻买家中';
-    const STATUS_4 = '买家找到';
+    const STATUS_3 = '正在找寻代购账号';
+    const STATUS_4 = '购买中';
     const STATUS_5 = '购买完成';
     public function getStatusTextAttribute()
     {

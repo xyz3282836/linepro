@@ -30,6 +30,9 @@
         .ladda-button[data-style=contract][data-loading][type=submit] {
             width: 36px;
         }
+        .margin-bottom-30{
+            margin-bottom: 30px;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->
@@ -71,33 +74,22 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="{{url('addclickfarm')}}">刷单任务</a>
-                                    <a href="{{url('addevaluate')}}">评价任务</a>
                                 </li>
                             </ul>
+                        </li>
+
+                        <li>
+                            <a href="{{url('card')}}">购物车</a>
                         </li>
 
 
                         <li class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                未完成任务列表 <span class="caret"></span>
+                                订单管理 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{url('clickfarmlist?type=nodone')}}">刷单任务列表</a>
-                                    <a href="{{url('evaluatelist?type=nodone')}}">评价任务列表</a>
-                                </li>
-                            </ul>
-                        </li>
-
-
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                已完成任务列表 <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{url('clickfarmlist?type=done')}}">刷单任务列表</a>
-                                    <a href="{{url('evaluatelist?type=done')}}">评价任务列表</a>
+                                    <a href="{{url('citemlist')}}">已购买商品列表</a>
                                 </li>
                             </ul>
                         </li>
@@ -123,7 +115,6 @@
                                     <li><a href="{{ url('rechargelist') }}">充值记录</a></li>
                                 </ul>
                             </li>
-                            <li><a href="javascript:;">店铺ID(<span class="color-red">{{Auth::user()->shop_id}}</span>)</a></li>
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>

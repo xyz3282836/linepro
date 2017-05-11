@@ -8,6 +8,7 @@ use DB;
 use Hash;
 use Illuminate\Http\Request;
 use Storage;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -52,17 +53,25 @@ class HomeController extends Controller
             ->with(['status'=>'密码修改成功']);
     }
 
-    public function postUpMy(Request $request){
-        $this->validate($request, [
-            'mobile'=>'required|regex:/^1[345789][0-9]{9}/',
+    public function postUpMy(){
+        $this->validate(request(),[
+            'mobile'=>'required|regex:/^1[345789][0-9]{9}$/',
             'addr' => 'required|min:5|max:50',
+            'shipping_addr' => 'required|min:5|max:50',
+            'real_name' => 'required|min:2|max:6',
             'management_type' => 'required|integer',
+            'idcardpic' => 'required',
+            'idcardno' => ['required','regex:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/'],
         ]);
-        $pdata = [];
         $pdata['mobile'] = request('mobile');
         $pdata['addr'] = request('addr');
         $pdata['management_type'] = request('management_type');
-        DB::table('users')->where('id',Auth::user()->id)->update($pdata);
+        $pdata['shipping_addr'] = request('shipping_addr');
+        $pdata['real_name'] = request('real_name');
+        $pdata['idcardpic'] = request('idcardpic');
+        $pdata['idcardno'] = request('idcardno');
+        $user = Auth::getUser();
+        $user->update($pdata);
         return redirect('upmy')
             ->with(['status'=>'资料修改成功']);
     }
@@ -70,12 +79,12 @@ class HomeController extends Controller
     public function upload(Request $request)
     {
         switch (request('type')){
-            case 'img':
+            case 'idcard':
                 $file = $request->file('upimg');
                 $ext = $file->getClientOriginalExtension();
                 $filename = time().rand(100000,999999).'.'.$ext;
-                $file->move('../public/upfile/img/',$filename);
-                $fullname = '/upfile/img/'.$filename;
+                $file->move('../public/upfile/idcard/',$filename);
+                $fullname = '/upfile/idcard/'.$filename;
                 break;
             case 'video':
                 $file = $request->file('upvideo');
