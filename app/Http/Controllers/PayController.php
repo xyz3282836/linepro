@@ -16,6 +16,7 @@ use App\Recharge;
 use Auth;
 use DB;
 use Exception;
+use Validator;
 
 class PayController extends Controller
 {
