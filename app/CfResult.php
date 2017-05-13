@@ -8,18 +8,11 @@
  */
 
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
+
 class CfResult extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'uid', 'cfid', 'asin', 'shop_id'
-    ];
-
     const STATUS_1 = '购买中';
     const STATUS_2 = '购买完成';
     const STATUS_3 = '正在准备发货';
@@ -30,21 +23,30 @@ class CfResult extends Model
     const STATUS_8 = '评价失败';
     const STATUS_9 = '评价成功';
     const OUT_TEXT = [
-        1=>CfResult::STATUS_1,
-        2=>CfResult::STATUS_2,
-        3=>CfResult::STATUS_3,
-        4=>CfResult::STATUS_4,
-        5=>CfResult::STATUS_5,
-        6=>CfResult::STATUS_6,
-        7=>CfResult::STATUS_7,
-        8=>CfResult::STATUS_8,
-        9=>CfResult::STATUS_9,
+        1 => CfResult::STATUS_1,
+        2 => CfResult::STATUS_2,
+        3 => CfResult::STATUS_3,
+        4 => CfResult::STATUS_4,
+        5 => CfResult::STATUS_5,
+        6 => CfResult::STATUS_6,
+        7 => CfResult::STATUS_7,
+        8 => CfResult::STATUS_8,
+        9 => CfResult::STATUS_9,
     ];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'uid', 'cfid', 'asin', 'shop_id'
+    ];
+    protected $appends = ['status_text'];
+
     public function getStatusTextAttribute()
     {
-        $text= CfResult::OUT_TEXT;
+        $text = CfResult::OUT_TEXT;
         return $text[$this->status];
     }
-    protected $appends = ['status_text'];
 
 }

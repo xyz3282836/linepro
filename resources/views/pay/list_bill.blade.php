@@ -27,10 +27,7 @@
                             </div>
                             <div class="form-group">
                                 <select class="form-control select-sm" name="type" required v-model="type">
-                                    <option value="0">综合</option>
-                                    <option value="1">充值</option>
-                                    <option value="2">刷单任务</option>
-                                    <option value="3">评价任务</option>
+                                    <option v-for="(v,k) in typec" v-text="v" :value="k"></option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary ladda-button" data-style="contract">查询</button>
@@ -69,7 +66,7 @@
                             </tbody>
                         </table>
                         @if($list)
-                            {!!  $list->links() !!}
+                            {!!  $list->appends(['start'=>$start,'end'=>$end,'type'=>$type])->links() !!}
 
                         @endif
                     </div>
@@ -92,7 +89,8 @@
         new Vue({
             el: '#app',
             data:{
-                type:"{{$type}}"
+                type:"{{$type}}",
+                typec: JSON.parse('{!! json_encode(App\Bill::OUT_TEXT) !!}'),
             },
 
         })

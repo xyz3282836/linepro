@@ -80,7 +80,7 @@
                             </tbody>
                         </table>
                         @if($list)
-                            {!!  $list->links() !!}
+                            {!!  $list->appends(['asin'=>$asin,'start'=>$start,'end'=>$end,'status'=>$status])->links() !!}
                         @endif
                     </div>
                 </div>
