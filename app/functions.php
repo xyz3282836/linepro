@@ -78,7 +78,14 @@ function p($arr)
 //}
 
 function get_amount_clickfarm($model){
-    return (config('linepro.clickfarm_price.service_charge') + $model['final_price']*config('linepro.us_exchange_rate') ) * $model['task_num'];
+    $exchange = config('linepro.base_exchange.'.Auth::user()->level);
+    $freight_exchange = config('linepro.freight_exchange.'.Auth::user()->level);
+    if($model['delivery_addr'] == '美国转运仓'){
+        $exchange += $freight_exchange;
+    }
+    $rate = round(config('linepro.us_exchange_rate'),1);
+    $result = ($exchange + $model['final_price']* $rate) * $model['task_num'];
+    return round($result,2);
 }
 
 

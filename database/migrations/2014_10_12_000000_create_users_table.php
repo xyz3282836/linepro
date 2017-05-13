@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('level')->default(1); // 1 普通会员 2 认证会员
             $table->decimal('amount',10,2)->default(0.00);//总金额
-            $table->integer('quota')->default(0);//平均配额
+            $table->integer('quota')->default(0);//配额
             $table->char('mobile',15)->default('');
             $table->char('addr',50)->default('');//联系地址
             $table->char('shipping_addr',50)->default('');//发货地址

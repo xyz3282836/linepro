@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\CfResult;
 use App\ClickFarm;
 use Auth;
 use Carbon\Carbon;
@@ -24,119 +25,179 @@ class CfController extends Controller
      * 刷单任务
      * add:get
      */
-    public function getAddClickFarm(){
-        return view('cf.add_clickfarm');
+    public function getAddClickFarm()
+    {
+        $base_exchange    = config('linepro.base_exchange.' . Auth::user()->level);
+        $freight_exchange = config('linepro.freight_exchange.' . Auth::user()->level);
+        return view('cf.add_clickfarm')->with([
+            'base_exchange'    => $base_exchange,
+            'freight_exchange' => $freight_exchange,
+        ]);
     }
 
     /**
      * 刷单任务
      * add:post
      */
-    public function postAddClickFarm(){
-        $this->validate(request(),[
-            'asin'=>'required|min:1|max:24',
-            'amazon_url'=>'required|active_url',
-            'amazon_pic'=>'required|active_url',
-            'amazon_title'=>'required|min:2|max:50',
-            'shop_id'=>'required|min:2|max:50',
-            'final_price'=>'required',
-            'task_num'=>'required|integer',
-            'delivery_addr'=>'required|min:5|max:50',
+    public function postAddClickFarm()
+    {
+        $this->validate(request(), [
+            'asin'          => 'required|min:1|max:24',
+            'amazon_url'    => 'required|active_url',
+            'amazon_pic'    => 'required|active_url',
+            'amazon_title'  => 'required|min:2|max:50',
+            'shop_id'       => 'required|min:2|max:50',
+            'final_price'   => 'required',
+            'task_num'      => 'required|integer',
+            'delivery_addr' => 'required|min:5|max:50',
         ]);
 
         $pdata = request()->all();
 
+
+        $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
-            'key_word'=>'',
+            'key_word' => '',
 
-            'lower_classification1'=>'',
-            'lower_classification2'=>'',
-            'lower_classification3'=>'',
-            'lower_classification4'=>'',
+            'lower_classification1' => '',
+            'lower_classification2' => '',
+            'lower_classification3' => '',
+            'lower_classification4' => '',
 
-            'outside_website'=>'',
-            'place'=>'',
+            'outside_website' => '',
+            'place'           => '',
 
-            'category'=>1,
+            'category' => 1,
 
-            'results'=>null,
-            'first_attribute'=>'',
-            'second_attribute'=>'',
+            'results'          => null,
+            'first_attribute'  => '',
+            'second_attribute' => '',
 
-            'refine'=>null,
-            'attribute_group1'=>'',
-            'attribute1'=>'',
-            'attribute_group2'=>'',
-            'attribute2'=>'',
-            'attribute_group3'=>'',
-            'attribute3'=>'',
+            'refine'           => null,
+            'attribute_group1' => '',
+            'attribute1'       => '',
+            'attribute_group2' => '',
+            'attribute2'       => '',
+            'attribute_group3' => '',
+            'attribute3'       => '',
 
-            'sort_by'=>1,
+            'sort_by' => 1,
 
-            'page'=>1,
+            'page' => 1,
 
-            'ba_place'=>1,
-            'ba_asin'=>'',
+            'ba_place' => 1,
+            'ba_asin'  => '',
         ]);
-        $pdata['amount'] = get_amount_clickfarm($pdata);
 
-        $model = new ClickFarm;
-        $model->uid = Auth::user()->id;
-        $model->platform_type = 1;
-        $model->asin = $pdata['asin'];
-        $model->task_num = $pdata['task_num'];
-        $model->final_price = $pdata['final_price'];
-        $model->shop_id = $pdata['shop_id'];
-        $model->amazon_url = $pdata['amazon_url'];
-        $model->amazon_pic = $pdata['amazon_pic'];
-        $model->amazon_title = $pdata['amazon_title'];
-        $model->delivery_addr = $pdata['delivery_addr'];
+        $model                   = new ClickFarm;
+        $model->uid              = Auth::user()->id;
+        $model->platform_type    = 1;
+        $model->us_exchange_rate = config('linepro.us_exchange_rate');
+        $model->asin             = $pdata['asin'];
+        $model->task_num         = $pdata['task_num'];
+        $model->final_price      = $pdata['final_price'];
+        $model->shop_id          = $pdata['shop_id'];
+        $model->amazon_url       = $pdata['amazon_url'];
+        $model->amazon_pic       = $pdata['amazon_pic'];
+        $model->amazon_title     = $pdata['amazon_title'];
+        $model->delivery_addr    = $pdata['delivery_addr'];
 
         //1.0
-        $model->is_fba = 1;
+        $model->is_fba        = 1;
         $model->discount_code = '';
 
-        $model->is_reviews = 0;
-        $model->is_link = 0;
+        $model->is_reviews    = 0;
+        $model->is_link       = 0;
         $model->is_sellerrank = 0;
 
         $model->contrast_asin = '';
-        $model->brower = 1;
-        $model->priority = 1;
-        $model->flow_port = 1;
-        $model->flow_source = 1;
-        $model->browse_step = 1;
-        $model->mixdata = $pdata['mixdata'];
+        $model->brower        = 1;
+        $model->priority      = 1;
+        $model->flow_port     = 1;
+        $model->flow_source   = 1;
+        $model->browse_step   = 1;
+        $model->mixdata       = $pdata['mixdata'];
 
-        $model->interval_time = 1;
-        $model->start_time = Carbon::now()->toDateTimeString();
+        $model->interval_time    = 1;
+        $model->start_time       = Carbon::now()->toDateTimeString();
         $model->customer_message = '';
-        $model->amount = $pdata['amount'];
+        $model->amount           = $pdata['amount'];
         $model->save();
-
-        return redirect('clickfarmlist');
+        return redirect('card');
     }
 
     /**
-     * 刷单任务
+     * 购物车 刷单任务
      * list
      */
-    public function listClickFarm(){
-        switch (request('type','nodone')){
-            case 'done':
-                $status = [5];
-                $tname = '已完成刷单任务列表';
-                break;
-            case 'nodone':
-                $status = [0,1,2,3,4];
-                $tname = '未完成刷单任务列表';
-                break;
-            default:
-                throw new Exception();
+    public function listCardClickFarm()
+    {
+        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        return view('cf.list_clickfarm')->with('tname', '购物车商品列表')->with('list', $list);
+    }
 
+    /**
+     * 购物车车删除
+     * @return string
+     */
+    public function postCancle()
+    {
+        $id    = request('id', 0);
+        $model = ClickFarm::find($id);
+        if (!$model) {
+            return error(MODEL_NOT_FOUNT);
         }
-        $list = ClickFarm::where('uid',Auth::user()->id)->whereIn('status',$status)->orderBy('id','desc')->paginate(10);
-        return view('index.list_clickfarm')->with('tname',$tname)->with('list',$list);
+        if ($model->uid != Auth::user()->id) {
+            return error(NO_ACCESS);
+        }
+        if ($model->status != 1) {
+            return error(NO_ACCESS);
+        }
+        $model->update(['status' => 0]);
+        return success();
+    }
+
+    /**
+     * 订单页 刷单任务
+     * list
+     */
+    public function listTradeClickFarm()
+    {
+        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', '>',1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with('list', $list);
+    }
+
+    /**
+     * 刷单任务结果表
+     * list
+     */
+    public function listCfResult($id)
+    {
+        $start = request('start');
+        $end = request('end');
+        $asin = request('asin','');
+        $status = request('status',1);
+
+        $model = ClickFarm::find($id);
+        if(!$model){
+            return error(MODEL_NOT_FOUNT);
+        }
+        $list = CfResult::where('cfid',$id);
+        if($start != null && $end != null){
+            $list->whereBetween('updated_at', [$start, $end]);
+        }
+        if($asin!=''){
+            $list->where('asin',$asin);
+        }
+        $list = $list->where('status',$status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        return view('cf.list_cf_result')->with('tname', '已购买商品详情列表')->with([
+            'list'=> $list,
+            'model'=>$model,
+            'start'=>$start,
+            'end'=>$end,
+            'asin'=>$asin,
+            'status'=>$status,
+        ]);
     }
 
 }

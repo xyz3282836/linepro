@@ -67,16 +67,16 @@
                     @if (!Auth::guest())
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                添加任务 <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{url('addclickfarm')}}">刷单任务</a>
-                                </li>
-                            </ul>
-                        </li>
+                        {{--<li class="dropdown">--}}
+                            {{--<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">--}}
+                                {{--添加任务 <span class="caret"></span>--}}
+                            {{--</a>--}}
+                            {{--<ul class="dropdown-menu" role="menu">--}}
+                                {{--<li>--}}
+                                    {{--<a href="{{url('addTask')}}">刷单任务</a>--}}
+                                {{--</li>--}}
+                            {{--</ul>--}}
+                        {{--</li>--}}
 
                         <li>
                             <a href="{{url('card')}}">购物车</a>
@@ -89,7 +89,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="{{url('citemlist')}}">已购买商品列表</a>
+                                    <a href="{{url('itemlist')}}">已购买商品列表</a>
                                 </li>
                             </ul>
                         </li>

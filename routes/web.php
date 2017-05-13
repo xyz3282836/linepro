@@ -21,12 +21,14 @@ Route::get('home', 'HomeController@index');
 
 
 //cf
-Route::get('addclickfarm', 'CfController@getAddClickFarm');
+Route::get('addTask', 'CfController@getAddClickFarm');
 Route::post('addclickfarm', 'CfController@postAddClickFarm');
+Route::get('card', 'CfController@listCardClickFarm');
+Route::get('itemlist', 'CfController@listTradeClickFarm');
+Route::post('canclecf', 'CfController@postCancle');
+Route::any('viewclickfarm/{id}', 'CfController@listCfResult');
 
-Route::get('clickfarmlist', 'CfController@listClickFarm');
-Route::get('viewclickfarm/{id}', 'CfController@getViewClickFarm');
-Route::post('cancle', 'IndexController@postCancle');
+//获取环境信息
 Route::get('getinfo', 'IndexController@getInfo');
 
 
@@ -43,7 +45,7 @@ Route::post('recharge', 'IndexController@postRecharge');
 Route::get('rechargelist', 'IndexController@listRecharge');
 
 //pay
-Route::post('pay', 'IndexController@postPay');
+Route::post('pay', 'PayController@postPay');
 
 //资金流水
 Route::any('billlist', 'IndexController@listBill');

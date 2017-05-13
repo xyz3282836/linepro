@@ -21,12 +21,13 @@ class CreateClickFarmsTable extends Migration
             $table->char('asin',24)->default('');//购买的asin
             $table->char('delivery_addr',50)->default('');//送货地址
             //amazon
-            $table->char('amazon_url',100)->default('');//亚马逊详情页
-            $table->char('amazon_pic',100)->default('');//亚马逊产品图片
-            $table->char('amazon_title',100)->default('');//亚马逊产品title
+            $table->string('amazon_url',500)->default('');//亚马逊详情页
+            $table->string('amazon_pic',500)->default('');//亚马逊产品图片
+            $table->char('amazon_title',50)->default('');//亚马逊产品title
             $table->char('shop_id',50)->default('');//店铺id
             $table->integer('task_num')->default(1);//刷单件数
             $table->decimal('final_price',10,2)->default(0.00);//美元价格
+            $table->decimal('us_exchange_rate',3,1)->default(0.00);//美元对人名币汇率
 
 
 

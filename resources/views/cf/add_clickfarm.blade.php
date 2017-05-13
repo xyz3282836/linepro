@@ -18,12 +18,11 @@
                     <div class="panel-body">
                         <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
-
                             {{--asin--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" value="{{old('asin')}}" required>
+                                    <input readonly type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" value="{{request('asin')}}" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -32,7 +31,7 @@
                             <div class="form-group {{ $errors->has('amazon_url') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 亚马逊产品url</label>
                                 <div class="col-md-6">
-                                    <input type="URL" class="form-control" name="amazon_url" value="{{old('amazon_url')}}" required>
+                                    <input readonly type="URL" class="form-control" name="amazon_url" value="{{request('detailUrl')}}" required>
                                     <p class="help-block with-errors">{{ $errors->first('amazon_url') }}</p>
                                 </div>
                             </div>
@@ -41,8 +40,10 @@
                             <div class="form-group {{ $errors->has('amazon_pic') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 亚马逊产品图片url</label>
                                 <div class="col-md-6">
-                                    <input type="URL" placeholder="" class="form-control" name="amazon_pic" value="{{old('amazon_pic')}}" required>
+
+                                    <input readonly type="URL" placeholder="" class="form-control" name="amazon_pic" value="{{request('picUrl')}}" required>
                                     <p class="help-block with-errors">{{ $errors->first('amazon_pic') }}</p>
+                                    <img src="{{request('picUrl')}}" width="150" alt="">
                                 </div>
                             </div>
 
@@ -50,7 +51,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 亚马逊产品title</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="" minlength="2" maxlength="50" value="{{old('amazon_title')}}" class="form-control" name="amazon_title" required>
+                                    <input readonly type="text" placeholder="" minlength="2" maxlength="50" value="{{request('title')}}" class="form-control" name="amazon_title" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -59,7 +60,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 店铺id</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="" minlength="2" maxlength="50" value="{{old('shop_id')}}" class="form-control" name="shop_id" required>
+                                    <input readonly type="text" placeholder="" minlength="2" maxlength="50" value="{{request('shopId')}}" class="form-control" name="shop_id" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -69,7 +70,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 最终价格(包含运费)</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="number" step="0.01" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
+                                        <input readonly type="number" step="0.01" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
                                         <div class="input-group-addon">美元</div>
                                     </div>
                                     <p class="help-block with-errors"></p>
@@ -80,7 +81,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 刷单件数</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" class="form-control" value="{{old('task_num')}}" name="task_num" min="1" max="9999" v-model="task" required>
+                                    <input type="number" placeholder="" class="form-control" value="{{request('')}}" name="task_num" min="1" max="9999" v-model="task" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                                 <div class="col-md-2"><p class="color-red">共计 <span v-text="getprice"></span> 元</p></div>
@@ -90,7 +91,10 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 送货地址</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="" minlength="2" value="{{old('delivery_addr')}}" maxlength="50" class="form-control" name="delivery_addr" required>
+                                    <select class="form-control" name="delivery_addr" v-model="delivery_addr" required>
+                                        <option value="{{Auth::user()->shipping_addr}}">{{Auth::user()->shipping_addr}}</option>
+                                        <option value="美国转运仓">美国转运仓</option>
+                                    </select>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -124,16 +128,23 @@
             },
             computed:{
                 getprice:function () {
+                    var exchange = {{$base_exchange}};
+                    var freight_exchange = {{$freight_exchange}};
                     var one = this.finalprice;
-                    var all = (one*this.usexcrate + {{config('linepro.clickfarm_price.service_charge')}})*Number(this.task);
+                    var rate = this.usexcrate.toFixed(1);
+                    if(this.delivery_addr == '美国转运仓'){
+                        exchange += freight_exchange;
+                    }
+                    var all = (one * rate + exchange) * Number(this.task);
                     all = all.toFixed(2);
                     return all;
                 }
             },
             data: {
-                finalprice:{{old('final_price')}},
+                finalprice:{{request('totalPrice')}},
                 task:1,
-                usexcrate:{{config('linepro.us_exchange_rate')}}
+                usexcrate:{{config('linepro.us_exchange_rate')}},
+                delivery_addr:"{{Auth::user()->shipping_addr}}"
             }
         });
 

@@ -4,11 +4,32 @@ return [
     //美元汇率
     'us_exchange_rate'=>6.78,
 
-    //价格配置
-    'clickfarm_price'=>[
-        //服务费
-        'service_charge'=>100,
+    //服务费 单位元
+    'base_exchange'=>[
+        //level1 普通会员
+        1=>2,
+        //level2 认证会员
+        2=>1.5,
     ],
+    //运费 单位元
+    'freight_exchange'=>[
+        //level1 普通会员
+        1=>20,
+        //level2 认证会员
+        2=>15,
+    ],
+
+    //会员有效天数
+    'vpdays'=>30,
+
+    //认证会员的费用 单位元
+    'vp_exchange'=>500,
+
+    //配额
+    'quota'=>25,
+
+    //每页多少条目
+    'perpage' => 10,
 
     //个人资料的类目
     'mc'=>[
