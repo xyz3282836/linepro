@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Bill;
 use App\ClickFarm;
 use App\Events\CfResults;
+use App\Recharge;
 use Auth;
 use DB;
 use Exception;
@@ -23,6 +24,74 @@ class PayController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * get
+     * 充值
+     */
+    public function getRecharge()
+    {
+        return view('pay.recharge');
+    }
+
+    /**
+     * post
+     * 充值
+     */
+    public function postRecharge()
+    {
+        $pdata     = request()->all();
+        $validator = Validator::make($pdata, [
+            'name'          => 'required|min:1|max:6',
+            'mobile'        => 'required|regex:/^1[345789][0-9]{9}/',
+            'orderid'       => 'required|integer',
+            'amount'        => 'required|numeric|min:1',
+            'recharge_time' => 'required|date_format:Y-m-d H:i',
+        ]);
+        if ($validator->fails()) {
+            foreach ($validator->errors()->getMessages() as $k => $v) {
+                p($k . '=>' . $v[0]);
+            }
+            die;
+        }
+        $model                = new Recharge;
+        $model->uid           = Auth::user()->id;
+        $model->name          = $pdata['name'];
+        $model->mobile        = $pdata['mobile'];
+        $model->orderid       = $pdata['orderid'];
+        $model->amount        = $pdata['amount'];
+        $model->recharge_time = $pdata['recharge_time'];
+        $model->save();
+
+        return redirect('recharge')->with('status', '充值成功');
+    }
+
+    /**
+     * list
+     * 充值
+     */
+    public function listRecharge()
+    {
+        $list = Recharge::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
+        return view('pay.list_recharge')->with('tname', '充值记录列表')->with('list', $list);
+    }
+
+    /**
+     * 充值详情
+     * view
+     */
+    public function getViewRecharge($id)
+    {
+        $one = Recharge::find($id);
+        if ($one->uid != Auth::user()->id) {
+            throw new Exception();
+        }
+        return view('pay.view_recharge')->with('one', $one);
+    }
+
+    /**
+     * 支付刷单任务
+     * @return string
+     */
     public function postPay()
     {
         $id    = request('id', 0);
@@ -84,4 +153,47 @@ class PayController extends Controller
         event(new CfResults($model));
         return success();
     }
+
+    /**
+     * 流水账单
+     */
+    public function listBill()
+    {
+        $start = request('start');
+        $end   = request('end');
+        $type  = request('type', 0);
+
+        $table = Bill::where('uid', Auth::user()->id);
+        if ($start != null && $end != null) {
+            $table->whereBetween('created_at', [$start, $end]);
+        }
+
+        if ($type) {
+            $table->where('type', $type);
+        }
+        $list = $table->orderBy('id', 'desc')->paginate(10);
+        return view('pay.list_bill')->with('tname', '账单列表')->with('list', $list)->with([
+            'start' => $start,
+            'end'   => $end,
+            'type'  => $type
+        ]);
+    }
+
+    public function billDesc()
+    {
+        $type   = request('type');
+        $taskid = request('taskid');
+
+        switch ($type) {
+            case 1:
+                return redirect('viewrecharge/' . $taskid);
+            case 2:
+                return redirect('viewclickfarm/' . $taskid);
+            case 3:
+                return redirect('viewevaluate/' . $taskid);
+            default:
+                throw new Exception();
+        }
+    }
+
 }

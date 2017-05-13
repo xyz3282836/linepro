@@ -38,18 +38,18 @@ Route::get('upmy', 'HomeController@getUpMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
 Route::post('upmy', 'HomeController@postUpMy');
 
-//recharge
-Route::get('recharge', 'IndexController@getRecharge');
-Route::get('viewrecharge/{id}', 'IndexController@getViewRecharge');
-Route::post('recharge', 'IndexController@postRecharge');
-Route::get('rechargelist', 'IndexController@listRecharge');
+//recharge 充值
+Route::get('recharge', 'PayController@getRecharge');
+Route::get('viewrecharge/{id}', 'PayController@getViewRecharge');
+Route::post('recharge', 'PayController@postRecharge');
+Route::get('rechargelist', 'PayController@listRecharge');
 
-//pay
+//pay 支付
 Route::post('pay', 'PayController@postPay');
 
 //资金流水
-Route::any('billlist', 'IndexController@listBill');
-Route::get('getbilldesc', 'IndexController@billDesc');
+Route::any('billlist', 'PayController@listBill');
+Route::get('getbilldesc', 'PayController@billDesc');
 
 //upfile
 Route::post('upload', 'HomeController@upload');

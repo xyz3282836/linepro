@@ -58,21 +58,16 @@ class CfController extends Controller
         $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
             'key_word' => '',
-
             'lower_classification1' => '',
             'lower_classification2' => '',
             'lower_classification3' => '',
             'lower_classification4' => '',
-
             'outside_website' => '',
             'place'           => '',
-
             'category' => 1,
-
             'results'          => null,
             'first_attribute'  => '',
             'second_attribute' => '',
-
             'refine'           => null,
             'attribute_group1' => '',
             'attribute1'       => '',
@@ -80,11 +75,8 @@ class CfController extends Controller
             'attribute2'       => '',
             'attribute_group3' => '',
             'attribute3'       => '',
-
             'sort_by' => 1,
-
             'page' => 1,
-
             'ba_place' => 1,
             'ba_asin'  => '',
         ]);
@@ -101,23 +93,19 @@ class CfController extends Controller
         $model->amazon_pic       = $pdata['amazon_pic'];
         $model->amazon_title     = $pdata['amazon_title'];
         $model->delivery_addr    = $pdata['delivery_addr'];
-
         //1.0
-        $model->is_fba        = 1;
-        $model->discount_code = '';
-
-        $model->is_reviews    = 0;
-        $model->is_link       = 0;
-        $model->is_sellerrank = 0;
-
-        $model->contrast_asin = '';
-        $model->brower        = 1;
-        $model->priority      = 1;
-        $model->flow_port     = 1;
-        $model->flow_source   = 1;
-        $model->browse_step   = 1;
-        $model->mixdata       = $pdata['mixdata'];
-
+        $model->is_fba           = 1;
+        $model->discount_code    = '';
+        $model->is_reviews       = 0;
+        $model->is_link          = 0;
+        $model->is_sellerrank    = 0;
+        $model->contrast_asin    = '';
+        $model->brower           = 1;
+        $model->priority         = 1;
+        $model->flow_port        = 1;
+        $model->flow_source      = 1;
+        $model->browse_step      = 1;
+        $model->mixdata          = $pdata['mixdata'];
         $model->interval_time    = 1;
         $model->start_time       = Carbon::now()->toDateTimeString();
         $model->customer_message = '';
@@ -163,7 +151,7 @@ class CfController extends Controller
      */
     public function listTradeClickFarm()
     {
-        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', '>',1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', '>', 1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with('list', $list);
     }
 
@@ -173,30 +161,30 @@ class CfController extends Controller
      */
     public function listCfResult($id)
     {
-        $start = request('start');
-        $end = request('end');
-        $asin = request('asin','');
-        $status = request('status',1);
+        $start  = request('start');
+        $end    = request('end');
+        $asin   = request('asin', '');
+        $status = request('status', 1);
 
         $model = ClickFarm::find($id);
-        if(!$model){
+        if (!$model) {
             return error(MODEL_NOT_FOUNT);
         }
-        $list = CfResult::where('cfid',$id);
-        if($start != null && $end != null){
+        $list = CfResult::where('cfid', $id);
+        if ($start != null && $end != null) {
             $list->whereBetween('updated_at', [$start, $end]);
         }
-        if($asin!=''){
-            $list->where('asin',$asin);
+        if ($asin != '') {
+            $list->where('asin', $asin);
         }
-        $list = $list->where('status',$status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        $list = $list->where('status', $status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_cf_result')->with('tname', '已购买商品详情列表')->with([
-            'list'=> $list,
-            'model'=>$model,
-            'start'=>$start,
-            'end'=>$end,
-            'asin'=>$asin,
-            'status'=>$status,
+            'list'   => $list,
+            'model'  => $model,
+            'start'  => $start,
+            'end'    => $end,
+            'asin'   => $asin,
+            'status' => $status,
         ]);
     }
 
