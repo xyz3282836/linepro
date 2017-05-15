@@ -32,6 +32,8 @@ class PayController extends Controller
      */
     public function getRecharge()
     {
+        //充值时资料要完善
+
         return view('pay.recharge');
     }
 
@@ -39,6 +41,8 @@ class PayController extends Controller
      * 支付宝支付
      */
     public function recharge(){
+        //充值时资料要完善
+
         $gateway = Omnipay::create('Alipay_AopPage');
         $gateway->setSignType(config('alipay.sign_type')); //RSA/RSA2
         $gateway->setAppId(config('alipay.app_id'));
@@ -66,6 +70,9 @@ class PayController extends Controller
         return redirect($redirectUrl);
     }
 
+    /**
+     *
+     */
     public function result(){
         $gateway = Omnipay::create('Alipay_AopPage');
         $gateway->setSignType(config('alipay.sign_type')); //RSA/RSA2
@@ -78,16 +85,18 @@ class PayController extends Controller
         $request = $gateway->completePurchase();
         $request->setParams(array_merge($_POST, $_GET)); //Don't use $_REQUEST for may contain $_COOKIE
 
-        /**
-         * @var AopCompletePurchaseResponse $response
-         */
         try {
             $response = $request->send();
 
             if($response->isPaid()){
-                /**
-                 * Payment is successful
-                 */
+
+                //TODO 获取orderid
+                $orderid = '';
+                $model = Recharge::where('order',$orderid)->find();
+                if($model){
+                    // 改变状态 加钱 流水账 判断会员是否要加有效期、配额
+                }
+
                 die('success'); //The notify response should be 'success' only
             }else{
                 /**
