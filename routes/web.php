@@ -38,13 +38,19 @@ Route::get('upmy', 'HomeController@getUpMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
 Route::post('upmy', 'HomeController@postUpMy');
 
-//recharge 充值
+//recharge 充值页面
 Route::get('recharge', 'PayController@getRecharge');
-Route::get('viewrecharge/{id}', 'PayController@getViewRecharge');
-Route::post('recharge', 'PayController@postRecharge');
-Route::get('rechargelist', 'PayController@listRecharge');
+//支付宝充值
+Route::get('recharge/pay', 'PayController@recharge');
+//支付后跳转页面
+Route::post('recharge/notify','PayController@notify');
+Route::get('recharge/result','PayController@result');
 
-//pay 支付
+//Route::get('viewrecharge/{id}', 'PayController@getViewRecharge');
+//Route::post('recharge', 'PayController@postRecharge');
+//Route::get('rechargelist', 'PayController@listRecharge');
+
+//pay 支付产品
 Route::post('pay', 'PayController@postPay');
 
 //资金流水
@@ -53,4 +59,5 @@ Route::get('getbilldesc', 'PayController@billDesc');
 
 //upfile
 Route::post('upload', 'HomeController@upload');
+
 

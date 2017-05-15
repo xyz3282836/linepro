@@ -16,6 +16,7 @@ use App\Recharge;
 use Auth;
 use DB;
 use Exception;
+use Omnipay\Omnipay;
 use Validator;
 
 class PayController extends Controller
@@ -32,6 +33,74 @@ class PayController extends Controller
     public function getRecharge()
     {
         return view('pay.recharge');
+    }
+
+    /**
+     * 支付宝支付
+     */
+    public function recharge(){
+        $gateway = Omnipay::create('Alipay_AopPage');
+        $gateway->setSignType(config('alipay.sign_type')); //RSA/RSA2
+        $gateway->setAppId(config('alipay.app_id'));
+        $gateway->setPrivateKey(config('alipay.app_private_key'));
+        $gateway->setAlipayPublicKey(config('alipay.alipay_public_key'));
+        $gateway->setReturnUrl('http://localhost/recharge/result');
+//        $gateway->setNotifyUrl('http://localhost/recharge/notify');
+        $gateway->setEnvironment('sandbox');
+
+        $request = $gateway->purchase();
+        $request->setBizContent([
+            'out_trade_no' => get_order_id(),
+            'total_amount' => 0.01,
+            'subject'      => '会员充值',
+            'product_code' => 'FAST_INSTANT_TRADE_PAY',
+        ]);
+
+        /**
+         * @var AopCompletePurchaseResponse $response
+         */
+        $response = $request->send();
+//        dd($response);
+        $redirectUrl = $response->getRedirectUrl();
+//        dd($redirectUrl);
+        return redirect($redirectUrl);
+    }
+
+    public function result(){
+        $gateway = Omnipay::create('Alipay_AopPage');
+        $gateway->setSignType(config('alipay.sign_type')); //RSA/RSA2
+        $gateway->setAppId(config('alipay.app_id'));
+        $gateway->setPrivateKey(config('alipay.app_private_key'));
+        $gateway->setAlipayPublicKey(config('alipay.alipay_public_key'));
+        $gateway->setReturnUrl('http://localhost/recharge/result');
+//        $gateway->setNotifyUrl('http://localhost/recharge/notify');
+        $gateway->setEnvironment('sandbox');
+        $request = $gateway->completePurchase();
+        $request->setParams(array_merge($_POST, $_GET)); //Don't use $_REQUEST for may contain $_COOKIE
+
+        /**
+         * @var AopCompletePurchaseResponse $response
+         */
+        try {
+            $response = $request->send();
+
+            if($response->isPaid()){
+                /**
+                 * Payment is successful
+                 */
+                die('success'); //The notify response should be 'success' only
+            }else{
+                /**
+                 * Payment is not successful
+                 */
+                die('fail'); //The notify response
+            }
+        } catch (Exception $e) {
+            /**
+             * Payment is not successful
+             */
+            die('fail'); //The notify response
+        }
     }
 
     /**
