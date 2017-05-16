@@ -27,7 +27,7 @@ class CreateRechargesTable extends Migration
             $table->index('uid');
             $table->index('status');
             $table->unique('orderid');
-            $table->unique('alipay_orderid');
+            $table->index('alipay_orderid');
         });
     }
 

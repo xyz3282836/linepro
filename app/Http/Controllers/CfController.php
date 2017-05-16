@@ -142,7 +142,8 @@ class CfController extends Controller
         if ($model->status != 1) {
             return error(NO_ACCESS);
         }
-        $model->update(['status' => 0]);
+        $model->status = 0;
+        $model->save();
         return success();
     }
 
