@@ -28,6 +28,15 @@
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('recharge/pay') }}">
                             {{ csrf_field() }}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 充值方式</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline" v-for="(v,k) in typec">
+                                        <input type="radio" v-model="type" name="type" :value="k">@{{ v }}
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 充值金额</label>
@@ -64,6 +73,14 @@
                 autoclose:true,
                 todayHighlight: 1,
             });
+        })
+        new Vue({
+            el: '#app',
+            data:{
+                type:'1',
+                typec: JSON.parse('{!! json_encode(App\Recharge::TYPE_OUT_TEXT) !!}'),
+            },
+
         })
     </script>
 @endsection
