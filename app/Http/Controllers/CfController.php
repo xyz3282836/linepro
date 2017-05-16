@@ -83,6 +83,7 @@ class CfController extends Controller
 
         $model                   = new ClickFarm;
         $model->uid              = Auth::user()->id;
+        $model->orderid          = get_order_id();
         $model->platform_type    = 1;
         $model->us_exchange_rate = config('linepro.us_exchange_rate');
         $model->asin             = $pdata['asin'];

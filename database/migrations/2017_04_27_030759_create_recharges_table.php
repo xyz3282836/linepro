@@ -17,7 +17,7 @@ class CreateRechargesTable extends Migration
             $table->increments('id');
             $table->integer('uid')->default(0);//用户id
             $table->tinyInteger('type')->default(1);//充值类型 1 支付宝
-            $table->char('orderid',50)->default('');//订单号
+            $table->char('orderid',30)->default('');//订单号
             $table->char('alipay_orderid',64)->default('');//订单号
             $table->decimal('amount',10,2)->default(0.00);//充值金额
             $table->tinyInteger('status')->default(0);// 0 未审核 1 通过 -1 不通过
@@ -27,6 +27,7 @@ class CreateRechargesTable extends Migration
             $table->index('uid');
             $table->index('status');
             $table->unique('orderid');
+            $table->unique('alipay_orderid');
         });
     }
 

@@ -13,15 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClickFarm extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'status', 'orderid'
-    ];
-
     const STATUS_0 = '取消订单';
     const STATUS_1 = '待支付';
     const STATUS_2 = '已经支付';

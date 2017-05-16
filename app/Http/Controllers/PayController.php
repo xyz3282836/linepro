@@ -92,7 +92,7 @@ class PayController extends Controller
                 $orderid        = $data['out_trade_no'];
                 $alipay_orderid = $data['trade_no'];
                 $model          = Recharge::where('orderid', $orderid)->first();
-                if ($model) {
+                if ($model && $model->status == 0) {
                     // 改变状态 加钱 流水账 判断会员是否要加有效期、配额
                     DB::beginTransaction();
                     try {
@@ -146,9 +146,13 @@ class PayController extends Controller
                         }
                     } catch (Exception $e) {
                         DB::rollBack();
-                        dump($e);
                         die('fail');
                     }
+                }else{
+                    return view('pay.recharge')
+                        ->with(['status' => '此次充值失败']);
+//                    return redirect('recharge')
+//                        ->with(['status' => '此次充值失败']);
                 }
             } else {
                 /**
@@ -222,7 +226,6 @@ class PayController extends Controller
         }
 
         $money   = $amount - $model->amount;
-        $orderid = get_order_id();
 
         DB::beginTransaction();
         try {
@@ -235,13 +238,14 @@ class PayController extends Controller
             Bill::create([
                 'uid'     => $user->id,
                 'type'    => $type,
-                'orderid' => $orderid,
+                'orderid' => $model->orderid,
                 'out'     => $model->amount,
                 'amount'  => $money,
                 'taskid'  => $model->id
             ]);
-            //orderid,status
-            $model->update(['status' => 2, 'orderid' => $orderid]);
+            //status
+            $model->status = 2;
+            $model->save();
             DB::commit();
 
         } catch (Exception $e) {
