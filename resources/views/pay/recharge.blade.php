@@ -32,7 +32,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 充值方式</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline" v-for="(v,k) in typec">
-                                        <input type="radio" v-model="type" name="type" :value="k">@{{ v }}
+                                        <input type="radio" v-model="type" name="type" :value="k" required>@{{ v }}
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -42,7 +42,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 充值金额</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="number" placeholder="" class="form-control" minlength="8" maxlength="8" name="amount" required>
+                                        <input type="number" placeholder="" class="form-control" min="1" max="999999" maxlength="6" name="amount" required>
                                         <div class="input-group-addon">元</div>
                                     </div>
                                     <p class="help-block with-errors"></p>

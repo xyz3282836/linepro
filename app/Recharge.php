@@ -24,8 +24,10 @@ class Recharge extends Model
     }
 
     const TYPE_1 = '支付宝';
+//    const TYPE_2 = '微信';
     const TYPE_OUT_TEXT = [
         1 => Recharge::TYPE_1,
+//        2 => Recharge::TYPE_2
     ];
     public function getTypeTextAttribute()
     {
