@@ -53,8 +53,8 @@
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->type_text}}</td>
                                     <td>{{$v->orderid}}</td>
-                                    <td>+ {{$v->in}}</td>
-                                    <td>- {{$v->out}}</td>
+                                    <td :class="{'color-red': {{$v->in}}>0.00}">+ {{$v->in}}</td>
+                                    <td :class="{'color-green': {{$v->out}}>0.00}">- {{$v->out}}</td>
                                     <td>{{$v->amount}}</td>
                                     <td><a href="{{url('getbilldesc?type='.$v->type.'&taskid='.$v->taskid)}}">查看</a></td>
                                 </tr>

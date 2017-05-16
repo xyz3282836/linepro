@@ -21,6 +21,9 @@
         .color-red{
             color:red;
         }
+        .color-green{
+            color:#2ab27b;
+        }
         .ladda-button[data-style=contract] {
             width: auto;
         }
