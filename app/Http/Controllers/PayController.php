@@ -284,6 +284,11 @@ class PayController extends Controller
         ]);
     }
 
+    /**
+     * 流水账单详情
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws Exception
+     */
     public function billDesc()
     {
         $type   = request('type');

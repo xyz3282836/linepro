@@ -15,7 +15,10 @@
                     <div class="panel-heading">充值详细信息</div>
                     <div class="panel-body">
                         <form class="form-horizontal">
-
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">充值状态</label>
+                                <label class="col-md-6 control-label">{{$one->status_text}}</label>
+                            </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">充值类型</label>
@@ -42,10 +45,12 @@
                                 <label class="col-md-6 control-label">{{$one->created_at}}</label>
                             </div>
 
+                            @if($one->status == 1)
                             <div class="form-group">
                                 <label class="col-md-4 control-label">到账时间</label>
                                 <label class="col-md-6 control-label">{{$one->updated_at}}</label>
                             </div>
+                            @endif
                         </form>
                     </div>
                 </div>

@@ -80,6 +80,11 @@ class HomeController extends Controller
             ->with(['status' => '资料修改成功']);
     }
 
+    /**
+     * 上传文件
+     * @param Request $request
+     * @return string
+     */
     public function upload(Request $request)
     {
         switch (request('type')) {
@@ -97,6 +102,8 @@ class HomeController extends Controller
                 $file->move('../public/upfile/video/', $filename);
                 $fullname = '/upfile/video/' . $filename;
                 break;
+            default:
+                return error(ERROR_PARAM);
         }
 
         return success($fullname);
