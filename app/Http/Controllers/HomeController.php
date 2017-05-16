@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\Vp;
+use App\VpBill;
 use Auth;
 use DB;
 use Hash;
@@ -99,5 +100,18 @@ class HomeController extends Controller
         }
 
         return success($fullname);
+    }
+
+    /**
+     * 会员有效期记录
+     */
+    public function listVp(){
+        if(Auth::user()->level == 2){
+            $tname = '会有有效期截止 <span class="color-red">'.substr(Auth::user()->validity,0,10).'</span>';
+        }else{
+            $tname = '会员有效期记录';
+        }
+        $list = VpBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
+        return view('my.list_vp')->with('tname', $tname)->with('list', $list);
     }
 }
