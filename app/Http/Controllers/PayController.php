@@ -13,17 +13,18 @@ use App\Bill;
 use App\ClickFarm;
 use App\Events\CfResults;
 use App\Recharge;
+use App\User;
+use App\VpBill;
 use Auth;
 use DB;
 use Exception;
-use Omnipay\Omnipay;
 use Validator;
 
 class PayController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'result']);
     }
 
     /**
@@ -33,72 +34,123 @@ class PayController extends Controller
     public function getRecharge()
     {
         //充值时资料要完善
-
         return view('pay.recharge');
     }
 
     /**
+     * post
      * 支付宝支付
      */
-    public function recharge(){
-        //充值时资料要完善
+    public function recharge()
+    {
+        $this->validate(request(), [
+            'amount' => 'required|numeric|min:1',
+        ]);
+        $amount = request('amount');
+        if ($amount >= config('linepro.vp_exchange')) {
+            $user = Auth::user();
+            if (!$user->checkInfoIscompleted()) {
+                return redirect('upmy');
+            }
+        }
+        $orderid        = get_order_id();
+        $model          = new Recharge;
+        $model->uid     = Auth::user()->id;
+        $model->amount  = $amount;
+        $model->orderid = $orderid;
+        $model->type    = 1;
+        $model->save();
 
-        $gateway = Omnipay::create('Alipay_AopPage');
-        $gateway->setSignType(config('alipay.sign_type')); //RSA/RSA2
-        $gateway->setAppId(config('alipay.app_id'));
-        $gateway->setPrivateKey(config('alipay.app_private_key'));
-        $gateway->setAlipayPublicKey(config('alipay.alipay_public_key'));
-        $gateway->setReturnUrl('http://localhost/recharge/result');
-//        $gateway->setNotifyUrl('http://localhost/recharge/notify');
-        $gateway->setEnvironment('sandbox');
-
+        $gateway = get_alipay();
         $request = $gateway->purchase();
         $request->setBizContent([
-            'out_trade_no' => get_order_id(),
-            'total_amount' => 0.01,
-            'subject'      => '会员充值',
+            'out_trade_no' => $orderid,
+            'total_amount' => $amount,
+            'subject'      => '充值',
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
 
-        /**
-         * @var AopCompletePurchaseResponse $response
-         */
-        $response = $request->send();
-//        dd($response);
+        $response    = $request->send();
         $redirectUrl = $response->getRedirectUrl();
-//        dd($redirectUrl);
         return redirect($redirectUrl);
     }
 
     /**
-     *
+     * get/post
+     * 充值回调
      */
-    public function result(){
-        $gateway = Omnipay::create('Alipay_AopPage');
-        $gateway->setSignType(config('alipay.sign_type')); //RSA/RSA2
-        $gateway->setAppId(config('alipay.app_id'));
-        $gateway->setPrivateKey(config('alipay.app_private_key'));
-        $gateway->setAlipayPublicKey(config('alipay.alipay_public_key'));
-        $gateway->setReturnUrl('http://localhost/recharge/result');
-//        $gateway->setNotifyUrl('http://localhost/recharge/notify');
-        $gateway->setEnvironment('sandbox');
+    public function result()
+    {
+        $gateway = get_alipay();
         $request = $gateway->completePurchase();
-        $request->setParams(array_merge($_POST, $_GET)); //Don't use $_REQUEST for may contain $_COOKIE
+        $request->setParams(array_merge($_POST, $_GET));
 
         try {
             $response = $request->send();
-
-            if($response->isPaid()){
-
-                //TODO 获取orderid
-                $orderid = '';
-                $model = Recharge::where('order',$orderid)->find();
-                if($model){
+            if ($response->isPaid()) {
+                $data           = $response->getData();
+                $orderid        = $data['out_trade_no'];
+                $alipay_orderid = $data['trade_no'];
+                $model          = Recharge::where('orderid', $orderid)->first();
+                if ($model) {
                     // 改变状态 加钱 流水账 判断会员是否要加有效期、配额
-                }
+                    DB::beginTransaction();
+                    try {
+                        // 改变状态
+                        $model->orderid        = $orderid;
+                        $model->alipay_orderid = $alipay_orderid;
+                        $model->status         = 1;
+                        $model->save();
 
-                die('success'); //The notify response should be 'success' only
-            }else{
+                        // 账号充钱
+                        $user         = User::find($model->uid);
+                        $user->amount = $user->amount + $model->amount;
+
+                        //有效期、配额
+                        if ($model->amount >= config('linepro.vp_exchange')) {
+                            //配额
+                            $user->quota = $user->quota + config('linepro.quota');
+                            //有效期
+                            if ($user->validity == null || strtotime($user->validity) < time()) {
+                                $validity = date('Y-m-d', strtotime('+ 31 days')) . ' 00:00:00';
+                            } else {
+                                $validity = date('Y-m-d H:i:s', strtotime('+ 30 days', strtotime($user->validity)));
+                            }
+                            VpBill::create([
+                                'uid'      => $user->id,
+                                'rid'      => $model->id,
+                                'days'     => config('linepro.vp_days'),
+                                'validity' => $validity,
+                            ]);
+                            $user->level    = 2;
+                            $user->validity = $validity;
+                        }
+
+                        $user->save();
+                        //流水账
+                        Bill::create([
+                            'uid'     => $user->id,
+                            'type'    => 1,
+                            'orderid' => $model->orderid,
+                            'in'      => $model->amount,
+                            'amount'  => $user->amount,
+                            'taskid'  => $model->id
+                        ]);
+
+                        DB::commit();
+                        if(request()->isMethod('get')){
+                            return view('pay.recharge')
+                                ->with(['status' => '充值成功']);
+                        }else{
+                            die('success');
+                        }
+                    } catch (Exception $e) {
+                        DB::rollBack();
+                        dump($e);
+                        die('fail');
+                    }
+                }
+            } else {
                 /**
                  * Payment is not successful
                  */
@@ -110,38 +162,6 @@ class PayController extends Controller
              */
             die('fail'); //The notify response
         }
-    }
-
-    /**
-     * post
-     * 充值
-     */
-    public function postRecharge()
-    {
-        $pdata     = request()->all();
-        $validator = Validator::make($pdata, [
-            'name'          => 'required|min:1|max:6',
-            'mobile'        => 'required|regex:/^1[345789][0-9]{9}/',
-            'orderid'       => 'required|integer',
-            'amount'        => 'required|numeric|min:1',
-            'recharge_time' => 'required|date_format:Y-m-d H:i',
-        ]);
-        if ($validator->fails()) {
-            foreach ($validator->errors()->getMessages() as $k => $v) {
-                p($k . '=>' . $v[0]);
-            }
-            die;
-        }
-        $model                = new Recharge;
-        $model->uid           = Auth::user()->id;
-        $model->name          = $pdata['name'];
-        $model->mobile        = $pdata['mobile'];
-        $model->orderid       = $pdata['orderid'];
-        $model->amount        = $pdata['amount'];
-        $model->recharge_time = $pdata['recharge_time'];
-        $model->save();
-
-        return redirect('recharge')->with('status', '充值成功');
     }
 
     /**

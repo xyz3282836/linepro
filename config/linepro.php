@@ -20,7 +20,7 @@ return [
     ],
 
     //会员有效天数
-    'vpdays'=>30,
+    'vp_days'=>30,
 
     //认证会员的费用 单位元
     'vp_exchange'=>500,

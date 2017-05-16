@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CfResults' => [
             'App\Listeners\AddCfResults',
         ],
+        'App\Events\Vp' => [
+            'App\Listeners\IsVp',
+        ],
     ];
 
     /**

@@ -21,7 +21,7 @@ class Bill extends Model
         2 => Bill::TYPE_2,
     ];
     protected $fillable = [
-        'uid', 'uid', 'type', 'orderid', 'out', 'amount', 'taskid'
+        'uid', 'uid', 'type', 'orderid', 'in','out', 'amount', 'taskid'
     ];
     protected $appends = ['type_text'];
 

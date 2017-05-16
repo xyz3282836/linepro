@@ -37,4 +37,26 @@ class User extends Authenticatable
         ];
         return $text[$this->level];
     }
+
+    public function checkInfoIscompleted(){
+        if($this->mobile == ''){
+            return false;
+        }
+        if($this->addr == ''){
+            return false;
+        }
+        if($this->shipping_addr == ''){
+            return false;
+        }
+        if($this->real_name == ''){
+            return false;
+        }
+        if($this->idcardno == ''){
+            return false;
+        }
+        if($this->idcardpic == ''){
+            return false;
+        }
+        return true;
+    }
 }

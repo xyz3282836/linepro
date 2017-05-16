@@ -19,27 +19,17 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">充值类型</label>
-                                <label class="col-md-6 control-label">{{$one->type}}</label>
+                                <label class="col-md-6 control-label">{{$one->type_text}}</label>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">充值时间</label>
-                                <label class="col-md-6 control-label">{{$one->recharge_time}}</label>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">充值凭证</label>
+                                <label class="col-md-4 control-label">充值订单</label>
                                 <label class="col-md-6 control-label">{{$one->orderid}}</label>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">姓名</label>
-                                <label class="col-md-6 control-label">{{$one->name}}</label>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">手机</label>
-                                <label class="col-md-6 control-label">{{$one->mobile}}</label>
+                                <label class="col-md-4 control-label">支付宝订单</label>
+                                <label class="col-md-6 control-label">{{$one->alipay_orderid}}</label>
                             </div>
 
                             <div class="form-group">
@@ -47,8 +37,15 @@
                                 <label class="col-md-6 control-label">{{$one->amount}}</label>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">充值时间</label>
+                                <label class="col-md-6 control-label">{{$one->created_at}}</label>
+                            </div>
 
-
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">到账时间</label>
+                                <label class="col-md-6 control-label">{{$one->updated_at}}</label>
+                            </div>
                         </form>
                     </div>
                 </div>

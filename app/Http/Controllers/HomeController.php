@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Vp;
 use Auth;
 use DB;
 use Hash;
@@ -26,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        event(new Vp(Auth::user()));
         return view('home');
     }
 

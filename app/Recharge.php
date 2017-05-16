@@ -23,13 +23,15 @@ class Recharge extends Model
         return $text[$this->status];
     }
 
-    public function getTypeAttribute($value)
+    const TYPE_1 = '支付宝';
+    const TYPE_OUT_TEXT = [
+        1 => Recharge::TYPE_1,
+    ];
+    public function getTypeTextAttribute()
     {
-        $text=[
-            1=>'支付宝',
-        ];
-        return $text[$value];
+        $text=Recharge::TYPE_OUT_TEXT;
+        return $text[$this->type];
     }
 
-    protected $appends = ['status_text'];
+    protected $appends = ['status_text','type_text'];
 }
