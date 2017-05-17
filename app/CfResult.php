@@ -54,7 +54,7 @@ class CfResult extends Model
 
     const THIS_DONE = '已经评价过';
     const LEVE1_HAS_DONE = '该asin已经评价过';
-    const LEVE2_NOT_ENOUGH_QUOTA = '该asin已经评价过';
+    const LEVE2_NOT_ENOUGH_QUOTA = '评价配额不足，需要充值';
 
     /**
      * @return string
