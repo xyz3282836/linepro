@@ -28,6 +28,9 @@ Route::get('itemlist', 'CfController@listTradeClickFarm');
 Route::post('canclecf', 'CfController@postCancle');
 Route::any('viewclickfarm/{id}', 'CfController@listCfResult');
 
+//cf 评价
+Route::post('cf/evaluate', 'CfController@evaluate');
+
 //获取环境信息
 Route::get('getinfo', 'IndexController@getInfo');
 

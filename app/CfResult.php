@@ -9,6 +9,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class CfResult extends Model
@@ -49,4 +50,50 @@ class CfResult extends Model
         return $text[$this->status];
     }
 
+    private $msg = '';
+
+    const THIS_DONE = '已经评价过';
+    const LEVE1_HAS_DONE = '该asin已经评价过';
+    const LEVE2_NOT_ENOUGH_QUOTA = '该asin已经评价过';
+
+    /**
+     * @return string
+     */
+    public function getMsg(): string
+    {
+        return $this->msg;
+    }
+
+    /**
+     * @param string $msg
+     */
+    public function setMsg(string $msg)
+    {
+        $this->msg = $msg;
+    }
+
+    public function checkEvaluate(){
+        if($this->status == 7 || $this->status == 8 || $this->status == 9){
+            $this->msg = CfResult::THIS_DONE;
+            return false;
+        }
+        $user = Auth::user();
+        switch ($user->level){
+            case 1:
+                $count = CfResult::where('asin',$this->asin)->whereIn('status',[7,8,9])->count();
+                if($count > 0){
+                    $this->msg = CfResult::LEVE1_HAS_DONE;
+                    return false;
+                }
+                break;
+            case 2:
+                if($user->quota == 0){
+                    $this->msg = CfResult::LEVE2_NOT_ENOUGH_QUOTA;
+                    return false;
+                }
+                break;
+        }
+
+        return true;
+    }
 }

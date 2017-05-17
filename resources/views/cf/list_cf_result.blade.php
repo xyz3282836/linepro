@@ -6,6 +6,7 @@
 @section('jslib')
     <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 @endsection
 @section('css')
     <style type="text/css">
@@ -67,7 +68,7 @@
                                     <td>{{$v->status_text}}</td>
                                     <td>
                                         @if($v->status == 6)
-                                            <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="evaluate({{$v->id}})">评价</button>
+                                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">评价</button>
                                         @endif
 
                                     </td>
@@ -87,6 +88,51 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="evaluatecf" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">评价</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="eform">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">星级：</label>
+                            <label class="radio-inline">
+                                <input type="radio" name="star" value="1" required>一星
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="star" value="2" required>二星
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="star" value="3" required>三星
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="star" value="4" required>四星
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="star" value="5" required>五星
+                            </label>
+                            <p class="help-block with-errors"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">标题：</label>
+                            <input type="text" class="form-control" name="title" id="title" required>
+                            <p class="help-block with-errors"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">正文：</label>
+                            <textarea class="form-control" name="content" id="content" required></textarea>
+                            <p class="help-block with-errors"></p>
+                        </div>
+                        <input type="hidden" name="id" id="eid">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="contract">提交评价</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -98,16 +144,18 @@
                 autoclose:true,
                 todayHighlight: true,
             });
-        });
-        new Vue({
-            el: '#app',
-            data:{
-                statusc: JSON.parse('{!! json_encode(App\CfResult::OUT_TEXT) !!}'),
-                status:'{{$status}}'
-            },
-            methods: {
-                evaluate:function (id) {
-                    axios.post("{{url('evaluate')}}",{id:id}).then(function (d) {
+            $('#evaluatecf').on('show.bs.modal', function (event) {
+                $('#eform')[0].reset();
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+                var modal = $(this);
+                modal.find('#eid').val(id);
+            });
+
+            $('#eform').validator().on('submit', function (e) {
+                if(!e.isDefaultPrevented())  {
+                    e.preventDefault();
+                    axios.post("{{url('cf/evaluate')}}",$(this).serialize()).then(function (d) {
                         var data = d.data;
                         if(!data.code){
                             layer.msg(data.msg, {icon: 2});
@@ -116,7 +164,17 @@
                             window.location.reload()
                         }
                     })
-                },
+                }
+            });
+        });
+
+        new Vue({
+            el: '#app',
+            data:{
+                statusc: JSON.parse('{!! json_encode(App\CfResult::OUT_TEXT) !!}'),
+                status:'{{$status}}'
+            },
+            methods: {
             },
             mounted: function () {
                 this.$nextTick(() => {

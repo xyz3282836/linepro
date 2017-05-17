@@ -190,4 +190,37 @@ class CfController extends Controller
         ]);
     }
 
+    /**
+     * 刷单评价
+     */
+    public function evaluate(){
+        $id    = request('id', 0);
+        $star  =request('star');
+        $title  =request('title');
+        $content  =request('content');
+
+        $model = CfResult::find($id);
+        if (!$model) {
+            return error(MODEL_NOT_FOUNT);
+        }
+        if ($model->uid != Auth::user()->id) {
+            return error(NO_ACCESS);
+        }
+
+        if(!$model->checkEvaluate()){
+            return error($model->getMsg);
+        }
+
+        $model->star = $star;
+        $model->title = $title;
+        $model->content = $content;
+        $model->status = 7;
+        $model->save();
+
+        $user= Auth::user();
+        $user->quota = $user->quota - config('linepro.once_quota');
+        $user->save();
+        return success();
+    }
+
 }

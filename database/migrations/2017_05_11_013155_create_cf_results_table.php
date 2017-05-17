@@ -38,6 +38,7 @@ class CreateCfResultsTable extends Migration
             $table->index('uid');
             $table->index('cfid');
             $table->index('status');
+            $table->index('asin','status');
         });
     }
 
