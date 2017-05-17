@@ -19,12 +19,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    @if (isset($status))
-                        <div class="alert alert-success">
-                            {{ $status }}
-                        </div>
-                    @endif
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('recharge/pay') }}">
                             {{ csrf_field() }}

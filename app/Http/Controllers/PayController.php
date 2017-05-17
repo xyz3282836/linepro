@@ -139,8 +139,6 @@ class PayController extends Controller
 
                         DB::commit();
                         if(request()->isMethod('get')){
-//                            return view('pay.recharge')
-//                                ->with(['status' => '充值成功']);
                             return redirect('recharge')
                                 ->with(['status' => '充值成功']);
                         }else{
@@ -151,8 +149,6 @@ class PayController extends Controller
                         die('fail');
                     }
                 }else{
-//                    return view('pay.recharge')
-//                        ->with(['status' => '此次充值失败']);
                     return redirect('recharge')
                         ->with(['status' => '此次充值失败']);
                 }
