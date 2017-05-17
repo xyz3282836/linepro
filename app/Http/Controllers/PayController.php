@@ -119,9 +119,9 @@ class PayController extends Controller
                             ]);
                             //有效期
                             if ($user->validity == null || strtotime($user->validity) < time()) {
-                                $validity = date('Y-m-d', strtotime('+ 31 days')) . ' 00:00:00';
+                                $validity = date('Y-m-d', strtotime('+ '.(config('linepro.vp_days') + 1).' days')) . ' 00:00:00';
                             } else {
-                                $validity = date('Y-m-d H:i:s', strtotime('+ 30 days', strtotime($user->validity)));
+                                $validity = date('Y-m-d H:i:s', strtotime('+ '.config('linepro.vp_days').' days', strtotime($user->validity)));
                             }
                             VpBill::create([
                                 'uid'      => $user->id,
