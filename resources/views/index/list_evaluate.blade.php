@@ -15,7 +15,7 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>id</th>
+                                <th>#</th>
                                 <th>订单号</th>
                                 <th>消费金额</th>
                                 <th>评价id</th>

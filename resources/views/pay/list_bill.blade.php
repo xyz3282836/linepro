@@ -36,7 +36,7 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>id</th>
+                                <th>#</th>
                                 <th>时间</th>
                                 <th>类型</th>
                                 <th>相关订单号</th>

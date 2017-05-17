@@ -43,7 +43,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>id</th>
+                                    <th>#</th>
                                     {{--<th>商品图片</th>--}}
                                     {{--<th>商品title</th>--}}
                                     {{--<th>店铺id</th>--}}
