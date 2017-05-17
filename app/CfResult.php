@@ -59,17 +59,9 @@ class CfResult extends Model
     /**
      * @return string
      */
-    public function getMsg(): string
+    public function getMsg()
     {
         return $this->msg;
-    }
-
-    /**
-     * @param string $msg
-     */
-    public function setMsg(string $msg)
-    {
-        $this->msg = $msg;
     }
 
     public function checkEvaluate(){

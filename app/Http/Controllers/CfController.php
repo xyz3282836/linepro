@@ -208,7 +208,7 @@ class CfController extends Controller
         }
 
         if(!$model->checkEvaluate()){
-            return error($model->getMsg);
+            return error($model->getMsg());
         }
 
         $model->star = $star;
