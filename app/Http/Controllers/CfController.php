@@ -11,8 +11,11 @@ namespace App\Http\Controllers;
 
 use App\CfResult;
 use App\ClickFarm;
+use App\QuotaBill;
 use Auth;
 use Carbon\Carbon;
+use DB;
+use Mockery\Exception;
 
 class CfController extends Controller
 {
@@ -57,28 +60,28 @@ class CfController extends Controller
 
         $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
-            'key_word' => '',
+            'key_word'              => '',
             'lower_classification1' => '',
             'lower_classification2' => '',
             'lower_classification3' => '',
             'lower_classification4' => '',
-            'outside_website' => '',
-            'place'           => '',
-            'category' => 1,
-            'results'          => null,
-            'first_attribute'  => '',
-            'second_attribute' => '',
-            'refine'           => null,
-            'attribute_group1' => '',
-            'attribute1'       => '',
-            'attribute_group2' => '',
-            'attribute2'       => '',
-            'attribute_group3' => '',
-            'attribute3'       => '',
-            'sort_by' => 1,
-            'page' => 1,
-            'ba_place' => 1,
-            'ba_asin'  => '',
+            'outside_website'       => '',
+            'place'                 => '',
+            'category'              => 1,
+            'results'               => null,
+            'first_attribute'       => '',
+            'second_attribute'      => '',
+            'refine'                => null,
+            'attribute_group1'      => '',
+            'attribute1'            => '',
+            'attribute_group2'      => '',
+            'attribute2'            => '',
+            'attribute_group3'      => '',
+            'attribute3'            => '',
+            'sort_by'               => 1,
+            'page'                  => 1,
+            'ba_place'              => 1,
+            'ba_asin'               => '',
         ]);
 
         $model                   = new ClickFarm;
@@ -193,11 +196,12 @@ class CfController extends Controller
     /**
      * 刷单评价
      */
-    public function evaluate(){
-        $id    = request('id', 0);
-        $star  =request('star');
-        $title  =request('title');
-        $content  =request('content');
+    public function evaluate()
+    {
+        $id      = request('id', 0);
+        $star    = request('star');
+        $title   = request('title');
+        $content = request('content');
 
         $model = CfResult::find($id);
         if (!$model) {
@@ -207,19 +211,40 @@ class CfController extends Controller
             return error(NO_ACCESS);
         }
 
-        if(!$model->checkEvaluate()){
+        if (!$model->checkEvaluate()) {
             return error($model->getMsg());
         }
+        $user = Auth::user();
 
-        $model->star = $star;
-        $model->title = $title;
-        $model->content = $content;
-        $model->status = 7;
-        $model->save();
+        DB::beginTransaction();
+        try {
+            $user->quota = $user->quota - config('linepro.once_quota');
+            $user->save();
 
-        $user= Auth::user();
-        $user->quota = $user->quota - config('linepro.once_quota');
-        $user->save();
+            $model = CfResult::find($id);
+            if (!$model->checkEvaluate()) {
+                throw new Exception();
+            }
+
+            $model->star    = $star;
+            $model->title   = $title;
+            $model->content = $content;
+            $model->status  = 7;
+            $model->save();
+
+            QuotaBill::create([
+                'uid'    => $user->id,
+                'type'   => 2,
+                'out'    => config('linepro.once_quota'),
+                'quota'  => $user->quota,
+                'taskid' => $model->id
+            ]);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return error(ERROR_IDEMPOTENCE);
+        }
         return success();
     }
 

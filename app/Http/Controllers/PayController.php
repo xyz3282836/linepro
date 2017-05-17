@@ -12,13 +12,13 @@ namespace App\Http\Controllers;
 use App\Bill;
 use App\ClickFarm;
 use App\Events\CfResults;
+use App\QuotaBill;
 use App\Recharge;
 use App\User;
 use App\VpBill;
 use Auth;
 use DB;
 use Exception;
-use Validator;
 
 class PayController extends Controller
 {
@@ -110,6 +110,13 @@ class PayController extends Controller
                         if ($model->amount >= config('linepro.vp_exchange')) {
                             //配额
                             $user->quota = $user->quota + config('linepro.quota');
+                            QuotaBill::create([
+                                'uid'    => $user->id,
+                                'type'   => 1,
+                                'in'     => config('linepro.quota'),
+                                'quota'  => $user->quota,
+                                'taskid' => $model->id
+                            ]);
                             //有效期
                             if ($user->validity == null || strtotime($user->validity) < time()) {
                                 $validity = date('Y-m-d', strtotime('+ 31 days')) . ' 00:00:00';
@@ -138,17 +145,17 @@ class PayController extends Controller
                         ]);
 
                         DB::commit();
-                        if(request()->isMethod('get')){
+                        if (request()->isMethod('get')) {
                             return redirect('recharge')
                                 ->with(['status' => '充值成功']);
-                        }else{
+                        } else {
                             die('success');
                         }
                     } catch (Exception $e) {
                         DB::rollBack();
                         die('fail');
                     }
-                }else{
+                } else {
                     return redirect('recharge')
                         ->with(['status' => '此次充值失败']);
                 }
@@ -223,7 +230,7 @@ class PayController extends Controller
             return error(NO_ENOUGH_MONEY);
         }
 
-        $money   = $amount - $model->amount;
+        $money = $amount - $model->amount;
 
         DB::beginTransaction();
         try {

@@ -164,7 +164,7 @@
     <script>
         $(function () {
             Ladda.bind( 'table .ladda-button', { timeout: 1500 } );
-            Ladda.bind( 'form .btn[type=submit]', { timeout: 3000 } );
+            Ladda.bind( 'form .btn.ladda-button[type=submit]', { timeout: 3000 } );
         })
     </script>
     @yield('js')

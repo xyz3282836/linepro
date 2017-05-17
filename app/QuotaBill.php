@@ -2,23 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: zhou
- * Date: 2017/4/28
- * Time: 上午9:58
+ * Date: 2017/5/17
+ * Time: 下午12:55
  */
 
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
 
-class Bill extends Model
+class QuotaBill extends Model
 {
-    const TYPE_0   = '综合';
+
     const TYPE_1   = '充值';
-    const TYPE_2   = '刷单任务消费';
+    const TYPE_2   = '刷单任务结果评价';
     const OUT_TEXT = [
-        0 => Bill::TYPE_0,
-        1 => Bill::TYPE_1,
-        2 => Bill::TYPE_2,
+        1 => QuotaBill::TYPE_1,
+        2 => QuotaBill::TYPE_2,
     ];
 
     protected $appends = ['type_text'];
@@ -29,8 +27,13 @@ class Bill extends Model
         return $text[$this->type];
     }
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'uid', 'uid', 'type', 'orderid', 'in','out', 'amount', 'taskid'
+        'uid','type','in','out','quota','taskid'
     ];
 
 }
