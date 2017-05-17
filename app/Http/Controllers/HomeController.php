@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\Vp;
+use App\QuotaBill;
 use App\VpBill;
 use Auth;
 use DB;
@@ -120,5 +121,13 @@ class HomeController extends Controller
         }
         $list = VpBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
         return view('my.list_vp')->with('tname', $tname)->with('list', $list);
+    }
+
+    /**
+     * 配额获得和使用记录
+     */
+    public function listQuota(){
+        $list = QuotaBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
+        return view('my.list_quota')->with('tname', '配额获得和使用')->with('list', $list);
     }
 }
