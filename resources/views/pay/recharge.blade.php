@@ -36,7 +36,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 充值金额</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="number" placeholder="" class="form-control" min="1" max="999999" maxlength="6" name="amount" required>
+                                        <input type="number" placeholder="" class="form-control" min="1" max="999999" maxlength="6" name="amount" value="{{config('linepro.vp_exchange')}}" required>
                                         <div class="input-group-addon">元</div>
                                     </div>
                                     <p class="help-block with-errors"></p>
