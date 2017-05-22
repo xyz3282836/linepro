@@ -84,7 +84,7 @@ class PayController extends Controller
         $gateway = get_alipay();
         $request = $gateway->completePurchase();
         $request->setParams(array_merge($_POST, $_GET));
-
+        $flag = false;
         try {
             $response = $request->send();
             if ($response->isPaid()) {
@@ -145,31 +145,35 @@ class PayController extends Controller
                         ]);
 
                         DB::commit();
-                        if (request()->isMethod('get')) {
-                            return redirect('recharge')
-                                ->with(['status' => '充值成功']);
-                        } else {
-                            die('success');
-                        }
+                        $flag = true;
                     } catch (Exception $e) {
                         DB::rollBack();
-                        die('fail');
+                        $flag = false;
                     }
-                } else {
-                    return redirect('recharge')
-                        ->with(['status' => '此次充值失败']);
+                } elseif ($model && $model->status == 1) {
+                    $flag = true;
+                }else{
+                    $flag = false;
                 }
             } else {
-                /**
-                 * Payment is not successful
-                 */
-                die('fail'); //The notify response
+                $flag = false;
             }
         } catch (Exception $e) {
-            /**
-             * Payment is not successful
-             */
-            die('fail'); //The notify response
+            $flag = false;
+        } finally{
+            if($flag){
+                $text = '充值成功';
+                $json = 'success';
+            }else{
+                $text = '此次充值失败';
+                $json = 'fail';
+            }
+            if (request()->isMethod('get')) {
+                return redirect('recharge')
+                    ->with(['status' => $text]);
+            } else {
+                die($json);
+            }
         }
     }
 
