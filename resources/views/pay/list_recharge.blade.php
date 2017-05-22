@@ -32,7 +32,7 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->alipay_orderid}}</td>
-                                    <td>{{$v->amount}}</td>
+                                    <td class="color-red">{{$v->amount}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->type_text}}</td>
                                     <td>{{$v->status_text}}</td>
