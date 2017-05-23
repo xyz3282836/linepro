@@ -109,24 +109,26 @@ class PayController extends Controller
                         //有效期、配额
                         if ($model->amount >= config('linepro.vp_exchange')) {
                             //配额
-                            $user->quota = $user->quota + config('linepro.quota');
+                            $addquota = floor($model->amount/config('linepro.vp_exchange'))*config('linepro.quota');
+                            $user->quota = $user->quota + $addquota;
                             QuotaBill::create([
                                 'uid'    => $user->id,
                                 'type'   => 1,
-                                'in'     => config('linepro.quota'),
+                                'in'     => $addquota,
                                 'quota'  => $user->quota,
                                 'taskid' => $model->id
                             ]);
                             //有效期
+                            $adddays = floor($model->amount/config('linepro.vp_exchange'))*config('linepro.vp_days');
                             if ($user->validity == null || strtotime($user->validity) < time()) {
-                                $validity = date('Y-m-d', strtotime('+ '.(config('linepro.vp_days') + 1).' days')) . ' 00:00:00';
+                                $validity = date('Y-m-d', strtotime('+ '.($adddays + 1).' days')) . ' 00:00:00';
                             } else {
-                                $validity = date('Y-m-d H:i:s', strtotime('+ '.config('linepro.vp_days').' days', strtotime($user->validity)));
+                                $validity = date('Y-m-d H:i:s', strtotime('+ '.$adddays.' days', strtotime($user->validity)));
                             }
                             VpBill::create([
                                 'uid'      => $user->id,
                                 'rid'      => $model->id,
-                                'days'     => config('linepro.vp_days'),
+                                'days'     => $adddays,
                                 'validity' => $validity,
                             ]);
                             $user->level    = 2;
