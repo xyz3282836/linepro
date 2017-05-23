@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\CfResult;
 use App\ClickFarm;
+use App\Exceptions\MsgException;
 use App\QuotaBill;
 use Auth;
 use Carbon\Carbon;
@@ -223,7 +224,7 @@ class CfController extends Controller
 
             $model = CfResult::find($id);
             if (!$model->checkEvaluate()) {
-                throw new Exception();
+                throw new MsgException();
             }
 
             $model->star    = $star;

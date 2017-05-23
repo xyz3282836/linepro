@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Bill;
 use App\ClickFarm;
 use App\Events\CfResults;
+use App\Exceptions\MsgException;
 use App\QuotaBill;
 use App\Recharge;
 use App\User;
@@ -109,7 +110,7 @@ class PayController extends Controller
                         //有效期、配额
                         if ($model->amount >= config('linepro.vp_exchange')) {
                             //配额
-                            $addquota = floor($model->amount/config('linepro.vp_exchange'))*config('linepro.quota');
+                            $addquota    = floor($model->amount / config('linepro.vp_exchange')) * config('linepro.quota');
                             $user->quota = $user->quota + $addquota;
                             QuotaBill::create([
                                 'uid'    => $user->id,
@@ -119,11 +120,11 @@ class PayController extends Controller
                                 'taskid' => $model->id
                             ]);
                             //有效期
-                            $adddays = floor($model->amount/config('linepro.vp_exchange'))*config('linepro.vp_days');
+                            $adddays = floor($model->amount / config('linepro.vp_exchange')) * config('linepro.vp_days');
                             if ($user->validity == null || strtotime($user->validity) < time()) {
-                                $validity = date('Y-m-d', strtotime('+ '.($adddays + 1).' days')) . ' 00:00:00';
+                                $validity = date('Y-m-d', strtotime('+ ' . ($adddays + 1) . ' days')) . ' 00:00:00';
                             } else {
-                                $validity = date('Y-m-d H:i:s', strtotime('+ '.$adddays.' days', strtotime($user->validity)));
+                                $validity = date('Y-m-d H:i:s', strtotime('+ ' . $adddays . ' days', strtotime($user->validity)));
                             }
                             VpBill::create([
                                 'uid'      => $user->id,
@@ -154,7 +155,7 @@ class PayController extends Controller
                     }
                 } elseif ($model && $model->status == 1) {
                     $flag = true;
-                }else{
+                } else {
                     $flag = false;
                 }
             } else {
@@ -162,11 +163,11 @@ class PayController extends Controller
             }
         } catch (Exception $e) {
             $flag = false;
-        } finally{
-            if($flag){
+        } finally {
+            if ($flag) {
                 $text = '充值成功';
                 $json = 'success';
-            }else{
+            } else {
                 $text = '此次充值失败';
                 $json = 'fail';
             }
@@ -197,7 +198,7 @@ class PayController extends Controller
     {
         $one = Recharge::find($id);
         if ($one->uid != Auth::user()->id) {
-            throw new Exception();
+            throw new MsgException();
         }
         return view('pay.view_recharge')->with('one', $one);
     }
@@ -243,7 +244,7 @@ class PayController extends Controller
             //减钱
             $user->update(['amount' => $money]);
             if (DB::table($table)->where('id', $id)->value('status') != 1) {
-                throw new Exception();
+                throw new MsgException();
             }
             //流水账
             Bill::create([
@@ -311,7 +312,7 @@ class PayController extends Controller
             case 3:
                 return redirect('viewevaluate/' . $taskid);
             default:
-                throw new Exception();
+                throw new MsgException();
         }
     }
 

@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,14 +45,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if(config('app.debug') || $exception instanceof AuthenticationException){
-            return parent::render($request, $exception);
-        }else{
+        if($exception instanceof MsgException){
             if($request->ajax()){
                 return error(ERROR_SYSTEM);
             }
             return response()->view('layouts.error');
         }
+        return parent::render($request, $exception);
 
     }
 
