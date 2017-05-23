@@ -40,7 +40,7 @@ class CfResult extends Model
      * @var array
      */
     protected $fillable = [
-        'uid', 'cfid', 'asin', 'shop_id'
+        'uid', 'cfid', 'asin', 'shop_id', 'status'
     ];
     protected $appends = ['status_text'];
 
