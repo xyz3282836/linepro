@@ -14,7 +14,7 @@ class Bill extends Model
 {
     const TYPE_0   = '综合';
     const TYPE_1   = '充值';
-    const TYPE_2   = '刷单任务消费';
+    const TYPE_2   = '代购任务消费';
     const OUT_TEXT = [
         0 => Bill::TYPE_0,
         1 => Bill::TYPE_1,

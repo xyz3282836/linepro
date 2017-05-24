@@ -13,7 +13,7 @@ class QuotaBill extends Model
 {
 
     const TYPE_1   = '充值';
-    const TYPE_2   = '刷单任务结果评价';
+    const TYPE_2   = '代购任务结果评价';
     const OUT_TYPE_TEXT = [
         1 => QuotaBill::TYPE_1,
         2 => QuotaBill::TYPE_2,

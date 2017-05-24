@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">刷单任务详细信息</div>
+                    <div class="panel-heading">代购任务详细信息</div>
                     <div class="panel-body">
 
                         @if($cf->status == 1)
