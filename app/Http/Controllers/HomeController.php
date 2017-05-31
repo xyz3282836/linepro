@@ -40,7 +40,13 @@ class HomeController extends Controller
 
     public function getUpMy()
     {
-        return view('my.desc');
+        $user = Auth::user();
+
+        $viewtext = 'full';
+        if($user->idcardpic != ''){
+            $viewtext = 'part';
+        }
+        return view('my.desc'.$viewtext)->with('user',$user);
     }
 
     public function postUpPwd(Request $request)
@@ -121,11 +127,4 @@ class HomeController extends Controller
         return view('my.list_vp')->with('tname', $tname)->with('list', $list);
     }
 
-    /**
-     * 配额获得和使用记录
-     */
-    public function listQuota(){
-        $list = QuotaBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
-        return view('my.list_quota')->with('tname', '配额获得和使用')->with('list', $list);
-    }
 }

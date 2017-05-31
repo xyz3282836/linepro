@@ -9,14 +9,11 @@
 
 @section('csslib')
     <link href="{{URL::asset('bootstrap-fileinput/css/fileinput.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('jslib')
     <script src="{{URL::asset('bootstrap-fileinput/js/fileinput.js')}}"></script>
     <script src="{{URL::asset('bootstrap-fileinput/js/locales/zh.js')}}"></script>
-    <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
-    <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 @endsection
 @section('content')
@@ -44,13 +41,6 @@
                             <div class="form-group">
                                 <label for="mobile" class="col-md-4 control-label">会员状态</label>
                                 <label for="mobile" class="col-md-6 control-label">{{ $user->level_text }}</label>
-                            </div>
-
-                            <div class="form-group" v-for="(one,index) in picarr">
-                                <label class="col-md-4 control-label" >身份证图片 <span v-text="index + 1"></span></label>
-                                <div class="col-md-6">
-                                    <img :src="one" alt="" width="200">
-                                </div>
                             </div>
 
                             <div class="form-group">
@@ -124,21 +114,12 @@
         new Vue({
             el: '#app',
             methods: {
-                getpic:function(){
-                    if(this.pic == ''){
-                        return;
-                    }
-                    this.picarr =this.pic.split(',')
-                },
             },
             mounted: function () {
                 this.$nextTick(()=>{
-                    this.getpic();
                 })
             },
             data:{
-                pic:"{{$user->idcardpic}}",
-                picarr:[],
             }
         });
         var picarr = [];
