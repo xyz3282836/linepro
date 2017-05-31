@@ -37,7 +37,6 @@
                         </div>
                         <div class="form-group">
                             <select class="form-control select-sm" name="status" required v-model="status">
-                                <option value="0">综合</option>
                                 <option v-for="(v,k) in statusc" v-text="v" :value="k"></option>
                             </select>
                         </div>

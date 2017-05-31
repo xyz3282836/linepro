@@ -30,7 +30,7 @@ class ClickFarm extends Model
 
     public static function getExceptText(){
         $arr = self::OUT_TEXT;
-        array_shift($arr);
+        $arr[0] = '综合';
         return $arr;
     }
 
