@@ -25,16 +25,24 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('upmy') }}">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">昵称</label>
-                                <label for="mobile" class="col-md-6 control-label">{{ $user->name }}</label>
+                                <label class="col-md-4 control-label">昵称</label>
+                                <label class="col-md-6 control-label">{{ $user->name }}</label>
                             </div>
                             <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">Email</label>
-                                <label for="mobile" class="col-md-6 control-label">{{ $user->email }}</label>
+                                <label class="col-md-4 control-label">Email</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->email) }}</label>
                             </div>
                             <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">会员状态</label>
-                                <label for="mobile" class="col-md-6 control-label">{{ $user->level_text }}</label>
+                                <label class="col-md-4 control-label">手机</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->mobile) }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">身份证号码</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->idcardno) }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">会员状态</label>
+                                <label class="col-md-6 control-label">{{ $user->level_text }}</label>
                             </div>
 
                             <div class="form-group">
@@ -44,23 +52,9 @@
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
-
-                            <div class="form-group {{ $errors->has('idcardno') ? ' has-error' : '' }}">
-                                <label for="idcardno" class="col-md-4 control-label">身份证号码</label>
-                                <div class="col-md-6">
-                                    <input id="idcardno"  type="text" class="form-control" pattern="[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)" name="idcardno" value="{{ $user->idcardno }}" required>
-                                    <p class="help-block with-errors">{{ $errors->first('idcardno') }}</p>
-                                </div>
-                            </div>
-                            <input type="hidden" name="idcardpic" id="mutipicval" value="{{$user->idcardpic}}">
-                            <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">手机号</label>
-                                <div class="col-md-6">
-                                    <input id="mobile" pattern="1[345789][0-9]{9}" type="text" class="form-control" name="mobile" value="{{ $user->mobile }}" required>
-                                    <p class="help-block with-errors"></p>
-                                </div>
-                            </div>
-
+                            <input type="hidden" name="idcardno" value="{{$user->idcardno}}">
+                            <input type="hidden" name="idcardpic" value="{{$user->idcardpic}}">
+                            <input type="hidden" name="mobile" value="{{$user->mobile}}">
                             <div class="form-group">
                                 <label for="addr" class="col-md-4 control-label">联系地址</label>
 

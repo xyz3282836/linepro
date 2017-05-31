@@ -124,3 +124,21 @@ function get_alipay()
 
     return $gateway;
 }
+
+function mask_number($num, $star_num = 4)
+{
+    $star_num = $star_num >= strlen($num) ? strlen($num)-2 : (int)$star_num;
+    if($star_num % 2 == 0)
+    {
+        $star_left = $star_right = $star_num/2;
+    }else{
+        $star_left = floor($star_num/2);
+        $star_right = $star_num - $star_left;
+    }
+    $len = strlen($num);
+    $left = floor($len/2)-$star_left;
+    $right = round($len/2)-$star_right;
+    $middle = $len - $left - $right;
+    $result = substr($num, 0, $left).str_repeat("*", $middle).substr($num, $left+$middle, $right);
+    return $result;
+}

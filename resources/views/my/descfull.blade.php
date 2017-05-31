@@ -35,8 +35,12 @@
                                 <label for="mobile" class="col-md-6 control-label">{{ $user->name }}</label>
                             </div>
                             <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">Email</label>
-                                <label for="mobile" class="col-md-6 control-label">{{ $user->email }}</label>
+                                <label class="col-md-4 control-label">Email</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->email) }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">手机</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->mobile) }}</label>
                             </div>
                             <div class="form-group">
                                 <label for="mobile" class="col-md-4 control-label">会员状态</label>
