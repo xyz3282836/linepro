@@ -142,3 +142,15 @@ function mask_number($num, $star_num = 4)
     $result = substr($num, 0, $left).str_repeat("*", $middle).substr($num, $left+$middle, $right);
     return $result;
 }
+
+function mask_name($str){
+    $num = mb_strlen($str,'UTF-8');
+    $end = mb_substr($str,-1,1,'UTF-8');
+    return str_repeat('*',$num-1).$end;
+}
+
+function mask_email($email){
+    $arr = explode('@',$email);
+    $first = $arr[0];
+    return substr($first,0,strlen($first)-4).'****@'.$arr[1];
+}

@@ -30,11 +30,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Email</label>
-                                <label class="col-md-6 control-label">{{ $user->email }}</label>
+                                <label class="col-md-6 control-label">{{ mask_email($user->email) }}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">手机</label>
                                 <label class="col-md-6 control-label">{{ mask_number($user->mobile,5) }}</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">姓名</label>
+                                <label class="col-md-6 control-label">{{ mask_name($user->realname) }}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">身份证号码</label>
@@ -49,13 +53,7 @@
                                 <label class="col-md-6 control-label">{{ $user->level_text }}</label>
                             </div>
 
-                            <div class="form-group">
-                                <label for="real_name" class="col-md-4 control-label">真实姓名</label>
-                                <div class="col-md-6">
-                                    <input id="real_name" type="text" class="form-control" name="real_name" value="{{ $user->real_name }}" minlength="2" maxlength="6" required>
-                                    <p class="help-block with-errors"></p>
-                                </div>
-                            </div>
+                            <input type="hidden" name="idcardno" value="{{$user->real_name}}">
                             <input type="hidden" name="idcardno" value="{{$user->idcardno}}">
                             <input type="hidden" name="idcardpic" value="{{$user->idcardpic}}">
                             <input type="hidden" name="mobile" value="{{$user->mobile}}">
