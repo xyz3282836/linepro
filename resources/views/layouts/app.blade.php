@@ -120,7 +120,6 @@
                                     <li><a href="{{ url('rechargelist') }}">充值记录</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{ url('vplist') }}">会员有效期记录</a></li>
-                                    <li><a href="{{ url('quotalist') }}">配额获得和使用记录</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">

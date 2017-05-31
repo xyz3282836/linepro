@@ -13,7 +13,6 @@ use App\Bill;
 use App\ClickFarm;
 use App\Events\CfResults;
 use App\Exceptions\MsgException;
-use App\QuotaBill;
 use App\Recharge;
 use App\User;
 use App\VpBill;
@@ -107,18 +106,8 @@ class PayController extends Controller
                         $user         = User::find($model->uid);
                         $user->amount = $user->amount + $model->amount;
 
-                        //有效期、配额
+                        //有效期
                         if ($model->amount >= config('linepro.vp_exchange')) {
-                            //配额
-                            $addquota    = floor($model->amount / config('linepro.vp_exchange')) * config('linepro.quota');
-                            $user->quota = $user->quota + $addquota;
-                            QuotaBill::create([
-                                'uid'    => $user->id,
-                                'type'   => 1,
-                                'in'     => $addquota,
-                                'quota'  => $user->quota,
-                                'taskid' => $model->id
-                            ]);
                             //有效期
                             $adddays = floor($model->amount / config('linepro.vp_exchange')) * config('linepro.vp_days');
                             if ($user->validity == null || strtotime($user->validity) < time()) {

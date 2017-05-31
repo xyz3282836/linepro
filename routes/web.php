@@ -41,7 +41,6 @@ Route::get('upmy', 'HomeController@getUpMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
 Route::post('upmy', 'HomeController@postUpMy');
 Route::get('vplist', 'HomeController@listVp');
-Route::get('quotalist', 'HomeController@listQuota');
 
 //recharge 充值
 Route::get('recharge', 'PayController@getRecharge');

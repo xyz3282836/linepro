@@ -64,13 +64,11 @@ class HomeController extends Controller
             'addr'            => 'required|min:5|max:50',
             'shipping_addr'   => 'required|min:5|max:50',
             'real_name'       => 'required|min:2|max:6',
-            'management_type' => 'required|integer',
             'idcardpic'       => 'required',
             'idcardno'        => ['required', 'regex:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/'],
         ]);
         $pdata['mobile']          = request('mobile');
         $pdata['addr']            = request('addr');
-        $pdata['management_type'] = request('management_type');
         $pdata['shipping_addr']   = request('shipping_addr');
         $pdata['real_name']       = request('real_name');
         $pdata['idcardpic']       = request('idcardpic');

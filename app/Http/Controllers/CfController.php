@@ -212,40 +212,11 @@ class CfController extends Controller
             return error(NO_ACCESS);
         }
 
-        if (!$model->checkEvaluate()) {
-            return error($model->getMsg());
-        }
-        $user = Auth::user();
-
-        DB::beginTransaction();
-        try {
-            $user->quota = $user->quota - config('linepro.once_quota');
-            $user->save();
-
-            $model = CfResult::find($id);
-            if (!$model->checkEvaluate()) {
-                throw new MsgException();
-            }
-
-            $model->star    = $star;
-            $model->title   = $title;
-            $model->content = $content;
-            $model->status  = 7;
-            $model->save();
-
-            QuotaBill::create([
-                'uid'    => $user->id,
-                'type'   => 2,
-                'out'    => config('linepro.once_quota'),
-                'quota'  => $user->quota,
-                'taskid' => $model->id
-            ]);
-
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            return error(ERROR_IDEMPOTENCE);
-        }
+        $model->star    = $star;
+        $model->title   = $title;
+        $model->content = $content;
+        $model->status  = 7;
+        $model->save();
         return success();
     }
 

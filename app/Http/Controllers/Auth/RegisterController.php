@@ -54,7 +54,6 @@ class RegisterController extends Controller
             'mobile'=>'required|regex:/^1[345789][0-9]{9}/',
             'addr' => 'required|min:5|max:50',
             'shipping_addr' => 'required|min:5|max:50',
-            'management_type' => 'required|integer',
         ]);
     }
 
@@ -72,7 +71,6 @@ class RegisterController extends Controller
             'mobile' => $data['mobile'],
             'addr' => $data['addr'],
             'shipping_addr' => $data['shipping_addr'],
-            'management_type' => $data['management_type'],
             'password' => bcrypt($data['password']),
         ]);
     }

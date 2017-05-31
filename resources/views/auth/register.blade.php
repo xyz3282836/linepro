@@ -78,23 +78,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('management_type') ? ' has-error' : '' }}">
-                            <label for="shop_id" class="col-md-4 control-label">经营类目</label>
-
-                            <div class="col-md-6">
-
-                                <select class="form-control" name="management_type" id="management_type" required>
-                                    <option v-for="(v,k) in cs" v-text="v" :value="k"></option>
-                                </select>
-
-                                @if ($errors->has('management_type'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('management_type') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">密码</label>
 
@@ -139,7 +122,6 @@
             el: '#app',
             methods: {},
             data:{
-                cs:JSON.parse('{!! json_encode(config('linepro.mc')) !!}'),
             }
         })
     </script>
