@@ -41,6 +41,10 @@
                                 <label class="col-md-6 control-label">{{ mask_number($user->idcardno,10) }}</label>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-4 control-label">身份证件图</label>
+                                <label class="col-md-6 control-label">已上传</label>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">会员状态</label>
                                 <label class="col-md-6 control-label">{{ $user->level_text }}</label>
                             </div>
