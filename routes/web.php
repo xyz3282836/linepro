@@ -37,9 +37,10 @@ Route::get('getinfo', 'IndexController@getInfo');
 
 //my
 Route::get('uppwd', 'HomeController@getUpPwd');
-Route::get('upmy', 'HomeController@getUpMy');
+Route::get('my', 'HomeController@getMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
-Route::post('upmy', 'HomeController@postUpMy');
+Route::get('addr', 'HomeController@getAddr');
+Route::post('addr', 'HomeController@postAddr');
 Route::get('vplist', 'HomeController@listVp');
 
 //recharge 充值

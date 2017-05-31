@@ -50,34 +50,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('addr') ? ' has-error' : '' }}">
-                            <label for="addr" class="col-md-4 control-label">联系地址</label>
-
-                            <div class="col-md-6">
-                                <input id="addr" type="text" class="form-control" name="addr" value="{{ old('addr') }}" minlength="5" maxlength="50" required>
-
-                                @if ($errors->has('addr'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('addr') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
-                            <label for="shipping_addr" class="col-md-4 control-label">发货地址</label>
-
-                            <div class="col-md-6">
-                                <input id="shipping_addr" type="text" class="form-control" name="shipping_addr" value="{{ old('shipping_addr') }}" minlength="5" maxlength="50" required>
-
-                                @if ($errors->has('shipping_addr'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('shipping_addr') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">密码</label>
 

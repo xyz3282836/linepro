@@ -33,22 +33,35 @@ class HomeController extends Controller
         return view('home');
     }
 
+    /**
+     * get 修改密码
+     */
     public function getUpPwd()
     {
         return view('auth.passwords.up');
     }
 
-    public function getUpMy()
+    /**
+     * 个人资料
+     */
+    public function getMy()
     {
         $user = Auth::user();
-
-        $viewtext = 'full';
-        if($user->idcardpic != ''){
-            $viewtext = 'part';
-        }
-        return view('my.desc'.$viewtext)->with('user',$user);
+        return view('my.my')->with('user', $user);
     }
 
+    /**
+     * get 地址完善
+     */
+    public function getAddr()
+    {
+        $user = Auth::user();
+        return view('my.addr')->with('user', $user);
+    }
+
+    /**
+     * post 修改密码
+     */
     public function postUpPwd(Request $request)
     {
         if (!Hash::check($request->input('opassword'), Auth::user()->getAuthPassword())) {
@@ -63,25 +76,26 @@ class HomeController extends Controller
             ->with(['status' => '密码修改成功']);
     }
 
-    public function postUpMy()
+    /**
+     * post 地址完善
+     */
+    public function postAddr()
     {
         $this->validate(request(), [
-            'mobile'          => 'required|regex:/^1[345789][0-9]{9}$/',
-            'addr'            => 'required|min:5|max:50',
-            'shipping_addr'   => 'required|min:5|max:50',
-            'real_name'       => 'required|min:2|max:6',
-            'idcardpic'       => 'required',
-            'idcardno'        => ['required', 'regex:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/'],
+            'mobile'        => 'required|regex:/^1[345789][0-9]{9}$/|unique:users',
+            'shipping_addr' => 'required|min:5|max:50',
+            'real_name'     => 'required|min:2|max:6',
+            'idcardpic'     => 'required',
+            'idcardno'      => ['required', 'regex:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/'],
         ]);
-        $pdata['mobile']          = request('mobile');
-        $pdata['addr']            = request('addr');
-        $pdata['shipping_addr']   = request('shipping_addr');
-        $pdata['real_name']       = request('real_name');
-        $pdata['idcardpic']       = request('idcardpic');
-        $pdata['idcardno']        = request('idcardno');
-        $user                     = Auth::getUser();
+        $pdata['mobile']        = request('mobile');
+        $pdata['shipping_addr'] = request('shipping_addr');
+        $pdata['real_name']     = request('real_name');
+        $pdata['idcardpic']     = request('idcardpic');
+        $pdata['idcardno']      = request('idcardno');
+        $user                   = Auth::user();
         $user->update($pdata);
-        return redirect('upmy')
+        return redirect('addr')
             ->with(['status' => '资料修改成功']);
     }
 
@@ -117,10 +131,11 @@ class HomeController extends Controller
     /**
      * 会员有效期记录
      */
-    public function listVp(){
-        if(Auth::user()->level == 2){
-            $tname = '会有有效期截止 <span class="color-red">'.substr(Auth::user()->validity,0,10).'</span>';
-        }else{
+    public function listVp()
+    {
+        if (Auth::user()->level == 2) {
+            $tname = '会有有效期截止 <span class="color-red">' . substr(Auth::user()->validity, 0, 10) . '</span>';
+        } else {
             $tname = '会员有效期记录';
         }
         $list = VpBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);

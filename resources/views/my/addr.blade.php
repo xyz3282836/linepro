@@ -21,36 +21,40 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">个人设置页面</div>
+                    <div class="panel-heading">完善地址</div>
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('upmy') }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('addr') }}">
                             {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">昵称</label>
-                                <label for="mobile" class="col-md-6 control-label">{{ $user->name }}</label>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Email</label>
-                                <label class="col-md-6 control-label">{{ $user->email }}</label>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">手机</label>
-                                <label class="col-md-6 control-label">{{ mask_number($user->mobile,5) }}</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobile" class="col-md-4 control-label">会员状态</label>
-                                <label for="mobile" class="col-md-6 control-label">{{ $user->level_text }}</label>
-                            </div>
 
-                            <div class="form-group">
+                            @if($user->idcardpic != '')
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">手机</label>
+                                    <label class="col-md-6 control-label">{{ mask_number($user->mobile,5) }}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">姓名</label>
+                                    <label class="col-md-6 control-label">{{ mask_name($user->real_name) }}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">身份证号码</label>
+                                    <label class="col-md-6 control-label">{{ mask_number($user->idcardno,10) }}</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">身份证件图</label>
+                                    <label class="col-md-6 control-label">已上传</label>
+                                </div>
+                            @endif
+
+                            <hr>
+                            <div class="form-group {{ $errors->has('real_name') ? ' has-error' : '' }}">
                                 <label for="real_name" class="col-md-4 control-label">真实姓名</label>
                                 <div class="col-md-6">
-                                    <input id="real_name" type="text" class="form-control" name="real_name" value="{{ $user->real_name }}" minlength="2" maxlength="6" required>
+                                    <input id="real_name" type="text" class="form-control" name="real_name" value="{{ old('real_name') }}" minlength="2" maxlength="6" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -58,7 +62,7 @@
                             <div class="form-group {{ $errors->has('idcardno') ? ' has-error' : '' }}">
                                 <label for="idcardno" class="col-md-4 control-label">身份证号码</label>
                                 <div class="col-md-6">
-                                    <input id="idcardno"  type="text" class="form-control" pattern="[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)" name="idcardno" value="{{ $user->idcardno }}" required>
+                                    <input id="idcardno"  type="text" class="form-control" pattern="[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)" name="idcardno" value="{{ old('idcardno') }}" required>
                                     <p class="help-block with-errors">{{ $errors->first('idcardno') }}</p>
                                 </div>
                             </div>
@@ -72,29 +76,20 @@
                             </div>
                             <input type="hidden" name="idcardpic" id="mutipicval" value="{{$user->idcardpic}}">
 
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('mobile') ? ' has-error' : '' }}">
                                 <label for="mobile" class="col-md-4 control-label">手机号</label>
                                 <div class="col-md-6">
-                                    <input id="mobile" pattern="1[345789][0-9]{9}" type="text" class="form-control" name="mobile" value="{{ $user->mobile }}" required>
-                                    <p class="help-block with-errors"></p>
+                                    <input id="mobile" pattern="1[345789][0-9]{9}" type="text" class="form-control" name="mobile" value="{{ old('mobile') }}" required>
+                                    <p class="help-block with-errors">{{ $errors->first('mobile') }}</p>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="addr" class="col-md-4 control-label">联系地址</label>
-
-                                <div class="col-md-6">
-                                    <input id="addr" type="text" class="form-control" name="addr" value="{{ $user->addr }}" minlength="5" maxlength="50" required>
-                                    <p class="help-block with-errors"></p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
                                 <label for="shipping_addr" class="col-md-4 control-label">发货地址</label>
 
                                 <div class="col-md-6">
-                                    <input id="shipping_addr" type="text" class="form-control" name="shipping_addr" value="{{ $user->shipping_addr }}" minlength="5" maxlength="50" required>
-                                    <p class="help-block with-errors"></p>
+                                    <input id="shipping_addr" type="text" class="form-control" name="shipping_addr" value="{{ old('shipping_addr') }}" minlength="5" maxlength="50" required>
+                                    <p class="help-block with-errors">{{ $errors->first('shipping_addr') }}</p>
                                 </div>
                             </div>
 

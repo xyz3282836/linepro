@@ -122,13 +122,24 @@
                                     <li><a href="{{ url('vplist') }}">会员有效期记录</a></li>
                                 </ul>
                             </li>
+
+                            <li class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    地址管理
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('addr') }}">达购转运</a></li>
+                                </ul>
+                            </li>
+
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('upmy') }}">个人设置</a></li>
+                                    <li><a href="{{ url('my') }}">个人资料</a></li>
                                     <li><a href="{{ url('uppwd') }}">修改密码</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
