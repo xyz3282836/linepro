@@ -38,7 +38,7 @@ class User extends Authenticatable
         return $text[$this->level];
     }
 
-    public function checkInfoIscompleted(){
+    public function checkInfoIsCompleted(){
         if($this->mobile == ''){
             return false;
         }

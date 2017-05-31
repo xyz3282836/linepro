@@ -48,9 +48,10 @@
                                     <label class="col-md-4 control-label">身份证件图</label>
                                     <label class="col-md-6 control-label">已上传</label>
                                 </div>
+                                <hr>
                             @endif
 
-                            <hr>
+
                             <div class="form-group {{ $errors->has('real_name') ? ' has-error' : '' }}">
                                 <label for="real_name" class="col-md-4 control-label">真实姓名</label>
                                 <div class="col-md-6">

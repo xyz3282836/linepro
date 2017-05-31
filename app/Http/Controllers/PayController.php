@@ -49,8 +49,8 @@ class PayController extends Controller
         $amount = request('amount');
         if ($amount >= config('linepro.vp_exchange')) {
             $user = Auth::user();
-            if (!$user->checkInfoIscompleted()) {
-                return redirect('upmy');
+            if (!$user->checkInfoIsCompleted()) {
+                return redirect('addr');
             }
         }
         $orderid        = get_order_id();
@@ -298,8 +298,6 @@ class PayController extends Controller
                 return redirect('viewrecharge/' . $taskid);
             case 2:
                 return redirect('viewclickfarm/' . $taskid);
-            case 3:
-                return redirect('viewevaluate/' . $taskid);
             default:
                 throw new MsgException();
         }
