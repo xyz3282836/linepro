@@ -42,9 +42,6 @@ class User extends Authenticatable
         if($this->mobile == ''){
             return false;
         }
-        if($this->addr == ''){
-            return false;
-        }
         if($this->shipping_addr == ''){
             return false;
         }
