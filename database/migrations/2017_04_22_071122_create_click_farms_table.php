@@ -64,6 +64,7 @@ class CreateClickFarmsTable extends Migration
             //索引
             $table->index('uid');
             $table->index('status');
+            $table->index('asin','status');
             $table->unique('orderid');
         });
     }

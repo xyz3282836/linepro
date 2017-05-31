@@ -157,8 +157,31 @@ class CfController extends Controller
      */
     public function listTradeClickFarm()
     {
-        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', '>', 1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
-        return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with('list', $list);
+        $start  = request('start');
+        $end    = request('end');
+        $asin   = request('asin', '');
+        $status = request('status', 1);
+
+        $list = ClickFarm::where('uid', Auth::user()->id);
+        if ($start != null && $end != null) {
+            $list->whereBetween('updated_at', [$start, $end]);
+        }
+        if ($asin != null) {
+            $list->where('asin', $asin);
+        }
+        if ($status != 0) {
+            $list->where('status', $status);
+        }else{
+            $list->where('status', '>',0);
+        }
+        $list = $list->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with([
+            'list'   => $list,
+            'start'  => $start,
+            'end'    => $end,
+            'asin'   => $asin,
+            'status' => $status,
+        ]);
     }
 
     /**
@@ -171,7 +194,6 @@ class CfController extends Controller
         $end    = request('end');
         $asin   = request('asin', '');
         $status = request('status', 1);
-
         $model = ClickFarm::find($id);
         if (!$model) {
             return error(MODEL_NOT_FOUNT);
@@ -180,7 +202,7 @@ class CfController extends Controller
         if ($start != null && $end != null) {
             $list->whereBetween('updated_at', [$start, $end]);
         }
-        if ($asin != '') {
+        if ($asin != null) {
             $list->where('asin', $asin);
         }
         $list = $list->where('status', $status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));

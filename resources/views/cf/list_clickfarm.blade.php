@@ -4,8 +4,14 @@
 
     </style>
 @endsection
+@section('csslib')
+    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/css/bootstrap-datepicker.min.css" rel="stylesheet">
+@endsection
 
 @section('jslib')
+    <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 @endsection
 
 
@@ -16,6 +22,27 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{$tname}}</div>
                 <div class="panel-body">
+                    <form class="form-inline margin-bottom-30" action="{{url('itemlist')}}" method="post">
+                        {{csrf_field()}}
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="ASIN" name="asin" value="{{$asin}}">
+                        </div>
+                        <div class="form-group">
+                            <div class="input-daterange input-group" id="datepicker">
+                                <input type="text" class="form-control" name="start" value="{{$start}}" />
+                                <span class="input-group-addon">to</span>
+                                <input type="text" class="form-control" name="end" value="{{$end}}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control select-sm" name="status" required v-model="status">
+                                <option value="0">综合</option>
+                                <option v-for="(v,k) in statusc" v-text="v" :value="k"></option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="contract">查询</button>
+                    </form>
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -64,7 +91,7 @@
                         </tbody>
                     </table>
                     @if($list)
-                    {!!  $list->links() !!}
+                        {!!  $list->appends(['asin'=>$asin,'start'=>$start,'end'=>$end,'status'=>$status])->links() !!}
                     @endif
                 </div>
             </div>
@@ -77,6 +104,10 @@
 <script>
     new Vue({
         el: '#app',
+        data:{
+            statusc: JSON.parse('{!! json_encode(App\ClickFarm::getExceptText()) !!}'),
+            status:'{{$status}}'
+        },
         methods: {
             pay:function (id) {
                 axios.post("{{url('pay')}}",{type:'cf',id:id}).then(function (d) {
@@ -106,5 +137,14 @@
             })
         },
     });
+
+    $(function () {
+        $('.input-daterange').datepicker({
+            format: 'yyyy-mm-dd',
+            language:'zh-CN',
+            autoclose:true,
+            todayHighlight: true,
+        });
+    })
 </script>
 @endsection

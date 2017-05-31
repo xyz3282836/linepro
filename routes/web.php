@@ -24,7 +24,7 @@ Route::get('home', 'HomeController@index');
 Route::get('addTask', 'CfController@getAddClickFarm');
 Route::post('addclickfarm', 'CfController@postAddClickFarm');
 Route::get('card', 'CfController@listCardClickFarm');
-Route::get('itemlist', 'CfController@listTradeClickFarm');
+Route::any('itemlist', 'CfController@listTradeClickFarm');
 Route::post('canclecf', 'CfController@postCancle');
 Route::any('viewclickfarm/{id}', 'CfController@listCfResult');
 

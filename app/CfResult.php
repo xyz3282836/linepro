@@ -46,7 +46,7 @@ class CfResult extends Model
 
     public function getStatusTextAttribute()
     {
-        $text = CfResult::OUT_TEXT;
+        $text = self::OUT_TEXT;
         return $text[$this->status];
     }
 

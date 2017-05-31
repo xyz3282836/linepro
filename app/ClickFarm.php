@@ -19,16 +19,24 @@ class ClickFarm extends Model
     const STATUS_3 = '正在找寻代购账号';
     const STATUS_4 = '购买中';
     const STATUS_5 = '购买完成';
+    const OUT_TEXT = [
+        0 => ClickFarm::STATUS_0,
+        1 => ClickFarm::STATUS_1,
+        2 => ClickFarm::STATUS_2,
+        3 => ClickFarm::STATUS_3,
+        4 => ClickFarm::STATUS_4,
+        5 => ClickFarm::STATUS_5,
+    ];
+
+    public static function getExceptText(){
+        $arr = self::OUT_TEXT;
+        array_shift($arr);
+        return $arr;
+    }
+
     public function getStatusTextAttribute()
     {
-        $text=[
-            0=>ClickFarm::STATUS_0,
-            1=>ClickFarm::STATUS_1,
-            2=>ClickFarm::STATUS_2,
-            3=>ClickFarm::STATUS_3,
-            4=>ClickFarm::STATUS_4,
-            5=>ClickFarm::STATUS_5,
-        ];
+        $text=self::OUT_TEXT;
         return $text[$this->status];
     }
 
