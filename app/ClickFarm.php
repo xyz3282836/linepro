@@ -27,18 +27,23 @@ class ClickFarm extends Model
         4 => ClickFarm::STATUS_4,
         5 => ClickFarm::STATUS_5,
     ];
+    protected $appends = ['status_text'];
 
-    public static function getExceptText(){
-        $arr = self::OUT_TEXT;
-        $arr[0] = '综合';
+    public static function getExceptText()
+    {
+        $arr = [
+            0 => '综合',
+            2 => ClickFarm::STATUS_2,
+            3 => ClickFarm::STATUS_3,
+            4 => ClickFarm::STATUS_4,
+            5 => ClickFarm::STATUS_5,
+        ];
         return $arr;
     }
 
     public function getStatusTextAttribute()
     {
-        $text=self::OUT_TEXT;
+        $text = self::OUT_TEXT;
         return $text[$this->status];
     }
-
-    protected $appends = ['status_text'];
 }

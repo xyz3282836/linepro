@@ -160,7 +160,7 @@ class CfController extends Controller
         $start  = request('start');
         $end    = request('end');
         $asin   = request('asin');
-        $status = request('status', 1);
+        $status = request('status', 2);
 
         $list = ClickFarm::where('uid', Auth::user()->id);
         if ($start != null && $end != null) {
@@ -172,7 +172,7 @@ class CfController extends Controller
         if ($status != 0) {
             $list->where('status', $status);
         }else{
-            $list->where('status', '>',0);
+            $list->where('status', '>',1);
         }
         $list = $list->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with([
