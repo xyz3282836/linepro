@@ -30,15 +30,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Email</label>
-                                <label class="col-md-6 control-label">{{ mask_number($user->email) }}</label>
+                                <label class="col-md-6 control-label">{{ $user->email }}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">手机</label>
-                                <label class="col-md-6 control-label">{{ mask_number($user->mobile) }}</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->mobile,5) }}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">身份证号码</label>
-                                <label class="col-md-6 control-label">{{ mask_number($user->idcardno) }}</label>
+                                <label class="col-md-6 control-label">{{ mask_number($user->idcardno,10) }}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">会员状态</label>
