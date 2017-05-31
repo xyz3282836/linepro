@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">姓名</label>
-                                <label class="col-md-6 control-label">{{ mask_name($user->realname) }}</label>
+                                <label class="col-md-6 control-label">{{ $user->realname }}</label>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">身份证号码</label>
