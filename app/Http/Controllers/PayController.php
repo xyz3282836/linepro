@@ -47,12 +47,6 @@ class PayController extends Controller
             'amount' => 'required|numeric|min:1',
         ]);
         $amount = request('amount');
-        if ($amount >= config('linepro.vp_exchange')) {
-            $user = Auth::user();
-            if (!$user->checkInfoIsCompleted()) {
-                return redirect('addr');
-            }
-        }
         $orderid        = get_order_id();
         $model          = new Recharge;
         $model->uid     = Auth::user()->id;
