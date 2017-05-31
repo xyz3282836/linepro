@@ -126,7 +126,7 @@ class CfController extends Controller
     public function listCardClickFarm()
     {
         $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
-        return view('cf.list_clickfarm')->with('tname', '购物车商品列表')->with('list', $list);
+        return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list);
     }
 
     /**
@@ -159,7 +159,7 @@ class CfController extends Controller
     {
         $start  = request('start');
         $end    = request('end');
-        $asin   = request('asin', '');
+        $asin   = request('asin');
         $status = request('status', 1);
 
         $list = ClickFarm::where('uid', Auth::user()->id);
@@ -192,7 +192,7 @@ class CfController extends Controller
     {
         $start  = request('start');
         $end    = request('end');
-        $asin   = request('asin', '');
+        $asin   = request('asin');
         $status = request('status', 1);
         $model = ClickFarm::find($id);
         if (!$model) {
