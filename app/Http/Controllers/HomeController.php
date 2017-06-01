@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\Vp;
-use App\QuotaBill;
 use App\VpBill;
 use Auth;
 use DB;
