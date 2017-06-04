@@ -73,7 +73,7 @@
                             <td>{{config('linepro.base_exchange.' . Auth::user()->level)}}元</td>
                             <td>{{$v->task_num}}</td>
                             <td>{{$v->us_exchange_rate}}</td>
-                            <td>{{$v->amount}}</td>
+                            <td>{{$v->amount}}元</td>
                             <td>{{$v->created_at}}</td>
                             <td>
                                 @if($v->status == 1)
