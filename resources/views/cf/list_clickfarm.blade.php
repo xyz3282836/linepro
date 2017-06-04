@@ -69,8 +69,8 @@
                             <td><a href="{{$v->amazon_pic}}"><img src="{{$v->amazon_pic}}" width="50" alt=""></a></td>
                             <td>{{$v->shop_id}}</td>
                             <td>{{$v->delivery_addr}}</td>
-                            <td>{{$v->final_price}}</td>
-                            <td>{{config('linepro.base_exchange.' . Auth::user()->level)}}</td>
+                            <td>{{$v->final_price}}元</td>
+                            <td>{{config('linepro.base_exchange.' . Auth::user()->level)}}元</td>
                             <td>{{$v->task_num}}</td>
                             <td>{{$v->us_exchange_rate}}</td>
                             <td>{{$v->amount}}</td>
