@@ -77,6 +77,11 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"> 服务费</label>
+                                <label class="col-md-6 control-label" v-text="exchange"></label>
+                            </div>
+
                             {{--num--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 代购件数</label>

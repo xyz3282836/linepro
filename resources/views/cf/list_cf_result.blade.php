@@ -46,7 +46,7 @@
                                     <th>#</th>
                                     {{--<th>商品图片</th>--}}
                                     {{--<th>商品title</th>--}}
-                                    {{--<th>店铺id</th>--}}
+                                    <th>店铺id</th>
                                     <th>ASIN</th>
                                     <th>账号邮箱</th>
                                     <th>亚马逊订单号</th>
@@ -61,6 +61,7 @@
                                 @forelse($list as $v)
                                 <tr>
                                     <td>{{$v->id}}</td>
+                                    <td>{{$v->shop_id}}</td>
                                     <td>{{$v->asin}}</td>
                                     <td>{{$v->amazon_email}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
