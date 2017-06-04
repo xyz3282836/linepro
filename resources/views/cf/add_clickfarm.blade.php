@@ -146,6 +146,7 @@
                 }
             },
             data: {
+                exchange:{{$base_exchange}},
                 finalprice:{{request('totalPrice')}},
                 task:1,
                 usexcrate:{{config('linepro.us_exchange_rate')}},
