@@ -4,6 +4,14 @@
     <link href="{{URL::asset('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
 @endsection
 
+@section('css')
+    <style type="text/css">
+        .col-md-6.control-label{
+            text-align: left;
+        }
+    </style>
+@endsection
+
 @section('jslib')
     <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js')}}"></script>
