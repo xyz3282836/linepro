@@ -51,11 +51,11 @@
                             <th>商品图片</th>
                             <th>商铺ID</th>
                             <th>送货地址</th>
-                            <th>单价</th>
-                            <th>服务费</th>
+                            <th>单价(美元)</th>
+                            <th>服务费(元)</th>
                             <th>商品数量</th>
                             <th>当时汇率</th>
-                            <th>总价</th>
+                            <th>总价(元)</th>
                             <th>下单时间</th>
                             <th>操作</th>
                         </tr>
@@ -69,11 +69,11 @@
                             <td><a href="{{$v->amazon_pic}}"><img src="{{$v->amazon_pic}}" width="50" alt=""></a></td>
                             <td>{{$v->shop_id}}</td>
                             <td>{{$v->delivery_addr}}</td>
-                            <td>{{$v->final_price}}元</td>
-                            <td>{{config('linepro.base_exchange.' . Auth::user()->level)}}元</td>
+                            <td>{{$v->final_price}}</td>
+                            <td>{{config('linepro.base_exchange.' . Auth::user()->level)}}</td>
                             <td>{{$v->task_num}}</td>
                             <td>{{$v->us_exchange_rate}}</td>
-                            <td>{{$v->amount}}元</td>
+                            <td>{{$v->amount}}</td>
                             <td>{{$v->created_at}}</td>
                             <td>
                                 @if($v->status == 1)
