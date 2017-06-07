@@ -19,7 +19,8 @@ class CreateUsersTable extends Migration
             $table->char('email',50)->unique();
             $table->string('password');
             $table->tinyInteger('level')->default(1); // 1 普通会员 2 认证会员
-            $table->decimal('amount',10,2)->default(0.00);//总金额
+            $table->decimal('amount',10,2)->default(0.00);//余额
+            $table->integer('golds')->default(0);//金币余额
             $table->char('mobile',15)->default('');
             $table->char('addr',50)->default('');//联系地址
             $table->char('shipping_addr',50)->default('');//发货地址
