@@ -19,6 +19,4 @@ class GoldBill extends Model
     protected $fillable = [
 
     ];
-
-    const Rate = 100;
 }

@@ -28,6 +28,11 @@ return [
     //每页多少条目
     'perpage' => 10,
 
+    //人名币兑金币
+    'rmb_exchange_gold'=>100,
+
+
+
     'bigc'=>[
         0   =>  '不选类别直接搜索',
         1   =>  'Alexa Skills',
