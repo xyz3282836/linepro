@@ -60,6 +60,23 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('captcha') ? ' has-error' : '' }}">
+                            <label for="captcha" class="col-md-4 control-label">验证码</label>
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <input id="captcha" class="form-control" type="captcha" name="captcha" required>
+                                    @if ($errors->has('captcha'))
+                                        <span class="help-block">
+                                                <strong>验证码输入错误</strong>
+                                            </span>
+                                    @endif
+                                </div>
+                                <span class="col-md-1 refereshrecapcha" @click="refreshCaptcha">
+                                    {!! captcha_img('flat')  !!}
+                                    </span>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary ladda-button" data-style="contract">
@@ -75,14 +92,23 @@
 </div>
 @endsection
 
-
 @section('js')
     <script>
         new Vue({
             el: '#app',
-            methods: {},
+            methods: {
+                refreshCaptcha:function(){
+                    axios.get("{{url('refereshcapcha')}}").then(function (d) {
+                        $('.refereshrecapcha').html(d.data);
+                    })
+                },
+            },
+            mounted: function () {
+                this.$nextTick(()=>{
+                })
+            },
             data:{
             }
-        })
+        });
     </script>
 @endsection

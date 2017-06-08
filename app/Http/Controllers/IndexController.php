@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use Gregwar\Captcha\CaptchaBuilder;
+use Session;
+
 class IndexController extends Controller
 {
     /**
@@ -12,7 +15,7 @@ class IndexController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('guest');
     }
 
     /**
@@ -21,5 +24,10 @@ class IndexController extends Controller
     public function getInfo()
     {
         phpinfo();
+    }
+
+    public function captcha()
+    {
+        return captcha_img('flat');
     }
 }
