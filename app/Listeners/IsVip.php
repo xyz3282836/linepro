@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\Vp;
+use App\Events\Vip;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class IsVp
+class IsVip
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class IsVp
     /**
      * Handle the event.
      *
-     * @param  Vp  $event
+     * @param  Vip  $event
      * @return void
      */
-    public function handle(Vp $event)
+    public function handle(Vip $event)
     {
         $model = $event->model;
         if(strtotime($model->validity) < time()){

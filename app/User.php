@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password','mobile','addr','management_type','shipping_addr','real_name','idcardpic','idcardno','amount'
+        'name', 'email', 'shop_id', 'password','mobile','addr','management_type','shipping_addr','real_name','idcardpic','idcardno','golds','amount'
     ];
 
     /**
@@ -55,5 +55,11 @@ class User extends Authenticatable
             return false;
         }
         return true;
+    }
+
+    public function getGoldByReg($gold){
+        $this->gold = $gold;
+        $this->save();
+        GoldBill::getByReg($this->id,$gold);
     }
 }

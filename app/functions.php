@@ -154,3 +154,7 @@ function mask_email($email){
     $first = $arr[0];
     return substr($first,0,strlen($first)-4).'****@'.$arr[1];
 }
+
+function gconfig($key){
+    return config('linepro.'.$key);
+}

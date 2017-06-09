@@ -15,7 +15,7 @@ use App\Events\CfResults;
 use App\Exceptions\MsgException;
 use App\Recharge;
 use App\User;
-use App\VpBill;
+use App\VipBill;
 use Auth;
 use DB;
 use Exception;
@@ -109,7 +109,7 @@ class PayController extends Controller
                             } else {
                                 $validity = date('Y-m-d H:i:s', strtotime('+ ' . $adddays . ' days', strtotime($user->validity)));
                             }
-                            VpBill::create([
+                            VipBill::create([
                                 'uid'      => $user->id,
                                 'rid'      => $model->id,
                                 'days'     => $adddays,

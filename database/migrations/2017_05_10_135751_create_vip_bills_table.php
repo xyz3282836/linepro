@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVpBillsTable extends Migration
+class CreateVipBillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateVpBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vp_bills', function (Blueprint $table) {
+        Schema::create('vip_bills', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('uid')->default(0);//用户id
             $table->integer('rid')->default(0);//充值记录id

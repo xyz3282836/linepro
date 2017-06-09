@@ -20,6 +20,7 @@ class CreateRechargesTable extends Migration
             $table->char('orderid',30)->default('');//订单号
             $table->char('alipay_orderid',64)->default('');//订单号
             $table->decimal('amount',10,2)->default(0.00);//充值金额
+            $table->decimal('rate')->default(0.00);//rmb-gold
             $table->integer('golds')->default(0);//等价金币
             $table->tinyInteger('status')->default(0);// 0 未审核 1 通过 -1 不通过
             $table->char('feedback',50)->default('');//充值反馈

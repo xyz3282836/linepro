@@ -9,7 +9,7 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 
-class VpBill extends Model
+class VipBill extends Model
 {
 
     /**

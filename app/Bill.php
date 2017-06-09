@@ -30,7 +30,7 @@ class Bill extends Model
     }
 
     protected $fillable = [
-        'uid', 'uid', 'type', 'orderid', 'in','out', 'amount', 'taskid'
+        'uid', 'type', 'orderid', 'in','out', 'amount', 'taskid'
     ];
 
 }

@@ -16,10 +16,11 @@ class CreateGoldBillsTable extends Migration
         Schema::create('gold_bills', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('uid')->default(0);//用户id
-            $table->tinyInteger('type')->default(1);//消费类型 1 充值  2 代购任务消费
+            $table->tinyInteger('type')->default(1);//消费类型 1注册 2 充值  3 代购任务消费
             $table->char('orderid',30)->default('');//订单号
             $table->integer('in')->default(0);//收入
             $table->integer('out')->default(0);//支出
+            $table->decimal('rate')->default(0.00);//rmb-gold
             $table->integer('golds')->default(0);//金币余额
             $table->integer('taskid')->default(0);//
             $table->timestamps();

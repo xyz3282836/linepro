@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\Vp;
-use App\VpBill;
+use App\Events\Vip;
+use App\VipBill;
 use Auth;
 use DB;
 use Hash;
@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        event(new Vp(Auth::user()));
+        event(new Vip(Auth::user()));
         return view('home');
     }
 
@@ -130,15 +130,15 @@ class HomeController extends Controller
     /**
      * 会员有效期记录
      */
-    public function listVp()
+    public function listVip()
     {
         if (Auth::user()->level == 2) {
             $tname = '会有有效期截止 <span class="color-red">' . substr(Auth::user()->validity, 0, 10) . '</span>';
         } else {
             $tname = '会员有效期记录';
         }
-        $list = VpBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
-        return view('my.list_vp')->with('tname', $tname)->with('list', $list);
+        $list = VipBill::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
+        return view('my.list_vip')->with('tname', $tname)->with('list', $list);
     }
 
 }

@@ -40,7 +40,6 @@
                         </table>
                         @if($list)
                             {!!  $list->links() !!}
-
                         @endif
                     </div>
                 </div>

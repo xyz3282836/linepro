@@ -23,18 +23,28 @@ return [
     'vp_days'=>30,
 
     //认证会员的费用 单位元
-    'vp_exchange'=>500,
+    'vp_exchange'=>1000,
 
     //每页多少条目
     'perpage' => 10,
 
     //人名币兑金币
-    'rmb_exchange_gold'=>100,
+    'rmbtogold'=>100,
+    'registergold'=>10000,
 
-    //评价权限函数
-    'evaluate.normal.weight'=>'',
+    //评价
+    'regular.evaluate'=>'0',
+    'vip.evaluate'=>'0',
 
+    //服务费率
+    'regular.service'=>'0.15',
+    'vip.service'=>'0.1',
 
+    //转运费
+    'exchange.transport'=>350,
+
+    //会员费用
+    'exchange.vip'=>1000,
 
 
     'bigc'=>[

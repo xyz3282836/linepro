@@ -41,7 +41,7 @@ Route::get('my', 'HomeController@getMy');
 Route::post('uppwd', 'HomeController@postUpPwd');
 Route::get('addr', 'HomeController@getAddr');
 Route::post('addr', 'HomeController@postAddr');
-Route::get('vplist', 'HomeController@listVp');
+Route::get('viplist', 'HomeController@listVip');
 
 //recharge 充值
 Route::get('recharge', 'PayController@getRecharge');
