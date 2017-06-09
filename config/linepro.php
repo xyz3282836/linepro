@@ -31,6 +31,10 @@ return [
     //人名币兑金币
     'rmb_exchange_gold'=>100,
 
+    //评价权限函数
+    'evaluate.normal.weight'=>'',
+
+
 
 
     'bigc'=>[
