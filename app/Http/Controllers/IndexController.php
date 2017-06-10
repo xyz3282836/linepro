@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
-use Gregwar\Captcha\CaptchaBuilder;
-use Session;
+use DebugBar\DebugBar;
+use Log;
 
 class IndexController extends Controller
 {
