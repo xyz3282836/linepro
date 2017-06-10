@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DebugBar\DebugBar;
-use Log;
-
 class IndexController extends Controller
 {
     /**
