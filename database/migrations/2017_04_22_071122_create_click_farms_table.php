@@ -29,7 +29,8 @@ class CreateClickFarmsTable extends Migration
             $table->decimal('final_price',10,2)->default(0.00);//美元价格
             $table->decimal('us_exchange_rate',3,1)->default(0.00);//美元对人名币汇率
 
-
+            //3.0
+            $table->tinyInteger('from_site')->default(1); // 来自站点
 
             //1.0
             $table->tinyInteger('platform_type')->default(1);//平台
@@ -59,6 +60,7 @@ class CreateClickFarmsTable extends Migration
             $table->char('orderid',30)->default('');//订单号
             $table->tinyInteger('status')->default(1);//状态 0:取消订单 1:待支付 2:已经支付 3:找寻买家中 4:买家找到，等待开始时间到 5:购买完成
             $table->decimal('amount',10,2)->default(0.00);//消费金额
+            $table->integer('golds')->default(0);//手续费金币
             $table->timestamps();
 
             //索引

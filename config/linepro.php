@@ -25,6 +25,9 @@ return [
     //认证会员的费用 单位元
     'vp_exchange'=>1000,
 
+    /**
+     * ----------------------------------
+     */
     //每页多少条目
     'perpage' => 10,
 
@@ -37,8 +40,15 @@ return [
     'vip.evaluate'=>'0',
 
     //服务费率
-    'regular.service'=>'0.15',
-    'vip.service'=>'0.1',
+    'regular.service.one.rate'=>'0.2',
+    'regular.service.three.rate'=>'0.15',
+    'regular.service.one.min'=>'2000',
+    'regular.service.three.min'=>'1500',
+
+    'vip.service.one.rate'=>'0.13',
+    'vip.service.three.rate'=>'0.1',
+    'vip.service.one.min'=>'1300',
+    'vip.service.three.min'=>'1000',
 
     //转运费
     'exchange.transport'=>350,

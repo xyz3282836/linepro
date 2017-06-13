@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password','mobile','addr','management_type','shipping_addr','real_name','idcardpic','idcardno','golds','amount'
+        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'amount', 'reg_time'
     ];
 
     /**
@@ -29,37 +29,40 @@ class User extends Authenticatable
 
     const STATUS_1 = '普通会员';
     const STATUS_2 = '认证会员';
+
     public function getLevelTextAttribute()
     {
-        $text=[
-            1=>User::STATUS_1,
-            2=>User::STATUS_2,
+        $text = [
+            1 => User::STATUS_1,
+            2 => User::STATUS_2,
         ];
         return $text[$this->level];
     }
 
-    public function checkInfoIsCompleted(){
-        if($this->mobile == ''){
+    public function checkInfoIsCompleted()
+    {
+        if ($this->mobile == '') {
             return false;
         }
-        if($this->shipping_addr == ''){
+        if ($this->shipping_addr == '') {
             return false;
         }
-        if($this->real_name == ''){
+        if ($this->real_name == '') {
             return false;
         }
-        if($this->idcardno == ''){
+        if ($this->idcardno == '') {
             return false;
         }
-        if($this->idcardpic == ''){
+        if ($this->idcardpic == '') {
             return false;
         }
         return true;
     }
 
-    public function getGoldByReg($gold){
-        $this->gold = $gold;
+    public function getGoldByReg($gold)
+    {
+        $this->golds = $gold;
         $this->save();
-        GoldBill::getByReg($this->id,$gold);
+        GoldBill::getByReg($this->id, $gold);
     }
 }
