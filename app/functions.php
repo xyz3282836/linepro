@@ -127,42 +127,87 @@ function get_alipay()
 
 function mask_number($num, $star_num = 4)
 {
-    $star_num = $star_num >= strlen($num) ? strlen($num)-2 : (int)$star_num;
-    if($star_num % 2 == 0)
-    {
-        $star_left = $star_right = $star_num/2;
-    }else{
-        $star_left = floor($star_num/2);
+    $star_num = $star_num >= strlen($num) ? strlen($num) - 2 : (int)$star_num;
+    if ($star_num % 2 == 0) {
+        $star_left = $star_right = $star_num / 2;
+    } else {
+        $star_left  = floor($star_num / 2);
         $star_right = $star_num - $star_left;
     }
-    $len = strlen($num);
-    $left = floor($len/2)-$star_left;
-    $right = round($len/2)-$star_right;
+    $len    = strlen($num);
+    $left   = floor($len / 2) - $star_left;
+    $right  = round($len / 2) - $star_right;
     $middle = $len - $left - $right;
-    $result = substr($num, 0, $left).str_repeat("*", $middle).substr($num, $left+$middle, $right);
+    $result = substr($num, 0, $left) . str_repeat("*", $middle) . substr($num, $left + $middle, $right);
     return $result;
 }
 
-function mask_name($str){
-    $num = mb_strlen($str,'UTF-8');
-    $end = mb_substr($str,-1,1,'UTF-8');
-    return str_repeat('*',$num-1).$end;
+function mask_name($str)
+{
+    $num = mb_strlen($str, 'UTF-8');
+    $end = mb_substr($str, -1, 1, 'UTF-8');
+    return str_repeat('*', $num - 1) . $end;
 }
 
-function mask_email($email){
-    $arr = explode('@',$email);
+function mask_email($email)
+{
+    $arr   = explode('@', $email);
     $first = $arr[0];
-    return substr($first,0,strlen($first)-4).'****@'.$arr[1];
+    return substr($first, 0, strlen($first) - 4) . '****@' . $arr[1];
 }
 
-function gconfig($key){
-    return \App\Gconfig::where('key',$key)->value('value');
+function gconfig($key)
+{
+    return \App\Gconfig::where('key', $key)->value('value');
 }
 
-function get_rate($site){
+function get_rate($site)
+{
     return App\ExchangeRate::getRate($site);
 }
 
-function get_currency($site){
+function get_currency($site)
+{
     return App\ExchangeRate::getCurrencyText($site);
+}
+
+function get_cf_price($cf)
+{
+    $trans         = gconfig('cost.transport');
+    $rate          = get_rate($cf->from_site);
+    $srate         = get_srate();
+    $tmp           = round($cf->task_num * $cf->finalprice * $rate * $srate[$cf->time_type] * 100);
+    $tmp           = $tmp < $srate[$cf->time_type]['mingolds'] ? $srate[$cf->time_type]['mingolds'] : $tmp;
+    $cf->golds     = $tmp;
+    $cf->rate      = $rate;
+    $cf->transport = $cf->delivery_type == 1 ? 0 : round($cf->task_num * $trans, 2);
+    $cf->amount    = round($cf->task_num * $cf->finalprice * $rate + $cf->transport, 2);
+}
+
+function get_srate()
+{
+    if (Auth::user()->level == 1) {
+        $arr = [
+            1 => [
+                'mingolds' => gconfig('regular.service.one.min'),
+                'rate'     => gconfig('regular.service.one.rate')
+            ],
+            3 => [
+                'mingolds' => gconfig('regular.service.three.min'),
+                'rate'     => gconfig('regular.service.three.rate')
+            ]
+        ];
+    } else {
+        $arr = [
+            1 => [
+                'mingolds' => gconfig('vip.service.one.min'),
+                'rate'     => gconfig('vip.service.one.rate')
+            ],
+            3 => [
+                'mingolds' => gconfig('vip.service.three.min'),
+                'rate'     => gconfig('vip.service.three.rate')
+            ]
+        ];
+    }
+    return $arr;
 }

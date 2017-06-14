@@ -28,35 +28,12 @@ class CfController extends Controller
      */
     public function getAddClickFarm()
     {
-        $site = request('site', 1);
-        if (Auth::user()->level == 1) {
-            $arr = [
-                1 => [
-                    'mingolds' => gconfig('regular.service.one.min'),
-                    'rate'     => gconfig('regular.service.one.rate')
-                ],
-                3 => [
-                    'mingolds' => gconfig('regular.service.three.min'),
-                    'rate'     => gconfig('regular.service.three.rate')
-                ]
-            ];
-        } else {
-            $arr = [
-                1 => [
-                    'mingolds' => gconfig('vip.service.one.min'),
-                    'rate'     => gconfig('vip.service.one.rate')
-                ],
-                3 => [
-                    'mingolds' => gconfig('vip.service.three.min'),
-                    'rate'     => gconfig('vip.service.three.rate')
-                ]
-            ];
-        }
+        $site  = request('site', 1);
         $trans = gconfig('cost.transport');
         return view('cf.add_clickfarm')->with([
             'rate'  => get_rate($site),
             'ctext' => get_currency($site),
-            'srate' => json_encode($arr),
+            'srate' => json_encode(get_srate()),
             'trans' => $trans
         ]);
     }
@@ -109,22 +86,21 @@ class CfController extends Controller
             'ba_asin'               => '',
         ]);
 
-        $model                   = new ClickFarm;
-        $model->uid              = Auth::user()->id;
-        $model->orderid          = get_order_id();
-        $model->platform_type    = 1;
-        $model->us_exchange_rate = config('linepro.us_exchange_rate');
-        $model->asin             = $pdata['asin'];
-        $model->task_num         = $pdata['task_num'];
-        $model->final_price      = $pdata['final_price'];
-        $model->shop_id          = $pdata['shop_id'];
-        $model->amazon_url       = $pdata['amazon_url'];
-        $model->amazon_pic       = $pdata['amazon_pic'];
-        $model->amazon_title     = $pdata['amazon_title'];
-        $model->delivery_addr    = $pdata['delivery_addr'];
-        $model->from_site        = $pdata['from_site'];
-        $model->time_type        = $pdata['time_type'];
-        $model->delivery_type    = $pdata['delivery_type'];
+        $model                = new ClickFarm;
+        $model->uid           = Auth::user()->id;
+        $model->orderid       = get_order_id();
+        $model->platform_type = 1;
+        $model->asin          = $pdata['asin'];
+        $model->task_num      = $pdata['task_num'];
+        $model->final_price   = $pdata['final_price'];
+        $model->shop_id       = $pdata['shop_id'];
+        $model->amazon_url    = $pdata['amazon_url'];
+        $model->amazon_pic    = $pdata['amazon_pic'];
+        $model->amazon_title  = $pdata['amazon_title'];
+        $model->delivery_addr = $pdata['delivery_addr'];
+        $model->from_site     = $pdata['from_site'];
+        $model->time_type     = $pdata['time_type'];
+        $model->delivery_type = $pdata['delivery_type'];
         //1.0
         $model->is_fba           = 1;
         $model->discount_code    = '';
@@ -142,6 +118,7 @@ class CfController extends Controller
         $model->start_time       = Carbon::now();
         $model->customer_message = '';
         $model->amount           = $pdata['amount'];
+        get_cf_price($model);
         $model->save();
         return redirect('card');
     }
