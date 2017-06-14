@@ -79,8 +79,36 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input readonly type="number" step="0.01" placeholder="" required class="form-control" name="final_price" min="0" max="999999" v-model="finalprice">
-                                        <div class="input-group-addon">美元</div>
+                                        <div class="input-group-addon">{{$ctext}}</div>
                                     </div>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 下单方式</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline" v-for="(v,k) in time_typec">
+                                        <input type="radio" v-model="time_type" name="time_type" :value="k" required>@{{ v }}
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 配送方式</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline" v-for="(v,k) in delivery_typec">
+                                        <input type="radio" v-model="delivery_type" name="delivery_type" :value="k" required>@{{ v }}
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group" v-show="delivery_type == 2">
+                                <label class="col-md-4 control-label"></label>
+                                <div class="col-md-6">
+                                    <input type="text" placeholder="国内转运地址" class="form-control" name="delivery_addr" maxlength="50" value="{{Auth::user()->shipping_addr}}">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -89,32 +117,24 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 代购件数</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" class="form-control" value="{{request('')}}" name="task_num" min="1" max="9999" v-model="task" required>
+                                    <input type="number" placeholder="" class="form-control" name="task_num" min="1" max="9999" v-model="task_num" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
-                                <div class="col-md-2"><p class="color-red">共计 <span v-text="getprice"></span> 元</p></div>
                             </div>
 
-                            {{--送货地址--}}
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><span class="color-red">*</span> 送货地址</label>
-                                <div class="col-md-6">
-                                    <select class="form-control" name="delivery_addr" v-model="delivery_addr" required>
-                                        <option value="{{Auth::user()->shipping_addr}}">{{Auth::user()->shipping_addr}}</option>
-                                        <option value="美国转运仓">美国转运仓</option>
-                                    </select>
-                                    <p class="help-block with-errors"></p>
-                                </div>
+                                <label class="col-md-4 control-label"> 转运费</label>
+                                <label class="col-md-6 control-label" v-text="gettrans"></label>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"> 服务费</label>
-                                <label class="col-md-6 control-label" v-text="exchange"></label>
+                                <label class="col-md-6 control-label" v-text="getservice"></label>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"> 共计</label>
-                                <label class="col-md-6 control-label" v-text="exchange"></label>
+                                <label class="col-md-6 control-label" v-text="getall"></label>
                             </div>
 
                             <div class="form-group">
@@ -145,25 +165,30 @@
                 })
             },
             computed:{
-                getprice:function () {
-                    var exchange = {{$base_exchange}};
-                    var freight_exchange = {{$freight_exchange}};
-                    var one = this.finalprice;
-                    var rate = this.usexcrate.toFixed(1);
-                    if(this.delivery_addr == '美国转运仓'){
-                        exchange += freight_exchange;
-                    }
-                    var all = (one * rate + exchange) * Number(this.task);
-                    all = all.toFixed(2);
-                    return all;
-                }
+                getall:function () {
+                    return (this.task_num*this.finalprice*this.rate + this.alltrans).toFixed(2)+'元';
+                },
+                getservice:function () {
+                    var tmp = (this.task_num*this.finalprice*this.rate*100*this.srate[this.time_type].rate).toFixed(0);
+                    tmp = tmp < Number(this.srate[this.time_type].mingolds)?this.srate[this.time_type].mingolds:tmp
+                    return tmp+'G';
+                },
+                gettrans:function () {
+                    this.delivery_type == 1?this.alltrans=0:this.alltrans=this.task_num*this.trans;
+                    return this.alltrans.toFixed(2)+'元';
+                },
             },
             data: {
-                exchange:{{$base_exchange}}+'元',
+                alltrans:0,
+                rate:{{$rate}},
+                trans:{{$trans}},
+                srate:JSON.parse('{!! $srate !!}'),
                 finalprice:{{request('totalPrice')}},
-                task:1,
-                usexcrate:{{config('linepro.us_exchange_rate')}},
-                delivery_addr:"{{Auth::user()->shipping_addr}}"
+                task_num:1,
+                time_type:1,
+                time_typec:JSON.parse('{!! json_encode(config('linepro.time_typec')) !!}'),
+                delivery_type:1,
+                delivery_typec:JSON.parse('{!! json_encode(config('linepro.delivery_typec')) !!}'),
             }
         });
 

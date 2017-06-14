@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExchangeRate extends Model
 {
-
-    /**
-     * php artisan db:seed --class=ExchangeRateSeeder
-     */
-
     const CURRENCY_USD = 1;
     const CURRENCY_CAD = 2;
     const CURRENCY_GBP = 3;
@@ -51,5 +46,13 @@ class ExchangeRate extends Model
                 break;
         }
         return self::CURRENCY_USD;
+    }
+
+    public static function getCurrencyText($site){
+        return self::where('id',self::getCurrency($site))->value('name');
+    }
+
+    public static function getRate($site){
+        return self::where('id',self::getCurrency($site))->value('rate');
     }
 }

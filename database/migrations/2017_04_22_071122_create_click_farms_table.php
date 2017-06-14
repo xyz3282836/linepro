@@ -31,6 +31,8 @@ class CreateClickFarmsTable extends Migration
 
             //3.0
             $table->tinyInteger('from_site')->default(1); // 来自站点
+            $table->tinyInteger('time_type')->default(1); // 1:24小时 3:72小时
+            $table->tinyInteger('delivery_type')->default(1);//1:自行转运 2:达购转运
 
             //1.0
             $table->tinyInteger('platform_type')->default(1);//平台
@@ -59,6 +61,7 @@ class CreateClickFarmsTable extends Migration
 
             $table->char('orderid',30)->default('');//订单号
             $table->tinyInteger('status')->default(1);//状态 0:取消订单 1:待支付 2:已经支付 3:找寻买家中 4:买家找到，等待开始时间到 5:购买完成
+            $table->decimal('transport',10,2)->default(0.00);//转运费
             $table->decimal('amount',10,2)->default(0.00);//消费金额
             $table->integer('golds')->default(0);//手续费金币
             $table->timestamps();

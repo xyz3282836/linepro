@@ -156,5 +156,13 @@ function mask_email($email){
 }
 
 function gconfig($key){
-    return config('linepro.'.$key);
+    return \App\Gconfig::where('key',$key)->value('value');
+}
+
+function get_rate($site){
+    return App\ExchangeRate::getRate($site);
+}
+
+function get_currency($site){
+    return App\ExchangeRate::getCurrencyText($site);
 }

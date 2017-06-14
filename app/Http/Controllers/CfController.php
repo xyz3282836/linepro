@@ -11,12 +11,9 @@ namespace App\Http\Controllers;
 
 use App\CfResult;
 use App\ClickFarm;
-use App\Exceptions\MsgException;
 use App\QuotaBill;
 use Auth;
 use Carbon\Carbon;
-use DB;
-use Mockery\Exception;
 
 class CfController extends Controller
 {
@@ -31,11 +28,36 @@ class CfController extends Controller
      */
     public function getAddClickFarm()
     {
-        $base_exchange    = config('linepro.base_exchange.' . Auth::user()->level);
-        $freight_exchange = config('linepro.freight_exchange.' . Auth::user()->level);
+        $site = request('site', 1);
+        if (Auth::user()->level == 1) {
+            $arr = [
+                1 => [
+                    'mingolds' => gconfig('regular.service.one.min'),
+                    'rate'     => gconfig('regular.service.one.rate')
+                ],
+                3 => [
+                    'mingolds' => gconfig('regular.service.three.min'),
+                    'rate'     => gconfig('regular.service.three.rate')
+                ]
+            ];
+        } else {
+            $arr = [
+                1 => [
+                    'mingolds' => gconfig('vip.service.one.min'),
+                    'rate'     => gconfig('vip.service.one.rate')
+                ],
+                3 => [
+                    'mingolds' => gconfig('vip.service.three.min'),
+                    'rate'     => gconfig('vip.service.three.rate')
+                ]
+            ];
+        }
+        $trans = gconfig('cost.transport');
         return view('cf.add_clickfarm')->with([
-            'base_exchange'    => $base_exchange,
-            'freight_exchange' => $freight_exchange,
+            'rate'  => get_rate($site),
+            'ctext' => get_currency($site),
+            'srate' => json_encode($arr),
+            'trans' => $trans
         ]);
     }
 
@@ -54,10 +76,12 @@ class CfController extends Controller
             'final_price'   => 'required',
             'task_num'      => 'required|integer',
             'delivery_addr' => 'required|min:5|max:50',
+            'from_site'     => 'required|integer',
+            'time_type'     => 'required|integer',
+            'delivery_type' => 'required|integer',
         ]);
 
         $pdata = request()->all();
-
 
         $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
@@ -98,6 +122,9 @@ class CfController extends Controller
         $model->amazon_pic       = $pdata['amazon_pic'];
         $model->amazon_title     = $pdata['amazon_title'];
         $model->delivery_addr    = $pdata['delivery_addr'];
+        $model->from_site        = $pdata['from_site'];
+        $model->time_type        = $pdata['time_type'];
+        $model->delivery_type    = $pdata['delivery_type'];
         //1.0
         $model->is_fba           = 1;
         $model->discount_code    = '';
@@ -112,7 +139,7 @@ class CfController extends Controller
         $model->browse_step      = 1;
         $model->mixdata          = $pdata['mixdata'];
         $model->interval_time    = 1;
-        $model->start_time       = Carbon::now()->toDateTimeString();
+        $model->start_time       = Carbon::now();
         $model->customer_message = '';
         $model->amount           = $pdata['amount'];
         $model->save();
@@ -171,8 +198,8 @@ class CfController extends Controller
         }
         if ($status != 0) {
             $list->where('status', $status);
-        }else{
-            $list->where('status', '>',1);
+        } else {
+            $list->where('status', '>', 1);
         }
         $list = $list->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with([
@@ -194,7 +221,7 @@ class CfController extends Controller
         $end    = request('end');
         $asin   = request('asin');
         $status = request('status', 1);
-        $model = ClickFarm::find($id);
+        $model  = ClickFarm::find($id);
         if (!$model) {
             return error(MODEL_NOT_FOUNT);
         }

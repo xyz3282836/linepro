@@ -1,61 +1,20 @@
 <?php
 
 return [
-    //美元汇率
-    'us_exchange_rate'=>6.78,
 
-    //服务费 单位元
-    'base_exchange'=>[
-        //level1 普通会员
-        1=>2,
-        //level2 认证会员
-        2=>1.5,
-    ],
-    //运费 单位元
-    'freight_exchange'=>[
-        //level1 普通会员
-        1=>20,
-        //level2 认证会员
-        2=>15,
-    ],
-
-    //会员有效天数
-    'vp_days'=>30,
-
-    //认证会员的费用 单位元
-    'vp_exchange'=>1000,
-
-    /**
-     * ----------------------------------
-     */
     //每页多少条目
     'perpage' => 10,
 
-    //人名币兑金币
-    'rmbtogold'=>100,
-    'registergold'=>10000,
 
-    //评价
-    'regular.evaluate'=>'0',
-    'vip.evaluate'=>'0',
+    'time_typec'=>[
+        1=>'限时下单(24小时)',
+        3=>'普通下单(72小时)'
+    ],
 
-    //服务费率
-    'regular.service.one.rate'=>'0.2',
-    'regular.service.three.rate'=>'0.15',
-    'regular.service.one.min'=>'2000',
-    'regular.service.three.min'=>'1500',
-
-    'vip.service.one.rate'=>'0.13',
-    'vip.service.three.rate'=>'0.1',
-    'vip.service.one.min'=>'1300',
-    'vip.service.three.min'=>'1000',
-
-    //转运费
-    'exchange.transport'=>350,
-
-    //会员费用
-    'exchange.vip'=>1000,
-
+    'delivery_typec'=>[
+        1=>'自行转运',
+        2=>'达购转运'
+    ],
 
     'bigc'=>[
         0   =>  '不选类别直接搜索',
