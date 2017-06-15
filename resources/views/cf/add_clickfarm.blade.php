@@ -24,15 +24,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">添加代购任务</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" data-toggle="validator" role="form" method="POST"
-                              action="{{ url('addclickfarm') }}">
+                        <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
                             {{--asin--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
-                                    <input readonly type="text" placeholder="" class="form-control" minlength="1"
-                                           maxlength="24" name="asin" value="{{request('asin')}}" required>
+                                    <input readonly type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" value="{{request('asin')}}" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -41,8 +39,7 @@
                             <div class="form-group {{ $errors->has('amazon_url') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 亚马逊产品url</label>
                                 <div class="col-md-6">
-                                    <input readonly type="URL" class="form-control" name="amazon_url"
-                                           value="{{request('detailUrl')}}" required>
+                                    <input readonly type="URL" class="form-control" name="amazon_url" value="{{request('detailUrl')}}" required>
                                     <p class="help-block with-errors">{{ $errors->first('amazon_url') }}</p>
                                 </div>
                             </div>
@@ -53,8 +50,7 @@
                                     亚马逊产品图片url</label>
                                 <div class="col-md-6">
 
-                                    <input readonly type="URL" placeholder="" class="form-control" name="amazon_pic"
-                                           value="{{request('picUrl')}}" required>
+                                    <input readonly type="URL" placeholder="" class="form-control" name="amazon_pic" value="{{request('picUrl')}}" required>
                                     <p class="help-block with-errors">{{ $errors->first('amazon_pic') }}</p>
                                     <img src="{{request('picUrl')}}" width="150" alt="">
                                 </div>
@@ -65,19 +61,17 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span>
                                     亚马逊产品title</label>
                                 <div class="col-md-6">
-                                    <input readonly type="text" placeholder="" minlength="2" maxlength="50"
-                                           value="{{request('title')}}" class="form-control" name="amazon_title"
-                                           required>
+                                    <input readonly type="text" placeholder="" minlength="2" maxlength="50" value="{{request('title')}}" class="form-control" name="amazon_title" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
 
                             {{--店铺id--}}
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><span class="color-red">*</span> 店铺id</label>
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 店铺名称</label>
                                 <div class="col-md-6">
-                                    <input readonly type="text" placeholder="" minlength="2" maxlength="50"
-                                           value="{{request('shopId')}}" class="form-control" name="shop_id" required>
+                                    <input readonly type="text" placeholder="" maxlength="50" value="{{request('shopName')}}" class="form-control" name="shop_name" required>
+                                    <input type="hidden" name="shop_id" value="{{request('shopId')}}">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -88,9 +82,8 @@
                                     最终价格(包含运费)</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input readonly type="number" step="0.01" placeholder="" required
-                                               class="form-control" name="final_price" min="0" max="999999"
-                                               v-model="finalprice">
+                                        <input readonly type="number" required class="form-control" name="final_price" min="0" max="999999" v-model="final_price">
+                                        <input type="hidden" name="from_site" value="{{request('site')}}">
                                         <div class="input-group-addon">{{$ctext}}</div>
                                     </div>
                                     <p class="help-block with-errors"></p>
@@ -101,8 +94,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 下单方式</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline" v-for="(v,k) in time_typec">
-                                        <input type="radio" v-model="time_type" name="time_type" :value="k"
-                                               required>@{{ v }}
+                                        <input type="radio" v-model="time_type" name="time_type" :value="k" required>@{{ v }}
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -112,8 +104,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 配送方式</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline" v-for="(v,k) in delivery_typec">
-                                        <input type="radio" v-model="delivery_type" name="delivery_type" :value="k"
-                                               required>@{{ v }}
+                                        <input type="radio" v-model="delivery_type" name="delivery_type" :value="k" required>@{{ v }}
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -122,8 +113,7 @@
                             <div class="form-group" v-show="delivery_type == 2">
                                 <label class="col-md-4 control-label"></label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="国内转运地址" class="form-control" name="delivery_addr"
-                                           maxlength="50" value="{{Auth::user()->shipping_addr}}">
+                                    <input type="text" placeholder="国内转运地址" class="form-control" name="delivery_addr" maxlength="50" value="{{Auth::user()->shipping_addr}}">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -132,8 +122,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 代购件数</label>
                                 <div class="col-md-6">
-                                    <input type="number" placeholder="" class="form-control" name="task_num" min="1"
-                                           max="9999" v-model="task_num" required>
+                                    <input type="number" placeholder="" class="form-control" name="task_num" min="1" max="9999" v-model="task_num" required>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -182,10 +171,10 @@
             },
             computed: {
                 getall: function () {
-                    return (this.task_num * this.finalprice * this.rate + this.alltrans).toFixed(2) + '元';
+                    return (this.task_num * this.final_price * this.rate + this.alltrans).toFixed(2) + '元';
                 },
                 getservice: function () {
-                    var tmp = (this.task_num * this.finalprice * this.rate * this.registergold * this.srate[this.time_type].rate).toFixed(0);
+                    var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);
                     tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
                     return tmp + 'G';
                 },
@@ -197,10 +186,10 @@
             data: {
                 alltrans: 0,
                 rate:{{$rate}},
-                registergold:{{$registergold}},
+                rmbtogold:{{$rmbtogold}},
                 trans:{{$trans}},
                 srate: JSON.parse('{!! $srate !!}'),
-                finalprice:{{request('totalPrice')}},
+                final_price:{{request('totalPrice')}},
                 task_num: 1,
                 time_type: 1,
                 time_typec: JSON.parse('{!! json_encode(config('linepro.time_typec')) !!}'),

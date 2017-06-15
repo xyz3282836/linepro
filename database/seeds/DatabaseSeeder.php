@@ -17,36 +17,36 @@ class DatabaseSeeder extends Seeder
                 'id'      => 1,
                 'apiname' => 'USD',
                 'name'    => 'USD',
-                'apirate' => '6',
-                'rate'    => '6'
+                'apirate' => '6.79',
+                'rate'    => '6.89'
             ],
             [
                 'id'      => 2,
                 'apiname' => 'CAD',
                 'name'    => 'CAD',
-                'apirate' => '6',
-                'rate'    => '6'
+                'apirate' => '5.13',
+                'rate'    => '5.23'
             ],
             [
                 'id'      => 3,
                 'apiname' => 'GBP',
                 'name'    => 'GBP',
-                'apirate' => '6',
-                'rate'    => '6'
+                'apirate' => '8.66',
+                'rate'    => '8.76'
             ],
             [
                 'id'      => 4,
                 'apiname' => 'EUR',
                 'name'    => 'EUR',
-                'apirate' => '6',
-                'rate'    => '6'
+                'apirate' => '7.61',
+                'rate'    => '7.71'
             ],
             [
                 'id'      => 5,
                 'apiname' => 'JPY',
                 'name'    => 'JPY',
-                'apirate' => '6',
-                'rate'    => '6'
+                'apirate' => '0.06',
+                'rate'    => '0.16'
             ]
         ]);
         DB::table('gconfigs')->insert([

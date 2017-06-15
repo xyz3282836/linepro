@@ -28,15 +28,15 @@ class CfController extends Controller
      */
     public function getAddClickFarm()
     {
-        $site         = request('site', 1);
-        $trans        = gconfig('cost.transport');
-        $registergold = gconfig('registergold');
+        $site      = request('site', 1);
+        $trans     = gconfig('cost.transport');
+        $rmbtogold = gconfig('rmbtogold');
         return view('cf.add_clickfarm')->with([
-            'rate'         => get_rate($site),
-            'ctext'        => get_currency($site),
-            'srate'        => json_encode(get_srate()),
-            'trans'        => $trans,
-            'registergold' => $registergold,
+            'rate'      => get_rate($site),
+            'ctext'     => get_currency($site),
+            'srate'     => json_encode(get_srate()),
+            'trans'     => $trans,
+            'rmbtogold' => $rmbtogold,
         ]);
     }
 
@@ -52,15 +52,19 @@ class CfController extends Controller
             'amazon_pic'    => 'required|active_url',
             'amazon_title'  => 'required|min:2|max:50',
             'shop_id'       => 'required|min:2|max:50',
+            'shop_name'     => 'min:2|max:50',
             'final_price'   => 'required',
             'task_num'      => 'required|integer',
-            'delivery_addr' => 'required|min:5|max:50',
+            'delivery_addr' => 'min:2|max:50',
             'from_site'     => 'required|integer',
             'time_type'     => 'required|integer',
             'delivery_type' => 'required|integer',
         ]);
 
         $pdata = request()->all();
+        if ($pdata['delivery_type'] == 1) {
+            $pdata['delivery_addr'] = '';
+        }
 
         $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
@@ -103,6 +107,7 @@ class CfController extends Controller
         $model->from_site     = $pdata['from_site'];
         $model->time_type     = $pdata['time_type'];
         $model->delivery_type = $pdata['delivery_type'];
+        $model->shop_name     = $pdata['shop_name'];
         //1.0
         $model->is_fba           = 1;
         $model->discount_code    = '';
@@ -131,7 +136,7 @@ class CfController extends Controller
      */
     public function listCardClickFarm()
     {
-        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->get();
         return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list);
     }
 

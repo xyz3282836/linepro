@@ -174,15 +174,15 @@ function get_currency($site)
 function get_cf_price($cf)
 {
     $trans         = gconfig('cost.transport');
-    $registergold  = gconfig('registergold');
+    $rmbtogold     = gconfig('rmbtogold');
     $rate          = get_rate($cf->from_site);
     $srate         = get_srate();
-    $tmp           = round($cf->task_num * $cf->finalprice * $rate * $srate[$cf->time_type] * $registergold);
+    $tmp           = round($cf->task_num * $cf->final_price * $rate * $srate[$cf->time_type]['rate'] * $rmbtogold);
     $tmp           = $tmp < $srate[$cf->time_type]['mingolds'] ? $srate[$cf->time_type]['mingolds'] : $tmp;
     $cf->golds     = $tmp;
     $cf->rate      = $rate;
     $cf->transport = $cf->delivery_type == 1 ? 0 : round($cf->task_num * $trans, 2);
-    $cf->amount    = round($cf->task_num * $cf->finalprice * $rate + $cf->transport, 2);
+    $cf->amount    = round(($cf->task_num * $cf->final_price * $rate + $cf->transport), 2);
 }
 
 function get_srate()

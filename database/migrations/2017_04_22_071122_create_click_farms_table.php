@@ -33,6 +33,7 @@ class CreateClickFarmsTable extends Migration
             $table->tinyInteger('from_site')->default(1); // 来自站点
             $table->tinyInteger('time_type')->default(1); // 1:24小时 3:72小时
             $table->tinyInteger('delivery_type')->default(1);//1:自行转运 2:达购转运
+            $table->char('shop_name',50)->default('');//1:自行转运 2:达购转运
 
             //1.0
             $table->tinyInteger('platform_type')->default(1);//平台
