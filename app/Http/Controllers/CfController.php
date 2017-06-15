@@ -52,10 +52,10 @@ class CfController extends Controller
             'amazon_pic'    => 'required|active_url',
             'amazon_title'  => 'required|min:2|max:50',
             'shop_id'       => 'required|min:2|max:50',
-            'shop_name'     => 'min:2|max:50',
+            'shop_name'     => 'max:50',
             'final_price'   => 'required',
             'task_num'      => 'required|integer',
-            'delivery_addr' => 'min:2|max:50',
+            'delivery_addr' => 'max:50',
             'from_site'     => 'required|integer',
             'time_type'     => 'required|integer',
             'delivery_type' => 'required|integer',
@@ -136,7 +136,7 @@ class CfController extends Controller
      */
     public function listCardClickFarm()
     {
-        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->get();
+        $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->get()->toJson();
         return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list);
     }
 

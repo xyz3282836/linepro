@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClickFarm extends Model
 {
-    protected $appends = ['status_text', 'delivery_type_text', 'from_site_text', 'time_type_text'];
+    protected $appends = ['status_text', 'delivery_type_text', 'from_site_text', 'time_type_text', 'final_price_text'];
 
     public function getStatusTextAttribute()
     {
@@ -38,4 +38,10 @@ class ClickFarm extends Model
         $arr = config('linepro.time_type');
         return $arr[$this->time_type];
     }
+
+    public function getFinalPriceTextAttribute()
+    {
+        return $this->final_price . get_currency($this->from_site);
+    }
+
 }

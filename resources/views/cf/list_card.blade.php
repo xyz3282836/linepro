@@ -13,7 +13,7 @@
                                 <th>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox">全选
+                                            <input type="checkbox" :checked="allc" @click="selectall">全选
                                         </label>
                                     </div>
                                 </th>
@@ -36,46 +36,38 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($list as $v)
-                                <tr>
+                                <tr v-for="one in cardlist">
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="id" value="{{$v->id}}">
+                                                <input type="checkbox" name="ids" @click="selectone(one)" :checked="one.checked">
                                             </label>
                                         </div>
                                     </td>
-                                    <td>{{$v->asin}}</td>
-                                    <td><a href="{{$v->amazon_url}}">{{$v->amazon_title}}</a></td>
-                                    <td><a href="{{$v->amazon_pic}}"><img src="{{$v->amazon_pic}}" width="50" alt=""></a></td>
-                                    <td>{{$v->shop_id}}</td>
-                                    <td>{{$v->from_site_text}}</td>
-                                    <td>{{$v->delivery_type_text}}</td>
-                                    <td>{{$v->delivery_addr}}</td>
-                                    <td>{{$v->time_type_text}}</td>
-                                    <td>{{$v->final_price}}({{get_currency($v->from_site)}})</td>
-                                    <td>{{$v->task_num}}</td>
-                                    <td>{{$v->rate}}</td>
-                                    <td>{{$v->golds}}G</td>
-                                    <td>{{$v->transport}}元</td>
-                                    <td>{{$v->amount}}元</td>
-                                    <td>{{$v->created_at}}</td>
+                                    <td v-text="one.asin"></td>
+                                    <td><a :href="one.amazon_url" v-text="one.amazon_title"></a></td>
+                                    <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="50" alt=""></a></td>
+                                    <td v-text="one.shop_id"></td>
+                                    <td v-text="one.from_site_text"></td>
+                                    <td v-text="one.delivery_type_text"></td>
+                                    <td v-text="one.delivery_addr"></td>
+                                    <td v-text="one.time_type_text"></td>
+                                    <td v-text="one.final_price_text"></td>
+                                    <td v-text="one.task_num"></td>
+                                    <td v-text="one.rate"></td>
+                                    <td v-text="one.golds">G</td>
+                                    <td v-text="one.transport">元</td>
+                                    <td v-text="one.amount">元</td>
+                                    <td v-text="one.created_at"></td>
                                     <td>
-                                        @if($v->status == 1)
-                                            <button class="btn btn-danger btn-sm ladda-button" data-style="contract" @click="cancle({{$v->id}})">取消订单</button>
-                                            <button class="btn btn-success btn-sm ladda-button" data-style="contract" @click="pay({{$v->id}})">支付下单</button>
-                                        @elseif($v->status > 1)
-                                            <a href="{{url('viewclickfarm/'.$v->id)}}">查看详情</a>
-                                        @endif
+                                        <a href="">1111</a>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="99">no data</td>
-                                </tr>
-                            @endforelse
                             </tbody>
                         </table>
+                        
+                        <p>总金币：<span v-text="allgold"></span>G</p>
+                        <p>总价格<span v-text="allprice"></span>元</p>
                     </div>
                 </div>
             </div>
@@ -88,7 +80,10 @@
         new Vue({
             el: '#app',
             data:{
-
+                cardlist:{!! $list !!},
+                allgold:0,
+                allprice:0,
+                allc:false
             },
             methods: {
                 pay:function (id) {
@@ -112,12 +107,34 @@
                             window.location.reload()
                         }
                     })
+                },
+                selectone(one){
+                    one.checked = !one.checked;
+                    this.getAll()
+                },
+                selectall(){
+                    this.allc = !this.allc;
+                    this.cardlist.forEach((v)=>v.checked = this.allc);
+                    this.getAll();
+                },
+                getAll(){
+                    this.allgold = 0;
+                    this.allprice = 0.00;
+                    this.cardlist.forEach((v)=>{
+                        if(v.checked){
+                            this.allgold += v.golds;
+                            this.allprice += Number(v.amount);
+                        }
+                    });
+                    this.allprice = this.allprice.toFixed(2)
                 }
             },
             mounted: function () {
-                this.$nextTick(() => {
-                })
-            },
+                this.$nextTick(()=>
+                    this.cardlist.forEach((v,k)=>{
+                        this.$set(v,'checked',false)
+                    }))
+            }
         });
     </script>
 @endsection

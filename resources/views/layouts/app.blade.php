@@ -164,11 +164,11 @@
 
         @show
     </div>
-    {{--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>--}}
-    {{--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
-    {{--<script src="https://cdn.bootcss.com/vue/2.2.6/vue.js"></script>--}}
-    {{--<script src="https://cdn.bootcss.com/axios/0.16.1/axios.min.js"></script>--}}
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.2.6/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.16.1/axios.min.js"></script>
+{{--    <script src="{{ mix('js/app.js') }}"></script>--}}
     <script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
     <script src="https://cdn.bootcss.com/Ladda/1.0.0/spin.min.js"></script>
     <script src="https://cdn.bootcss.com/Ladda/1.0.0/ladda.min.js"></script>

@@ -164,10 +164,9 @@
             el: '#app',
             methods: {},
             mounted: function () {
-                this.$nextTick(function () {
+                this.$nextTick(()=>{
 
-                    }
-                )
+                })
             },
             computed: {
                 getall: function () {
@@ -188,13 +187,13 @@
                 rate:{{$rate}},
                 rmbtogold:{{$rmbtogold}},
                 trans:{{$trans}},
-                srate: JSON.parse('{!! $srate !!}'),
+                srate: {!! $srate !!},
                 final_price:{{request('totalPrice')}},
                 task_num: 1,
                 time_type: 1,
-                time_typec: JSON.parse('{!! json_encode(config('linepro.time_typec')) !!}'),
+                time_typec: {!! json_encode(config('linepro.time_typec')) !!},
                 delivery_type: 1,
-                delivery_typec: JSON.parse('{!! json_encode(config('linepro.delivery_typec')) !!}'),
+                delivery_typec: {!! json_encode(config('linepro.delivery_typec')) !!},
             }
         });
 
