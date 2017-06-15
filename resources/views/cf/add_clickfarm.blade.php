@@ -185,7 +185,7 @@
                     return (this.task_num * this.finalprice * this.rate + this.alltrans).toFixed(2) + '元';
                 },
                 getservice: function () {
-                    var tmp = (this.task_num * this.finalprice * this.rate * 100 * this.srate[this.time_type].rate).toFixed(0);
+                    var tmp = (this.task_num * this.finalprice * this.rate * this.registergold * this.srate[this.time_type].rate).toFixed(0);
                     tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
                     return tmp + 'G';
                 },
@@ -197,6 +197,7 @@
             data: {
                 alltrans: 0,
                 rate:{{$rate}},
+                registergold:{{$registergold}},
                 trans:{{$trans}},
                 srate: JSON.parse('{!! $srate !!}'),
                 finalprice:{{request('totalPrice')}},

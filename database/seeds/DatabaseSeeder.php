@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
                 'value' => '100',
             ],
             [
-                'key'   => 'rmbtogold',
+                'key'   => 'registergold',
                 'desc'  => '注册送金币',
                 'value' => '10000',
             ],

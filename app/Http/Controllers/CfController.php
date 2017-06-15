@@ -28,13 +28,15 @@ class CfController extends Controller
      */
     public function getAddClickFarm()
     {
-        $site  = request('site', 1);
-        $trans = gconfig('cost.transport');
+        $site         = request('site', 1);
+        $trans        = gconfig('cost.transport');
+        $registergold = gconfig('registergold');
         return view('cf.add_clickfarm')->with([
-            'rate'  => get_rate($site),
-            'ctext' => get_currency($site),
-            'srate' => json_encode(get_srate()),
-            'trans' => $trans
+            'rate'         => get_rate($site),
+            'ctext'        => get_currency($site),
+            'srate'        => json_encode(get_srate()),
+            'trans'        => $trans,
+            'registergold' => $registergold,
         ]);
     }
 

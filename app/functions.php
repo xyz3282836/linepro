@@ -174,9 +174,10 @@ function get_currency($site)
 function get_cf_price($cf)
 {
     $trans         = gconfig('cost.transport');
+    $registergold  = gconfig('registergold');
     $rate          = get_rate($cf->from_site);
     $srate         = get_srate();
-    $tmp           = round($cf->task_num * $cf->finalprice * $rate * $srate[$cf->time_type] * 100);
+    $tmp           = round($cf->task_num * $cf->finalprice * $rate * $srate[$cf->time_type] * $registergold);
     $tmp           = $tmp < $srate[$cf->time_type]['mingolds'] ? $srate[$cf->time_type]['mingolds'] : $tmp;
     $cf->golds     = $tmp;
     $cf->rate      = $rate;
