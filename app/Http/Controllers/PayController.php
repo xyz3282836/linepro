@@ -192,63 +192,43 @@ class PayController extends Controller
      */
     public function postPay()
     {
-        $id    = request('id', 0);
+        $ids   = request('id');
         $table = request('type', '');
-        $model = null;
+        $user = Auth::user();
         switch ($table) {
             case 'cf':
-                $model = ClickFarm::find($id);
+                $list = ClickFarm::where('uid',$user->id)->where('status',1)->whereIn('id',$ids)->get();
                 $type  = 2;
                 $table = 'click_farms';
                 break;
             default:
                 return error(MODEL_NOT_FOUNT);
         }
-
-        if (!$model) {
+        if (!$list) {
             return error(MODEL_NOT_FOUNT);
         }
-        $user = Auth::user();
-        if ($model->uid != $user->id) {
-            return error(NO_ACCESS);
+        //计算总金币 总价格
+        $allgolds = 0;
+        $allprice = 0.00;
+        foreach ($list as $one) {
+            $allgolds += $one->golds;
+            $allprice += $one->amount;
         }
-        if ($model->status != 1) {
-            return error(NO_ACCESS);
+        if($user->golds < $allgolds){
+            return error(NO_ENOUGH_GOLD);
         }
-        $amount = $user->amount;
-        if ($amount < $model->amount) {
-            return error(NO_ENOUGH_MONEY);
-        }
+        if($one->amount > 0){
+            //扣余额
+            if($allprice > $one->amount){
+                //需要锁下单
+                $allprice = $allprice-$one->amount;
 
-        $money = $amount - $model->amount;
+            }else{
+                //余额足够支付
 
-        DB::beginTransaction();
-        try {
-            //减钱
-            $user->update(['amount' => $money]);
-            if (DB::table($table)->where('id', $id)->value('status') != 1) {
-                throw new MsgException();
             }
-            //流水账
-            Bill::create([
-                'uid'     => $user->id,
-                'type'    => $type,
-                'orderid' => $model->orderid,
-                'out'     => $model->amount,
-                'amount'  => $money,
-                'taskid'  => $model->id
-            ]);
-            //status
-            $model->status = 2;
-            $model->save();
-            DB::commit();
-
-        } catch (Exception $e) {
-            DB::rollBack();
-            return error(ERROR_IDEMPOTENCE);
         }
-        //批量新建任务结果记录
-        event(new CfResults($model));
+
         return success();
     }
 
