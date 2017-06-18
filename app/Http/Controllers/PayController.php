@@ -20,6 +20,7 @@ use App\VipBill;
 use Auth;
 use DB;
 use Exception;
+use Log;
 
 class PayController extends Controller
 {
@@ -81,21 +82,23 @@ class PayController extends Controller
                 $orderid        = $data['out_trade_no'];
                 $alipay_orderid = $data['trade_no'];
                 $model          = Order::where('orderid', $orderid)->first();
-
-                switch ($model->type) {
-                    case Order::TYPE_RECHARGE:
-                        Order::payRechargeGolds($model, $alipay_orderid);
-                        break;
-                    case Order::TYPE_CONSUME:
-                        Order::payOrder($model, $alipay_orderid);
-                        break;
+                if($model->status == Order::STATUS_UNPAID){
+                    switch ($model->type) {
+                        case Order::TYPE_RECHARGE:
+                            Order::payRechargeGolds($model, $alipay_orderid);
+                            break;
+                        case Order::TYPE_CONSUME:
+                            Order::payOrder($model, $alipay_orderid);
+                            break;
+                    }
+                    $flag = true;
                 }
-                $flag = true;
             } else {
                 $flag = false;
             }
         } catch (Exception $e) {
             $flag = false;
+            dd($e);
         } finally {
             if ($flag) {
                 $text = '充值成功';
@@ -145,7 +148,7 @@ class PayController extends Controller
         $ids  = request('id');
         $user = Auth::user();
         $list = ClickFarm::where('uid', $user->id)->where('status', 1)->whereIn('id', $ids)->get();
-        if (!$list) {
+        if (count($list)==0) {
             return error(MODEL_NOT_FOUNT);
         }
         //计算总金币 总价格
@@ -162,7 +165,7 @@ class PayController extends Controller
         $balance = $user->balance - $user->lock_balance;
         if ($price > $balance) {
             //余额+充值 跳转 不生成bill
-            $one     = Order::consumeByPartRecharge($price, $golds, $balance);
+            $one     = Order::consumeByPartRecharge($price, $golds, $balance,$list);
             $gateway = get_alipay();
             $request = $gateway->purchase();
             $request->setBizContent([
@@ -173,14 +176,11 @@ class PayController extends Controller
             ]);
             $response    = $request->send();
             $redirectUrl = $response->getRedirectUrl();
-            return redirect($redirectUrl);
+            return success($redirectUrl);
         }
         //余额 生成bill
-        $result = Order::consumeByBalance($price, $golds, $list);
-        if(is_null($result)){
-            return success();
-        }
-        return error(ERROR_SYSTEM);
+        Order::consumeByBalance($price, $golds, $list);
+        return success();
     }
 
     /**

@@ -2,7 +2,13 @@
 @section('csslib')
     <link href="{{URL::asset('bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet">
 @endsection
-
+@section('css')
+    <style type="text/css">
+        .col-md-6.control-label {
+            text-align: left;
+        }
+    </style>
+@endsection
 @section('jslib')
     <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script src="{{URL::asset('bootstrap-datetimepicker/js/bootstrap-datetimepicker.zh-CN.js')}}"></script>
@@ -36,11 +42,16 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 充值金额</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <input type="number" placeholder="" class="form-control" step="100" min="100" max="999999" maxlength="6" name="amount" value="{{config('linepro.vp_exchange')}}" required>
+                                        <input type="number" placeholder="" class="form-control" step="100" min="100" max="999999" maxlength="6" name="amount" v-model="amount" required>
                                         <div class="input-group-addon">元</div>
                                     </div>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"> 金币</label>
+                                <label class="col-md-6 control-label" v-text="getgolds"></label>
                             </div>
 
                             <div class="form-group">
@@ -72,9 +83,15 @@
             el: '#app',
             data:{
                 type:'1',
+                amount:{{gconfig('cost.vip')}},
+                rate:{{gconfig('rmbtogold')}},
                 typec: {!! json_encode(config('linepro.order_ptypec')) !!},
             },
-
+            computed:{
+                getgolds(){
+                    return (this.amount * this.rate).toFixed(0)
+                }
+            }
         })
     </script>
 @endsection

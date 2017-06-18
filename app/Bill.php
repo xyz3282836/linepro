@@ -28,7 +28,7 @@ class Bill extends Model
     }
 
     protected $fillable = [
-        'uid', 'type', 'orderid', 'in', 'out', 'gin', 'gout', 'rate', 'oid'
+        'uid', 'type', 'orderid', 'alipay_orderid', 'in', 'out', 'gin', 'gout', 'rate', 'oid'
     ];
 
 
@@ -37,9 +37,9 @@ class Bill extends Model
      * @param $gold
      * @param null $uid
      */
-    public static function getGoldByReg($golds, $user=null)
+    public static function getGoldByReg($golds, $user = null)
     {
-        $user=$user!=null?$user:Auth::user();
+        $user        = $user != null ? $user : Auth::user();
         $user->golds = $golds;
         $user->save();
         self::create([

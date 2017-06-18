@@ -13,11 +13,12 @@ use App\Exceptions\MsgException;
 use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Order extends Model
 {
     const STATUS_DEL = 0;//已删除
-    const STATUS_UNPAID = 1;//代付款
+    const STATUS_UNPAID = 1;//待付款
     const STATUS_SUCCESS = 2;//已付款
 
     const TYPE_RECHARGE = 1;//充值
@@ -120,6 +121,7 @@ class Order extends Model
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
+            dd($e);
             throw new MsgException('');
         }
     }
@@ -129,11 +131,12 @@ class Order extends Model
      * 充值+余额 支付
      * @param $price
      * @param $golds
-     * @param int $balance
+     * @param $balance
+     * @param $list
      * @return mixed
      * @throws MsgException
      */
-    public static function consumeByPartRecharge($price, $golds, $balance = 0)
+    public static function consumeByPartRecharge($price, $golds, $balance, $list)
     {
         $user = Auth::user();
         DB::beginTransaction();
@@ -152,10 +155,16 @@ class Order extends Model
                 'rate'         => gconfig('rmbtogold'),
                 'status'       => self::STATUS_UNPAID
             ]);
+            foreach ($list as $model) {
+                $model->oid    = $one->id;
+                $model->status = 2;
+                $model->save();
+            }
             DB::commit();
             return $one;
         } catch (\Throwable $e) {
             DB::rollBack();
+            dd($e);
             throw new MsgException();
         }
     }
@@ -176,20 +185,21 @@ class Order extends Model
             $one->alipay_orderid = $alipay_orderid;
             $one->save();
             $user->lock_golds   = $user->lock_golds - $one->golds;
-            $user->lock_balance = $user->lock_balance - $one->price;
+            $user->golds        = $user->golds - $one->golds;
+            $user->lock_balance = $user->lock_balance - $one->balance;
+            $user->balance      = $user->balance - $one->balance;
             $user->save();
             Bill::create([
-                'uid'     => $user->id,
-                'oid'     => $one->id,
-                'type'    => Bill::TYPE_CONSUME,
-                'orderid' => $one->orderid,
-                'out'     => $one->price - $one->balance,
-                'gout'    => $one->golds,
-                'rate'    => gconfig('rmbtogold'),
+                'uid'            => $user->id,
+                'oid'            => $one->id,
+                'type'           => Bill::TYPE_CONSUME,
+                'orderid'        => $one->orderid,
+                'alipay_orderid' => $one->alipay_orderid,
+                'out'            => $one->price - $one->balance,
+                'gout'           => $one->golds,
+                'rate'           => gconfig('rmbtogold'),
             ]);
             foreach ($list as $model) {
-                $model->oid = $one->id;
-                $model->save();
                 event(new CfResults($model));
             }
             DB::commit();
@@ -230,12 +240,13 @@ class Order extends Model
                 'uid'     => $user->id,
                 'oid'     => $one->id,
                 'type'    => Bill::TYPE_CONSUME,
-                'orderid' => $orderid,
+                'orderid' => $one->orderid,
                 'gout'    => $golds,
                 'rate'    => gconfig('rmbtogold'),
             ]);
             foreach ($list as $model) {
-                $model->oid = $one->id;
+                $model->oid    = $one->id;
+                $model->status = 2;
                 $model->save();
                 event(new CfResults($model));
             }

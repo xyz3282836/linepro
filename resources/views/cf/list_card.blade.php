@@ -106,7 +106,7 @@
                             layer.msg(data.msg, {icon: 2});
                         } else {
                             layer.msg('支付成功', {icon: 1});
-                            window.location.reload()
+                            window.location.href = data.data;
                         }
                     })
                 },
@@ -117,7 +117,7 @@
                             layer.msg(data.msg, {icon: 2});
                         } else {
                             layer.msg('支付成功', {icon: 1});
-                            window.location.reload()
+//                            window.location.href = data.data;
                         }
                     })
                 },
@@ -128,7 +128,7 @@
                             layer.msg(data.msg, {icon: 2});
                         } else {
                             layer.msg('操作成功', {icon: 1});
-                            window.location.reload()
+//                            window.location.reload()
                         }
                     })
                 },

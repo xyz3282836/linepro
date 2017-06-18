@@ -60,7 +60,7 @@ class CreateClickFarmsTable extends Migration
             $table->tinyInteger('interval_time')->default(1); // 刷单间隔
             $table->string('customer_message',500)->default('');//客户留言
 
-            $table->tinyInteger('status')->default(1);//状态 0:取消订单 1:待支付 2:已经支付 3:找寻买家中 4:买家找到，等待开始时间到 5:购买完成
+            $table->tinyInteger('status')->default(1);//状态 0:删除 1:有效 2:绑定订单
             $table->decimal('transport',10,2)->default(0.00);//转运费
             $table->decimal('amount',10,2)->default(0.00);//消费金额
             $table->integer('golds')->default(0);//手续费金币

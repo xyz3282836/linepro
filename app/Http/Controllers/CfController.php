@@ -94,7 +94,6 @@ class CfController extends Controller
 
         $model                = new ClickFarm;
         $model->uid           = Auth::user()->id;
-        $model->orderid       = get_order_id();
         $model->platform_type = 1;
         $model->asin          = $pdata['asin'];
         $model->task_num      = $pdata['task_num'];
