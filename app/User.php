@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'amount', 'reg_time'
+        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'lock_golds', 'balance', 'lock_balance', 'reg_time'
     ];
 
     /**
@@ -57,12 +58,5 @@ class User extends Authenticatable
             return false;
         }
         return true;
-    }
-
-    public function getGoldByReg($gold)
-    {
-        $this->golds = $gold;
-        $this->save();
-        GoldBill::getByReg($this->id, $gold);
     }
 }

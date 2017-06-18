@@ -13,6 +13,7 @@ use App\Bill;
 use App\ClickFarm;
 use App\Events\CfResults;
 use App\Exceptions\MsgException;
+use App\Order;
 use App\Recharge;
 use App\User;
 use App\VipBill;
@@ -47,20 +48,14 @@ class PayController extends Controller
             'amount' => 'required|numeric|min:1',
         ]);
         $amount = request('amount');
-        $orderid        = get_order_id();
-        $model          = new Recharge;
-        $model->uid     = Auth::user()->id;
-        $model->amount  = $amount;
-        $model->orderid = $orderid;
-        $model->type    = 1;
-        $model->save();
+        $one    = Order::rechargeGolds($amount);
 
         $gateway = get_alipay();
         $request = $gateway->purchase();
         $request->setBizContent([
-            'out_trade_no' => $orderid,
+            'out_trade_no' => $one->orderid,
             'total_amount' => $amount,
-            'subject'      => '充值',
+            'subject'      => '充值金币',
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
 
@@ -85,62 +80,17 @@ class PayController extends Controller
                 $data           = $response->getData();
                 $orderid        = $data['out_trade_no'];
                 $alipay_orderid = $data['trade_no'];
-                $model          = Recharge::where('orderid', $orderid)->first();
-                if ($model && $model->status == 0) {
-                    // 改变状态 加钱 流水账 判断会员是否要加有效期、配额
-                    DB::beginTransaction();
-                    try {
-                        // 改变状态
-                        $model->orderid        = $orderid;
-                        $model->alipay_orderid = $alipay_orderid;
-                        $model->status         = 1;
-                        $model->save();
+                $model          = Order::where('orderid', $orderid)->first();
 
-                        // 账号充钱
-                        $user         = User::find($model->uid);
-                        $user->amount = $user->amount + $model->amount;
-
-                        //有效期
-                        if ($model->amount >= config('linepro.vp_exchange')) {
-                            //有效期
-                            $adddays = floor($model->amount / config('linepro.vp_exchange')) * config('linepro.vp_days');
-                            if ($user->validity == null || strtotime($user->validity) < time()) {
-                                $validity = date('Y-m-d', strtotime('+ ' . ($adddays + 1) . ' days')) . ' 00:00:00';
-                            } else {
-                                $validity = date('Y-m-d H:i:s', strtotime('+ ' . $adddays . ' days', strtotime($user->validity)));
-                            }
-                            VipBill::create([
-                                'uid'      => $user->id,
-                                'rid'      => $model->id,
-                                'days'     => $adddays,
-                                'validity' => $validity,
-                            ]);
-                            $user->level    = 2;
-                            $user->validity = $validity;
-                        }
-
-                        $user->save();
-                        //流水账
-                        Bill::create([
-                            'uid'     => $user->id,
-                            'type'    => 1,
-                            'orderid' => $model->orderid,
-                            'in'      => $model->amount,
-                            'amount'  => $user->amount,
-                            'taskid'  => $model->id
-                        ]);
-
-                        DB::commit();
-                        $flag = true;
-                    } catch (Exception $e) {
-                        DB::rollBack();
-                        $flag = false;
-                    }
-                } elseif ($model && $model->status == 1) {
-                    $flag = true;
-                } else {
-                    $flag = false;
+                switch ($model->type) {
+                    case Order::TYPE_RECHARGE:
+                        Order::payRechargeGolds($model, $alipay_orderid);
+                        break;
+                    case Order::TYPE_CONSUME:
+                        Order::payOrder($model, $alipay_orderid);
+                        break;
                 }
+                $flag = true;
             } else {
                 $flag = false;
             }
@@ -169,7 +119,7 @@ class PayController extends Controller
      */
     public function listRecharge()
     {
-        $list = Recharge::where('uid', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
+        $list = Order::where('uid', Auth::user()->id)->where('type',Order::TYPE_RECHARGE)->orderBy('id', 'desc')->paginate(10);
         return view('pay.list_recharge')->with('tname', '充值记录列表')->with('list', $list);
     }
 
@@ -179,7 +129,7 @@ class PayController extends Controller
      */
     public function getViewRecharge($id)
     {
-        $one = Recharge::find($id);
+        $one = Order::find($id);
         if ($one->uid != Auth::user()->id) {
             throw new MsgException();
         }
@@ -192,44 +142,45 @@ class PayController extends Controller
      */
     public function postPay()
     {
-        $ids   = request('id');
-        $table = request('type', '');
+        $ids  = request('id');
         $user = Auth::user();
-        switch ($table) {
-            case 'cf':
-                $list = ClickFarm::where('uid',$user->id)->where('status',1)->whereIn('id',$ids)->get();
-                $type  = 2;
-                $table = 'click_farms';
-                break;
-            default:
-                return error(MODEL_NOT_FOUNT);
-        }
+        $list = ClickFarm::where('uid', $user->id)->where('status', 1)->whereIn('id', $ids)->get();
         if (!$list) {
             return error(MODEL_NOT_FOUNT);
         }
         //计算总金币 总价格
-        $allgolds = 0;
-        $allprice = 0.00;
+        $golds = 0;
+        $price = 0.00;
         foreach ($list as $one) {
-            $allgolds += $one->golds;
-            $allprice += $one->amount;
+            $golds += $one->golds;
+            $price += $one->amount;
         }
-        if($user->golds < $allgolds){
-            return error(NO_ENOUGH_GOLD);
+        //金币不够
+        if (($user->golds - $user->lock_golds) < $golds) {
+            return error(NO_ENOUGH_GOLDS);
         }
-        if($one->amount > 0){
-            //扣余额
-            if($allprice > $one->amount){
-                //需要锁下单
-                $allprice = $allprice-$one->amount;
-
-            }else{
-                //余额足够支付
-
-            }
+        $balance = $user->balance - $user->lock_balance;
+        if ($price > $balance) {
+            //余额+充值 跳转 不生成bill
+            $one     = Order::consumeByPartRecharge($price, $golds, $balance);
+            $gateway = get_alipay();
+            $request = $gateway->purchase();
+            $request->setBizContent([
+                'out_trade_no' => $one->orderid,
+                'total_amount' => $one->price - $one->balance,
+                'subject'      => '代购支付',
+                'product_code' => 'FAST_INSTANT_TRADE_PAY',
+            ]);
+            $response    = $request->send();
+            $redirectUrl = $response->getRedirectUrl();
+            return redirect($redirectUrl);
         }
-
-        return success();
+        //余额 生成bill
+        $result = Order::consumeByBalance($price, $golds, $list);
+        if(is_null($result)){
+            return success();
+        }
+        return error(ERROR_SYSTEM);
     }
 
     /**

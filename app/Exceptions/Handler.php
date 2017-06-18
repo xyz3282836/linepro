@@ -46,10 +46,14 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof MsgException || $exception instanceof HttpException) {
-            if ($request->ajax()) {
-                return error(ERROR_SYSTEM);
+            $msg = $exception->getMessage();
+            if($msg == ''){
+                $msg = ERROR_SYSTEM;
             }
-            return response()->view('layouts.error');
+            if ($request->ajax()) {
+                return error($msg);
+            }
+            return response()->view('layouts.error',['msg'=>$msg]);
         }
         return parent::render($request, $exception);
 

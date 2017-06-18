@@ -19,9 +19,6 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Vip' => [
             'App\Listeners\IsVip',
         ],
-        'App\Events\ESendGold' => [
-            'App\Listeners\LSendGold',
-        ],
     ];
 
     /**

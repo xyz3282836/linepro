@@ -72,6 +72,7 @@
             <div class="title m-b-md">
                 404
             </div>
+            <p>{{$msg}}</p>
         </div>
     </div>
 @endsection

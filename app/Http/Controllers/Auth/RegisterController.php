@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Bill;
 use App\Events\ESendGold;
+use App\Exceptions\MsgException;
 use App\User;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -65,13 +68,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
-            'name'     => $data['name'],
-            'email'    => $data['email'],
-            'password' => bcrypt($data['password']),
-            'reg_time' => Carbon::now()
-        ]);
-        event(new ESendGold($user));
-        return $user;
+        DB::beginTransaction();
+        try{
+            $user = User::create([
+                'name'     => $data['name'],
+                'email'    => $data['email'],
+                'password' => bcrypt($data['password']),
+                'reg_time' => Carbon::now()
+            ]);
+            Bill::getGoldByReg(gconfig('registergold'),$user);
+            DB::commit();
+            return $user;
+        }catch (\Throwable $e){
+            DB::rollBack();
+            throw new MsgException('注册失败');
+        }
     }
 }

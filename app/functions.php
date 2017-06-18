@@ -10,8 +10,8 @@
 use Omnipay\Omnipay;
 const MODEL_NOT_FOUNT   = '无此数据';
 const NO_ACCESS         = '无权限';
-const NO_ENOUGH_MONEY   = '没有足够的余额，请先充值';
-const NO_ENOUGH_GOLD    = '没有足够的金币，请先充值';
+const NO_ENOUGH_BALANCE = '没有足够的余额，请先充值';
+const NO_ENOUGH_GOLDS   = '没有足够的金币，请先充值';
 const ERROR_IDEMPOTENCE = '重复操作';
 const ERROR_SYSTEM      = '系统错误';
 const ERROR_PARAM       = '参数错误';
@@ -50,34 +50,6 @@ function p($arr)
     print_r($arr);
     echo '</pre>';
 }
-
-//function get_amount_clickfarm($cf){
-//    $price = config('linepro.clickfarm_price');
-//    $one = 0;
-//    if($cf['is_reviews'] == 1){
-//        $one += $price['reviews'];
-//    }
-//    if($cf['specified_asin'] != null){
-//        $one += $price['asin'];
-//    }
-//    if($cf['brower'] == 2){
-//        $one += $price['deep'];
-//    }
-//    if($cf['priority'] == 3){
-//        $one += $price['ad'];
-//    }
-//    if($cf['flow_port'] == 2){
-//        $one += $price['mobile'];
-//    }
-//    if($cf['flow_source'] == 2){
-//        $one += $price['ab'];
-//    }
-//    if($cf['browse_step'] == 1 || $cf['browse_step'] == 2){
-//        $one += $price['page'][$cf['page']];
-//    }
-//    $one += $cf['final_price'];
-//    return $one * $cf['task_num'];
-//}
 
 function get_amount_clickfarm($model)
 {

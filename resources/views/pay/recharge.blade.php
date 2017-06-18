@@ -72,7 +72,7 @@
             el: '#app',
             data:{
                 type:'1',
-                typec: JSON.parse('{!! json_encode(App\Recharge::TYPE_OUT_TEXT) !!}'),
+                typec: {!! json_encode(config('linepro.order_ptypec')) !!},
             },
 
         })

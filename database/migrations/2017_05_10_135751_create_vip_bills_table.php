@@ -16,7 +16,7 @@ class CreateVipBillsTable extends Migration
         Schema::create('vip_bills', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('uid')->default(0);//用户id
-            $table->integer('rid')->default(0);//充值记录id
+            $table->integer('oid')->default(0);//order-id
             $table->smallInteger('days')->default(0);//加的天数
             $table->dateTime('validity')->nullable();//统计到哪天
             $table->timestamps();
