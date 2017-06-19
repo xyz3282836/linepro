@@ -43,7 +43,7 @@
                                 <th>余额支出</th>
                                 <th>充值支出</th>
                                 <th>金币支出</th>
-                                <th>详情</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -72,6 +72,7 @@
                                                 <th>转运费</th>
                                                 <th>手续费</th>
                                                 <th>合计总价</th>
+                                                <th>操作</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -82,6 +83,11 @@
                                                     <td>{{$vv->transport}} 元</td>
                                                     <td>{{$vv->golds}} G</td>
                                                     <td>{{$vv->amount}} 元</td>
+                                                    <td>
+                                                        @if($v->status > 1)
+                                                        <a href="{{url('viewclickfarm/'.$vv->id)}}">追踪</a>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>

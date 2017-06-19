@@ -180,39 +180,6 @@ class CfController extends Controller
     }
 
     /**
-     * 订单页 刷单任务
-     * list
-     */
-    public function listTradeClickFarm()
-    {
-        $start  = request('start');
-        $end    = request('end');
-        $asin   = request('asin');
-        $status = request('status', 2);
-
-        $list = ClickFarm::where('uid', Auth::user()->id);
-        if ($start != null && $end != null) {
-            $list->whereBetween('updated_at', [$start, $end]);
-        }
-        if ($asin != null) {
-            $list->where('asin', $asin);
-        }
-        if ($status != 0) {
-            $list->where('status', $status);
-        } else {
-            $list->where('status', '>', 1);
-        }
-        $list = $list->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
-        return view('cf.list_clickfarm')->with('tname', '已购买商品列表')->with([
-            'list'   => $list,
-            'start'  => $start,
-            'end'    => $end,
-            'asin'   => $asin,
-            'status' => $status,
-        ]);
-    }
-
-    /**
      * 刷单任务结果表
      * list
      */
@@ -236,7 +203,7 @@ class CfController extends Controller
         $list = $list->where('status', $status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_cf_result')->with('tname', '已购买商品详情列表')->with([
             'list'   => $list,
-            'model'  => $model,
+            'id'  => $model->id,
             'start'  => $start,
             'end'    => $end,
             'asin'   => $asin,
@@ -265,7 +232,7 @@ class CfController extends Controller
         $model->star    = $star;
         $model->title   = $title;
         $model->content = $content;
-        $model->status  = 7;
+        $model->status  = 3;
         $model->save();
         return success();
     }

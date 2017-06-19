@@ -30,7 +30,7 @@ class CreateCfResultsTable extends Migration
             $table->string('content',1024)->default('');//正文
 
             // 非业务字段
-            $table->tinyInteger('status')->default(1);//状态 1购买中，2购买完成，3正在准备发货，4已经发货，5已经送达，6订单完成可评价，7正在尝试评价，8评价失败，9评价成功
+            $table->tinyInteger('status')->default(1);
 
             $table->timestamps();
 

@@ -20,9 +20,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{$tname}}</div>
                     <div class="panel-body">
-                        <form class="form-inline margin-bottom-30" action="{{url('viewclickfarm/'.$model->id)}}" method="post">
-                            {{csrf_field()}}
-
+                        <form class="form-inline margin-bottom-30" action="{{url('viewclickfarm/'.$id)}}" method="get">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="ASIN" name="asin" value="{{$asin}}">
                             </div>
@@ -52,7 +50,7 @@
                                     <th>亚马逊订单号</th>
                                     <th>物流</th>
                                     <th>物流单号</th>
-                                    <th>更新时间</th>
+                                    <th>评价详情</th>
                                     <th>状态</th>
                                     <th>操作</th>
                                 </tr>
@@ -67,10 +65,16 @@
                                     <td>{{$v->amazon_orderid}}</td>
                                     <td>{{$v->amazon_logistics_company}}</td>
                                     <td>{{$v->amazon_logistics_orderid}}</td>
-                                    <td>{{$v->updated_at}}</td>
+                                    <td width="300">
+                                        @if($v->status > 2)
+                                        <p>评价星级：{{$v->star}}</p>
+                                        <p>评价标题：{{$v->title}}</p>
+                                        <p>评价内容：{{$v->content}}</p>
+                                        @endif
+                                    </td>
                                     <td>{{$v->status_text}}</td>
                                     <td>
-                                        @if($v->status == 6)
+                                        @if($v->status == 2)
                                             <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">评价</button>
                                         @endif
 
@@ -174,7 +178,7 @@
         new Vue({
             el: '#app',
             data:{
-                statusc: JSON.parse('{!! json_encode(App\CfResult::OUT_TEXT) !!}'),
+                statusc: {!! json_encode(config('linepro.cfresult_status')) !!},
                 status:'{{$status}}'
             },
             methods: {

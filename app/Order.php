@@ -16,24 +16,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    const STATUS_DEL     = 0;//已删除
-    const STATUS_UNPAID  = 1;//待付款
-    const STATUS_SUCCESS = 2;//已付款
+    const STATUS_DEL          = 0;//已删除
+    const STATUS_UNPAID       = 1;//待付款
+    const STATUS_PAID         = 2;//已付款
+    const STATUS_UNDERWAY     = 3;//进行中
+    const STATUS_FULL_SUCCESS = 4;//全部完成
+    const STATUS_FULL_FAILURE = 5;//全部失败
+    const STATUS_PART_FAILURE = 6;//部分失败
 
     const TYPE_RECHARGE = 1;//充值
     const TYPE_CONSUME  = 2;//消费
     const TYPE_REFUND   = 3;//退款
 
     const PTYPE_ALIPAY = 1;
-
-    public function cfs(){
-        return $this->hasMany(ClickFarm::class,'oid');
-    }
-
     protected $fillable = [
         'uid', 'type', 'payment_type', 'orderid', 'alipay_orderid', 'balance', 'price', 'golds', 'rate', 'status'
     ];
-
     protected $appends = ['type_text', 'status_text', 'payment_type_text'];
 
     /**
@@ -77,7 +75,7 @@ class Order extends Model
         $user = User::find($one->uid);
         DB::beginTransaction();
         try {
-            $one->status         = self::STATUS_SUCCESS;
+            $one->status         = self::STATUS_PAID;
             $one->alipay_orderid = $alipay_orderid;
             $one->save();
             $user->golds = $user->golds + $one->golds;
@@ -102,13 +100,13 @@ class Order extends Model
             }
             $user->save();
             Bill::create([
-                'uid'     => $user->id,
-                'oid'     => $one->id,
-                'type'    => Bill::TYPE_RECHARGE,
-                'orderid' => $one->orderid,
+                'uid'            => $user->id,
+                'oid'            => $one->id,
+                'type'           => Bill::TYPE_RECHARGE,
+                'orderid'        => $one->orderid,
                 'alipay_orderid' => $one->alipay_orderid,
-                'gin'     => $one->golds,
-                'rate'    => gconfig('rmbtogold'),
+                'gin'            => $one->golds,
+                'rate'           => gconfig('rmbtogold'),
             ]);
             DB::commit();
         } catch (\Throwable $e) {
@@ -172,7 +170,7 @@ class Order extends Model
         $list = ClickFarm::where('oid', $one->id)->get();
         DB::beginTransaction();
         try {
-            $one->status         = self::STATUS_SUCCESS;
+            $one->status         = self::STATUS_PAID;
             $one->alipay_orderid = $alipay_orderid;
             $one->save();
             $user->lock_golds   = $user->lock_golds - $one->golds;
@@ -225,7 +223,7 @@ class Order extends Model
                 'price'        => $price,
                 'golds'        => $golds,
                 'rate'         => gconfig('rmbtogold'),
-                'status'       => self::STATUS_SUCCESS
+                'status'       => self::STATUS_PAID
             ]);
             Bill::create([
                 'uid'     => $user->id,
@@ -246,6 +244,11 @@ class Order extends Model
             DB::rollBack();
             throw new MsgException();
         }
+    }
+
+    public function cfs()
+    {
+        return $this->hasMany(ClickFarm::class, 'oid');
     }
 
     public function getTypeTextAttribute()
