@@ -19,11 +19,10 @@
                                 <th>充值单号</th>
                                 <th>支付宝单号</th>
                                 <th>充值金额</th>
+                                <th>等价金币</th>
                                 <th>充值时间</th>
                                 <th>充值类型</th>
                                 <th>状态</th>
-                                <th>反馈</th>
-                                <th>详情</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,12 +31,11 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->alipay_orderid}}</td>
-                                    <td class="color-red">{{$v->amount}}</td>
+                                    <td class="color-red">{{$v->golds/$v->rate}}</td>
+                                    <td class="color-red">{{$v->golds}}</td>
                                     <td>{{$v->created_at}}</td>
-                                    <td>{{$v->type_text}}</td>
+                                    <td>{{$v->payment_type_text}}</td>
                                     <td>{{$v->status_text}}</td>
-                                    <td>{{$v->feedback}}</td>
-                                    <td><a href="{{url('viewrecharge/'.$v->id)}}">查看</a></td>
                                 </tr>
                             @empty
                                 <tr>

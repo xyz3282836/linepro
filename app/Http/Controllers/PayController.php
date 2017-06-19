@@ -60,6 +60,41 @@ class PayController extends Controller
         return redirect($redirectUrl);
     }
 
+    public function jumpAlipay(){
+        $id = request('id',0);
+        $one = Order::find($id);
+        if (!$one) {
+            return error(MODEL_NOT_FOUNT);
+        }
+        if ($one->uid != Auth::user()->id) {
+            return error(NO_ACCESS);
+        }
+        if ($one->status != 1) {
+            return error('已支付');
+        }
+        switch ($one->type){
+            case Order::TYPE_RECHARGE:
+                $subject = '充值金币';
+                $amount = $one->golds / gconfig('rmbtogold');
+                break;
+            case Order::TYPE_CONSUME:
+                $subject = '代购支付';
+                $amount = $one->price - $one->balance;
+                break;
+        }
+        $gateway = get_alipay();
+        $request = $gateway->purchase();
+        $request->setBizContent([
+            'out_trade_no' => $one->orderid,
+            'total_amount' => $amount,
+            'subject'      => $subject,
+            'product_code' => 'FAST_INSTANT_TRADE_PAY',
+        ]);
+        $response    = $request->send();
+        $redirectUrl = $response->getRedirectUrl();
+        return redirect($redirectUrl);
+    }
+
     /**
      * get/post
      * 充值回调
@@ -96,10 +131,10 @@ class PayController extends Controller
             dd($e);
         } finally {
             if ($flag) {
-                $text = '充值成功';
+                $text = '支付成功';
                 $json = 'success';
             } else {
-                $text = '此次充值失败';
+                $text = '此次支付失败';
                 $json = 'fail';
             }
             if (request()->isMethod('get')) {
@@ -118,20 +153,7 @@ class PayController extends Controller
     public function listRecharge()
     {
         $list = Order::where('uid', Auth::user()->id)->where('type', Order::TYPE_RECHARGE)->orderBy('id', 'desc')->paginate(10);
-        return view('pay.list_recharge')->with('tname', '充值记录列表')->with('list', $list);
-    }
-
-    /**
-     * 充值详情
-     * view
-     */
-    public function getViewRecharge($id)
-    {
-        $one = Order::find($id);
-        if ($one->uid != Auth::user()->id) {
-            throw new MsgException();
-        }
-        return view('pay.view_recharge')->with('one', $one);
+        return view('pay.list_recharge')->with('tname', '充值金币记录列表')->with('list', $list);
     }
 
     /**
@@ -222,5 +244,4 @@ class PayController extends Controller
                 throw new MsgException();
         }
     }
-
 }

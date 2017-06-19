@@ -13,37 +13,28 @@ use App\Exceptions\MsgException;
 use Auth;
 use DB;
 use Illuminate\Database\Eloquent\Model;
-use Log;
 
 class Order extends Model
 {
-    const STATUS_DEL = 0;//已删除
-    const STATUS_UNPAID = 1;//待付款
+    const STATUS_DEL     = 0;//已删除
+    const STATUS_UNPAID  = 1;//待付款
     const STATUS_SUCCESS = 2;//已付款
 
     const TYPE_RECHARGE = 1;//充值
-    const TYPE_CONSUME = 2;//消费
-    const TYPE_REFUND = 3;//退款
+    const TYPE_CONSUME  = 2;//消费
+    const TYPE_REFUND   = 3;//退款
 
     const PTYPE_ALIPAY = 1;
+
+    public function cfs(){
+        return $this->hasMany(ClickFarm::class,'oid');
+    }
 
     protected $fillable = [
         'uid', 'type', 'payment_type', 'orderid', 'alipay_orderid', 'balance', 'price', 'golds', 'rate', 'status'
     ];
 
-    protected $appends = ['type_text', 'status_text'];
-
-    public function getTypeTextAttribute()
-    {
-        $arr = config('linepro.bill_type');
-        return $arr[$this->type];
-    }
-
-    public function getStatusTextAttribute()
-    {
-        $arr = config('linepro.bill_status');
-        return $arr[$this->status];
-    }
+    protected $appends = ['type_text', 'status_text', 'payment_type_text'];
 
     /**
      * 充值金币
@@ -115,6 +106,7 @@ class Order extends Model
                 'oid'     => $one->id,
                 'type'    => Bill::TYPE_RECHARGE,
                 'orderid' => $one->orderid,
+                'alipay_orderid' => $one->alipay_orderid,
                 'gin'     => $one->golds,
                 'rate'    => gconfig('rmbtogold'),
             ]);
@@ -125,7 +117,6 @@ class Order extends Model
             throw new MsgException('');
         }
     }
-
 
     /**
      * 充值+余额 支付
@@ -255,5 +246,23 @@ class Order extends Model
             DB::rollBack();
             throw new MsgException();
         }
+    }
+
+    public function getTypeTextAttribute()
+    {
+        $arr = config('linepro.order_type');
+        return $arr[$this->type];
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $arr = config('linepro.order_status');
+        return $arr[$this->status];
+    }
+
+    public function getPaymentTypeTextAttribute()
+    {
+        $arr = config('linepro.order_ptype');
+        return $arr[$this->payment_type];
     }
 }

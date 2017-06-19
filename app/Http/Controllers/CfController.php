@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\CfResult;
 use App\ClickFarm;
+use App\Order;
 use App\QuotaBill;
 use Auth;
 use Carbon\Carbon;
@@ -137,6 +138,23 @@ class CfController extends Controller
     {
         $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->get()->toJson();
         return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list);
+    }
+
+    public function listOrder(){
+        $start = request('start');
+        $end   = request('end');
+        $type  = request('type', 1);
+
+        $table = Order::with('cfs')->where('uid', Auth::user()->id)->where('status',$type);
+        if ($start != null && $end != null) {
+            $table->whereBetween('created_at', [$start, $end]);
+        }
+        $list = $table->orderBy('id', 'desc')->paginate(10);
+        return view('cf.list_order')->with('tname', '订单管理')->with('list', $list)->with([
+            'start' => $start,
+            'end'   => $end,
+            'type'  => $type
+        ]);
     }
 
     /**

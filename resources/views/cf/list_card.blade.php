@@ -61,10 +61,10 @@
                                 <td v-text="one.created_at"></td>
                                 <td>
                                     <button v-if="one.status == 1" class="btn btn-danger btn-sm ladda-button"
-                                            data-style="contract" @click="cancle(one.id)">取消订单
+                                            data-style="contract" @click="cancle(one.id)">删除代购商品
                                     </button>
                                     <button v-if="one.status == 1" class="btn btn-success btn-sm ladda-button"
-                                            data-style="contract" @click="pay(one.id)">支付下单
+                                            data-style="contract" @click="pay(one.id)">立刻购买
                                     </button>
                                     <a v-if="one.status > 1" :href="'viewclickfarm/'+one.id">查看详情</a>
                                 </td>
@@ -105,7 +105,7 @@
                         if (!data.code) {
                             layer.msg(data.msg, {icon: 2});
                         } else {
-                            layer.msg('支付成功', {icon: 1});
+                            layer.msg('操作成功', {icon: 1});
                             window.location.href = data.data;
                         }
                     })
@@ -116,8 +116,8 @@
                         if (!data.code) {
                             layer.msg(data.msg, {icon: 2});
                         } else {
-                            layer.msg('支付成功', {icon: 1});
-//                            window.location.href = data.data;
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.href = data.data;
                         }
                     })
                 },
@@ -128,7 +128,7 @@
                             layer.msg(data.msg, {icon: 2});
                         } else {
                             layer.msg('操作成功', {icon: 1});
-//                            window.location.reload()
+                            window.location.reload()
                         }
                     })
                 },

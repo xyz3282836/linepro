@@ -84,6 +84,9 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
+                                    <a href="{{url('orderlist')}}">我的订单</a>
+                                </li>
+                                <li>
                                     <a href="{{url('itemlist')}}">已购买商品列表</a>
                                 </li>
                             </ul>
@@ -102,7 +105,18 @@
                             <li><a href="{{ url('billlist') }}">账单</a></li>
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{Auth::user()->level_text}}(<span class="color-red">{{Auth::user()->golds}}G</span>) <span class="caret"></span>
+                                    地址管理 <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ url('addr') }}">达购转运</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    {{Auth::user()->level_text}}
+                                    金币:<span class="color-red">{{Auth::user()->golds}}G</span>
+                                    <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -112,20 +126,11 @@
                                     <li><a href="{{ url('viplist') }}">会员有效期记录</a></li>
                                 </ul>
                             </li>
-
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    地址管理 <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('addr') }}">达购转运</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }}
+                                    余额:<span class="color-red">{{Auth::user()->balance}}元</span>
+                                    <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
