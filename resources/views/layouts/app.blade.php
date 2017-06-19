@@ -36,6 +36,9 @@
         .margin-bottom-30{
             margin-bottom: 30px;
         }
+        table td{
+            max-width: 300px;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->
