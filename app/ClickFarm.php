@@ -23,7 +23,7 @@ class ClickFarm extends Model
 
     public function getDeliveryTypeTextAttribute()
     {
-        $arr = config('linepro.delivery_typec');
+        $arr = config('linepro.delivery_type');
         return $arr[$this->delivery_type];
     }
 

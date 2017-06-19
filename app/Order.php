@@ -102,7 +102,7 @@ class Order extends Model
                 }
                 VipBill::create([
                     'uid'      => $user->id,
-                    'rid'      => $one->id,
+                    'oid'      => $one->id,
                     'days'     => $adddays,
                     'validity' => $validity,
                 ]);

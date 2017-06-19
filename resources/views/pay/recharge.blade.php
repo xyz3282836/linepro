@@ -85,7 +85,7 @@
                 type:'1',
                 amount:{{gconfig('cost.vip')}},
                 rate:{{gconfig('rmbtogold')}},
-                typec: {!! json_encode(config('linepro.order_ptypec')) !!},
+                typec: {!! json_encode(config('linepro.order_ptype')) !!},
             },
             computed:{
                 getgolds(){

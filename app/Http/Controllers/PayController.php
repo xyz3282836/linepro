@@ -11,16 +11,11 @@ namespace App\Http\Controllers;
 
 use App\Bill;
 use App\ClickFarm;
-use App\Events\CfResults;
 use App\Exceptions\MsgException;
 use App\Order;
 use App\Recharge;
-use App\User;
-use App\VipBill;
 use Auth;
-use DB;
 use Exception;
-use Log;
 
 class PayController extends Controller
 {
@@ -82,7 +77,7 @@ class PayController extends Controller
                 $orderid        = $data['out_trade_no'];
                 $alipay_orderid = $data['trade_no'];
                 $model          = Order::where('orderid', $orderid)->first();
-                if($model->status == Order::STATUS_UNPAID){
+                if ($model->status == Order::STATUS_UNPAID) {
                     switch ($model->type) {
                         case Order::TYPE_RECHARGE:
                             Order::payRechargeGolds($model, $alipay_orderid);
@@ -122,7 +117,7 @@ class PayController extends Controller
      */
     public function listRecharge()
     {
-        $list = Order::where('uid', Auth::user()->id)->where('type',Order::TYPE_RECHARGE)->orderBy('id', 'desc')->paginate(10);
+        $list = Order::where('uid', Auth::user()->id)->where('type', Order::TYPE_RECHARGE)->orderBy('id', 'desc')->paginate(10);
         return view('pay.list_recharge')->with('tname', '充值记录列表')->with('list', $list);
     }
 
@@ -148,7 +143,7 @@ class PayController extends Controller
         $ids  = request('id');
         $user = Auth::user();
         $list = ClickFarm::where('uid', $user->id)->where('status', 1)->whereIn('id', $ids)->get();
-        if (count($list)==0) {
+        if (count($list) == 0) {
             return error(MODEL_NOT_FOUNT);
         }
         //计算总金币 总价格
@@ -165,7 +160,7 @@ class PayController extends Controller
         $balance = $user->balance - $user->lock_balance;
         if ($price > $balance) {
             //余额+充值 跳转 不生成bill
-            $one     = Order::consumeByPartRecharge($price, $golds, $balance,$list);
+            $one     = Order::consumeByPartRecharge($price, $golds, $balance, $list);
             $gateway = get_alipay();
             $request = $gateway->purchase();
             $request->setBizContent([
@@ -190,14 +185,14 @@ class PayController extends Controller
     {
         $start = request('start');
         $end   = request('end');
-        $type  = request('type', 0);
+        $type  = request('type', -1);
 
         $table = Bill::where('uid', Auth::user()->id);
         if ($start != null && $end != null) {
             $table->whereBetween('created_at', [$start, $end]);
         }
 
-        if ($type) {
+        if ($type >= 0) {
             $table->where('type', $type);
         }
         $list = $table->orderBy('id', 'desc')->paginate(10);

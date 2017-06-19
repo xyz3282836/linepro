@@ -193,7 +193,7 @@
                 time_type: 1,
                 time_typec: {!! json_encode(config('linepro.time_typec')) !!},
                 delivery_type: 1,
-                delivery_typec: {!! json_encode(config('linepro.delivery_typec')) !!},
+                delivery_typec: {!! json_encode(config('linepro.delivery_type')) !!},
             }
         });
 

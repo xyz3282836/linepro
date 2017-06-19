@@ -16,8 +16,7 @@
                     <div class="panel-heading">{{$tname}}</div>
                     <div class="panel-body">
 
-                        <form class="form-inline margin-bottom-30" action="{{url('billlist')}}" method="post">
-                            {{csrf_field()}}
+                        <form class="form-inline margin-bottom-30" action="{{url('billlist')}}" method="get">
                             <div class="form-group">
                                 <div class="input-daterange input-group" id="datepicker">
                                     <input type="text" class="form-control" name="start" value="{{$start}}" />
@@ -39,10 +38,12 @@
                                 <th>#</th>
                                 <th>时间</th>
                                 <th>类型</th>
-                                <th>相关订单号</th>
-                                <th>收入</th>
-                                <th>支出</th>
-                                <th>余额</th>
+                                <th>订单号</th>
+                                <th>支付宝订单号</th>
+                                <th>人名币收入</th>
+                                <th>人名币支出</th>
+                                <th>金币收入</th>
+                                <th>金币支出</th>
                                 <th>详情</th>
                             </tr>
                             </thead>
@@ -53,10 +54,12 @@
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->type_text}}</td>
                                     <td>{{$v->orderid}}</td>
+                                    <td>{{$v->alipay_orderid}}</td>
                                     <td :class="{'color-red': {{$v->in}}>0.00}">+ {{$v->in}}</td>
                                     <td :class="{'color-green': {{$v->out}}>0.00}">- {{$v->out}}</td>
-                                    <td>{{$v->amount}}</td>
-                                    <td><a href="{{url('getbilldesc?type='.$v->type.'&taskid='.$v->taskid)}}">查看</a></td>
+                                    <td :class="{'color-red': {{$v->gin}}>0.00}">+ {{$v->gin}}</td>
+                                    <td :class="{'color-green': {{$v->gout}}>0.00}">- {{$v->gout}}</td>
+                                    <td><a href="{{url('getbilldesc?&taskid='.$v->taskid)}}">查看</a></td>
                                 </tr>
                             @empty
                                 <tr>
@@ -90,7 +93,7 @@
             el: '#app',
             data:{
                 type:"{{$type}}",
-                typec: JSON.parse('{!! json_encode(App\Bill::OUT_TEXT) !!}'),
+                typec: {!! json_encode(config('linepro.bill_types')) !!}
             },
 
         })

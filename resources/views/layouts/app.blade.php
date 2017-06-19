@@ -106,7 +106,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ url('recharge') }}">充值会员</a></li>
+                                    <li><a href="{{ url('recharge') }}">充值金币</a></li>
                                     <li><a href="{{ url('rechargelist') }}">充值记录</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{ url('viplist') }}">会员有效期记录</a></li>

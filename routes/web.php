@@ -26,7 +26,7 @@ Route::post('addclickfarm', 'CfController@postAddClickFarm');
 Route::get('card', 'CfController@listCardClickFarm');
 Route::any('itemlist', 'CfController@listTradeClickFarm');
 Route::post('canclecf', 'CfController@postCancle');
-Route::any('viewclickfarm/{id}', 'CfController@listCfResult');
+Route::get('viewclickfarm/{id}', 'CfController@listCfResult');
 
 //cf 评价
 Route::post('cf/evaluate', 'CfController@evaluate');
@@ -46,7 +46,7 @@ Route::get('viplist', 'HomeController@listVip');
 //recharge 充值
 Route::get('recharge', 'PayController@getRecharge');
 Route::post('recharge/pay', 'PayController@recharge');
-Route::any('recharge/result','PayController@result');
+Route::get('recharge/result','PayController@result');
 Route::get('viewrecharge/{id}', 'PayController@getViewRecharge');
 Route::get('rechargelist', 'PayController@listRecharge');
 
@@ -54,7 +54,7 @@ Route::get('rechargelist', 'PayController@listRecharge');
 Route::post('pay', 'PayController@postPay');
 
 //资金流水
-Route::any('billlist', 'PayController@listBill');
+Route::get('billlist', 'PayController@listBill');
 Route::get('getbilldesc', 'PayController@billDesc');
 
 //upfile

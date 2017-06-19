@@ -29,6 +29,10 @@
                                 <label class="col-md-4 control-label">会员状态</label>
                                 <label class="col-md-6 control-label">{{ $user->level_text }}</label>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">注册时间</label>
+                                <label class="col-md-6 control-label">{{ $user->reg_time }}</label>
+                            </div>
                         </form>
                     </div>
                 </div>

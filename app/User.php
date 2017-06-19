@@ -19,6 +19,8 @@ class User extends Authenticatable
         'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'lock_golds', 'balance', 'lock_balance', 'reg_time'
     ];
 
+    protected $appends = ['level_text'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -28,16 +30,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    const STATUS_1 = '普通会员';
-    const STATUS_2 = '认证会员';
-
     public function getLevelTextAttribute()
     {
-        $text = [
-            1 => User::STATUS_1,
-            2 => User::STATUS_2,
-        ];
-        return $text[$this->level];
+        $arr = config('linepro.user_level');
+        return $arr[$this->level];
     }
 
     public function checkInfoIsCompleted()
