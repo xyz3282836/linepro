@@ -86,9 +86,6 @@
                                 <li>
                                     <a href="{{url('orderlist')}}">我的订单</a>
                                 </li>
-                                <li>
-                                    <a href="{{url('itemlist')}}">已购买商品列表</a>
-                                </li>
                             </ul>
                         </li>
 
