@@ -57,7 +57,7 @@ class CfResult extends Model
         $count = CfResult::where('cfid',$this->cfid)->count();
         $waitcount--;
         if ($waitcount>=0){
-            if(($one->golds/$one->rate/($count-$waitcount)-20-$weight) <= 0){
+            if(($one->golds/$one->grate/($count-$waitcount)-20-$weight) <= 0){
                 $user->is_evaluate = 0;
                 $user->save();
             }
