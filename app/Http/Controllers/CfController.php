@@ -225,15 +225,22 @@ class CfController extends Controller
         if (!$model) {
             return error(MODEL_NOT_FOUNT);
         }
-        if ($model->uid != Auth::user()->id) {
+        $user = Auth::user();
+        if ($model->uid != $user->id) {
             return error(NO_ACCESS);
         }
-
+        if($model->status != CfResult::STATUS_REMAIN_EVALUATE){
+            return error(NO_ACCESS);
+        }
+        if(!$user->is_evaluate){
+            return error('此账号已被封禁');
+        }
         $model->star    = $star;
         $model->title   = $title;
         $model->content = $content;
         $model->status  = 3;
         $model->save();
+        $model->evaluate($user);
         return success();
     }
 

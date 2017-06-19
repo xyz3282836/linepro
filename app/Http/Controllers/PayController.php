@@ -75,7 +75,7 @@ class PayController extends Controller
         switch ($one->type){
             case Order::TYPE_RECHARGE:
                 $subject = '充值金币';
-                $amount = $one->golds / gconfig('rmbtogold');
+                $amount = $one->golds / $one->rate;
                 break;
             case Order::TYPE_CONSUME:
                 $subject = '代购支付';

@@ -79,7 +79,7 @@ class Order extends Model
             $one->alipay_orderid = $alipay_orderid;
             $one->save();
             $user->golds = $user->golds + $one->golds;
-            $amount      = $one->golds / gconfig('rmbtogold');
+            $amount      = $one->golds / $one->rate;
             //有效期
             if ($amount >= gconfig('cost.vip')) {
                 //有效期

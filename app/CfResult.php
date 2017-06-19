@@ -9,6 +9,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class CfResult extends Model
@@ -19,9 +20,6 @@ class CfResult extends Model
     const STATUS_SUCCESS         = 4;//评价成功
     const STATUS_FAILURE         = 5;//评价失败
 
-    const THIS_DONE              = '已经评价过';
-    const LEVE1_HAS_DONE         = '该asin已经评价过';
-    const LEVE2_NOT_ENOUGH_QUOTA = '评价配额不足，需要充值';
     /**
      * The attributes that are mass assignable.
      *
@@ -45,5 +43,25 @@ class CfResult extends Model
     public function getMsg()
     {
         return $this->msg;
+    }
+
+    public function evaluate($user=null){
+        $one = ClickFarm::find($this->cfid);
+        $user = $user!=null?$user:Auth::user();
+        if ($user->level == 1){
+            $weight = gconfig('regular.evaluate');
+        }else{
+            $weight = gconfig('vip.evaluate');
+        }
+        $waitcount = CfResult::where('cfid',$this->cfid)->whereIn('status',[1,2])->count();
+        $count = CfResult::where('cfid',$this->cfid)->count();
+        $waitcount--;
+        if ($waitcount>=0){
+            if(($one->golds/$one->rate/($count-$waitcount)-20-$weight) <= 0){
+                $user->is_evaluate = 0;
+                $user->save();
+            }
+        }
+
     }
 }
