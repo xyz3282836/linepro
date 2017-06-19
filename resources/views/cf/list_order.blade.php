@@ -41,6 +41,7 @@
                                 <th>订单号</th>
                                 <th>总价</th>
                                 <th>余额支出</th>
+                                <th>充值支出</th>
                                 <th>金币支出</th>
                                 <th>详情</th>
                             </tr>
@@ -53,6 +54,7 @@
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->price}}</td>
                                     <td>{{$v->balance}}</td>
+                                    <td>{{$v->price - $v->balance}}</td>
                                     <td>{{$v->golds}}</td>
                                     <td>
                                         <a v-if="{{$v->status}} == 1" href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
