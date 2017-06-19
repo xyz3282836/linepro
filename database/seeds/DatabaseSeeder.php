@@ -16,35 +16,35 @@ class DatabaseSeeder extends Seeder
             [
                 'id'      => 1,
                 'apiname' => 'USD',
-                'name'    => 'USD',
+                'name'    => '$',
                 'apirate' => '6.79',
                 'rate'    => '6.89'
             ],
             [
                 'id'      => 2,
                 'apiname' => 'CAD',
-                'name'    => 'CAD',
+                'name'    => 'C$',
                 'apirate' => '5.13',
                 'rate'    => '5.23'
             ],
             [
                 'id'      => 3,
                 'apiname' => 'GBP',
-                'name'    => 'GBP',
+                'name'    => '£',
                 'apirate' => '8.66',
                 'rate'    => '8.76'
             ],
             [
                 'id'      => 4,
                 'apiname' => 'EUR',
-                'name'    => 'EUR',
+                'name'    => '€',
                 'apirate' => '7.61',
                 'rate'    => '7.71'
             ],
             [
                 'id'      => 5,
                 'apiname' => 'JPY',
-                'name'    => 'JPY',
+                'name'    => 'JPY¥',
                 'apirate' => '0.06',
                 'rate'    => '0.16'
             ]
