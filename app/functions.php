@@ -131,7 +131,11 @@ function mask_email($email)
 
 function gconfig($key)
 {
-    return \App\Gconfig::where('key', $key)->value('value');
+    if(Cache::get($key,false) === false){
+        $value = App\Gconfig::where('key', $key)->value('value');
+        Cache::forever($key,$value);
+        return $value;
+    }
 }
 
 function get_rate($site)
