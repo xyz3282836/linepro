@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,39 +15,44 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('exchange_rates')->insert([
             [
-                'id'      => 1,
-                'apiname' => 'USD',
-                'name'    => '$',
-                'apirate' => '6.79',
-                'rate'    => '6.89'
+                'id'        => 1,
+                'apiname'   => 'USD',
+                'name'      => '$',
+                'apirate'   => '6.79',
+                'rate'      => '6.89',
+                'created_at' => Carbon::now()
             ],
             [
-                'id'      => 2,
-                'apiname' => 'CAD',
-                'name'    => 'C$',
-                'apirate' => '5.13',
-                'rate'    => '5.23'
+                'id'        => 2,
+                'apiname'   => 'CAD',
+                'name'      => 'C$',
+                'apirate'   => '5.13',
+                'rate'      => '5.23',
+                'created_at' => Carbon::now()
             ],
             [
-                'id'      => 3,
-                'apiname' => 'GBP',
-                'name'    => '£',
-                'apirate' => '8.66',
-                'rate'    => '8.76'
+                'id'        => 3,
+                'apiname'   => 'GBP',
+                'name'      => '£',
+                'apirate'   => '8.66',
+                'rate'      => '8.76',
+                'created_at' => Carbon::now()
             ],
             [
-                'id'      => 4,
-                'apiname' => 'EUR',
-                'name'    => '€',
-                'apirate' => '7.61',
-                'rate'    => '7.71'
+                'id'        => 4,
+                'apiname'   => 'EUR',
+                'name'      => '€',
+                'apirate'   => '7.61',
+                'rate'      => '7.71',
+                'created_at' => Carbon::now()
             ],
             [
-                'id'      => 5,
-                'apiname' => 'JPY',
-                'name'    => 'JPY¥',
-                'apirate' => '0.06',
-                'rate'    => '0.16'
+                'id'        => 5,
+                'apiname'   => 'JPY',
+                'name'      => 'JPY¥',
+                'apirate'   => '0.06',
+                'rate'      => '0.16',
+                'created_at' => Carbon::now()
             ]
         ]);
         DB::table('gconfigs')->insert([
