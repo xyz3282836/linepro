@@ -17,7 +17,7 @@ class CreateGconfigsTable extends Migration
             $table->increments('id');
             $table->string('key');
             $table->string('desc')->default('');
-            $table->string('value');
+            $table->string('value',1000);
         });
     }
 

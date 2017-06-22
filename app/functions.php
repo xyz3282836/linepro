@@ -139,14 +139,10 @@ function gconfig($key)
     return $value;
 }
 
-function set_gconfig($key)
+function set_gconfig($id,$value)
 {
-    $value = Cache::get($key, false);
-    if ($value === false) {
-        $value = App\Gconfig::where('key', $key)->value('value');
-        Cache::forever($key, $value);
-    }
-    return $value;
+    $key = App\Gconfig::where('id', $id)->value('key');
+    Cache::forever($key, $value);
 }
 
 function get_rate($site)

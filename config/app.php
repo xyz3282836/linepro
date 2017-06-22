@@ -179,8 +179,6 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
 
-        Barryvdh\Debugbar\ServiceProvider::class,
-
         Mews\Captcha\CaptchaServiceProvider::class,
 
         Encore\Admin\Providers\AdminServiceProvider::class

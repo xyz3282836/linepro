@@ -38,6 +38,8 @@ class ConfigController extends Controller
             $grid->key('标识')->label('danger');
             $grid->desc('描述');
             $grid->value('值')->editable();
+
+            $grid->disableCreation();
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
             });
@@ -49,7 +51,7 @@ class ConfigController extends Controller
         });
     }
 
-    public $id = 0;
+
 
     public function edit($id)
     {
@@ -67,10 +69,7 @@ class ConfigController extends Controller
         return Admin::form(Gconfig::class, function (Form $form) {
             $form->display('key', '标识')->rules('required');
             $form->display('desc', '描述')->rules('required');
-            $form->text('value', '值')->rules('required');
-            $form->saving(function ($form) {
-
-            });
+            $form->textarea('value', '值')->rules('required');
         });
     }
 
@@ -83,5 +82,11 @@ class ConfigController extends Controller
 
             $content->body($this->form());
         });
+    }
+
+    public function update($id)
+    {
+        set_gconfig($id,request('value'));
+        return $this->form()->update($id);
     }
 }

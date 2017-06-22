@@ -25,6 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if (env('APP_DEBUG')) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
+        if (env('APP_ENV') != 'production') {
+            $this->app->register(\Way\Generators\GeneratorsServiceProvider::class);
+            $this->app->register(\Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class);
+
+        }
     }
 }

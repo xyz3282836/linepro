@@ -53,7 +53,7 @@ return [
             'file'   => 'file',
         ],
 
-        'host' => 'http://localhost:8000/admin/upload/',
+        'host' => '/upfile/admin',
     ],
 
     /*
@@ -91,7 +91,7 @@ return [
     /*
      * By setting this option to open or close operation log in laravel-admin.
      */
-    'operation_log'   => true,
+    'operation_log'   => false,
 
     /*
     |---------------------------------------------------------|
