@@ -139,6 +139,16 @@ function gconfig($key)
     return $value;
 }
 
+function set_gconfig($key)
+{
+    $value = Cache::get($key, false);
+    if ($value === false) {
+        $value = App\Gconfig::where('key', $key)->value('value');
+        Cache::forever($key, $value);
+    }
+    return $value;
+}
+
 function get_rate($site)
 {
     return App\ExchangeRate::getRate($site);

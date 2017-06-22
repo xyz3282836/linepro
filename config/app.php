@@ -183,6 +183,8 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
 
+        Encore\Admin\Providers\AdminServiceProvider::class
+
     ],
 
     /*
