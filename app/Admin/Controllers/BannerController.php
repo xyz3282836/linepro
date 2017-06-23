@@ -34,9 +34,9 @@ class BannerController extends Controller
     protected function grid()
     {
         return Admin::grid(Banner::class, function (Grid $grid) {
-            $grid->title();
-            $grid->pic()->image();
-            $grid->created_at();
+            $grid->title('图片标题');
+            $grid->pic('图片')->image();
+            $grid->created_at('创建时间');
         });
     }
 
