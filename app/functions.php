@@ -16,7 +16,6 @@ const ERROR_IDEMPOTENCE = '重复操作';
 const ERROR_SYSTEM      = '系统错误';
 const ERROR_PARAM       = '参数错误';
 
-
 //订购日期
 function get_order_id()
 {

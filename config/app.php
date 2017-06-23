@@ -181,7 +181,9 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
 
-        Encore\Admin\Providers\AdminServiceProvider::class
+        Encore\Admin\Providers\AdminServiceProvider::class,
+
+//        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 
@@ -238,6 +240,10 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+
+//        'Image' => Intervention\Image\Facades\Image::class
+
+
 
     ],
 

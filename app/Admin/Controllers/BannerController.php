@@ -2,21 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: zhou
- * Date: 2017/6/22
- * Time: 下午3:14
+ * Date: 2017/6/23
+ * Time: 上午10:32
  */
-
 namespace App\Admin\Controllers;
 
-use App\Gconfig;
+use App\Banner;
 use App\Http\Controllers\Controller;
+use Cache;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
+use Request;
 
-class ConfigController extends Controller
+class BannerController extends Controller
 {
     use ModelForm;
 
@@ -31,20 +32,12 @@ class ConfigController extends Controller
 
     protected function grid()
     {
-        return Admin::grid(Gconfig::class, function (Grid $grid) {
-            $grid->key('标识')->label('danger');
-            $grid->desc('描述');
-            $grid->value('值')->editable();
+        return Admin::grid(Banner::class, function (Grid $grid) {
+            $grid->id('ID');
+            $grid->title();
+            $grid->pic()->image();
+            $grid->created_at();
 
-            $grid->disableCreation();
-            $grid->actions(function ($actions) {
-                $actions->disableDelete();
-            });
-            $grid->tools(function ($tools) {
-                $tools->batch(function ($batch) {
-                    $batch->disableDelete();
-                });
-            });
         });
     }
 
@@ -57,12 +50,14 @@ class ConfigController extends Controller
         });
     }
 
-    protected function form()
+    public function form()
     {
-        return Admin::form(Gconfig::class, function (Form $form) {
-            $form->display('key', '标识')->rules('required');
-            $form->display('desc', '描述')->rules('required');
-            $form->textarea('value', '值')->rules('required');
+        return Admin::form(Banner::class, function (Form $form) {
+            $form->text('title','图片标题');
+            $form->image('pic','图片')->uniqueName()->move('banner')->rules('required');
+
+            $form->display('created_at','创建时间');
+            $form->display('updated_at','更新时间');
         });
     }
 
@@ -75,9 +70,16 @@ class ConfigController extends Controller
         });
     }
 
+    public function store()
+    {
+        Cache::forget('banners');
+        return $this->form()->store();
+    }
+
     public function update($id)
     {
-        set_gconfig($id,request('value'));
+        Cache::forget('banners');
         return $this->form()->update($id);
     }
+
 }

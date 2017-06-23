@@ -16,4 +16,6 @@ Route::group([
 
     $router->resource('faq','FaqController');
 
+    $router->resource('banner','BannerController');
+
 });

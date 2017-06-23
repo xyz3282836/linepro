@@ -63,3 +63,9 @@ Route::post('upload', 'HomeController@upload');
 
 //captcha
 Route::get('refereshcapcha', 'IndexController@captcha');
+
+//faq
+Route::get('faq', 'IndexController@faq');
+
+//download
+Route::get('download', 'IndexController@download');

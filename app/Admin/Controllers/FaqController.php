@@ -11,6 +11,7 @@ namespace App\Admin\Controllers;
 
 use App\Faq;
 use App\Http\Controllers\Controller;
+use Cache;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -25,10 +26,8 @@ class FaqController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-
             $content->header('header');
             $content->description('description');
-
             $content->body($this->grid());
         });
     }
@@ -39,17 +38,14 @@ class FaqController extends Controller
             $grid->id('ID')->sortable();
             $grid->q('问题')->editable();
             $grid->a('答案')->editable();
-
         });
     }
 
     public function edit($id)
     {
         return Admin::content(function (Content $content) use ($id) {
-
             $content->header('header');
             $content->description('description');
-
             $content->body($this->form()->edit($id));
         });
     }
@@ -57,10 +53,8 @@ class FaqController extends Controller
     public function create()
     {
         return Admin::content(function (Content $content) {
-
             $content->header('header');
             $content->description('description');
-
             $content->body($this->form());
         });
     }
@@ -72,5 +66,17 @@ class FaqController extends Controller
             $form->text('q', '问题')->rules('required|min:2');
             $form->textarea('a', '回答')->rules('required|min:2');
         });
+    }
+
+    public function store()
+    {
+        Cache::forget('faqs');
+        return $this->form()->store();
+    }
+
+    public function update($id)
+    {
+        Cache::forget('faqs');
+        return $this->form()->update($id);
     }
 }

@@ -16,45 +16,75 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('banners')->insert([
+            [
+                'id'         => 1,
+                'title'      => 'banner1',
+                'pic'        => 'banner/banner1.png',
+                'created_at' => '2017-06-23 03:43:25',
+                'updated_at' => '2017-06-23 04:44:31',
+            ],
+            [
+                'id'         => 2,
+                'title'      => 'banner2',
+                'pic'        => 'banner/banner2.png',
+                'created_at' => '2017-06-23 04:28:07',
+                'updated_at' => '2017-06-23 04:28:07',
+            ],
+            [
+                'id'         => 3,
+                'title'      => 'banner3',
+                'pic'        => 'banner/banner3.png',
+                'created_at' => '2017-06-23 04:45:26',
+                'updated_at' => '2017-06-23 04:45:26',
+            ],
+            [
+                'id'         => 4,
+                'title'      => 'banner4',
+                'pic'        => 'banner/banner4.png',
+                'created_at' => '2017-06-23 04:45:41',
+                'updated_at' => '2017-06-23 04:45:41',
+            ],
+        ]);
         DB::table('exchange_rates')->insert([
             [
-                'id'        => 1,
-                'apiname'   => 'USD',
-                'name'      => '$',
-                'apirate'   => '6.79',
-                'rate'      => '6.89',
+                'id'         => 1,
+                'apiname'    => 'USD',
+                'name'       => '$',
+                'apirate'    => '6.79',
+                'rate'       => '6.89',
                 'created_at' => Carbon::now()
             ],
             [
-                'id'        => 2,
-                'apiname'   => 'CAD',
-                'name'      => 'C$',
-                'apirate'   => '5.13',
-                'rate'      => '5.23',
+                'id'         => 2,
+                'apiname'    => 'CAD',
+                'name'       => 'C$',
+                'apirate'    => '5.13',
+                'rate'       => '5.23',
                 'created_at' => Carbon::now()
             ],
             [
-                'id'        => 3,
-                'apiname'   => 'GBP',
-                'name'      => '£',
-                'apirate'   => '8.66',
-                'rate'      => '8.76',
+                'id'         => 3,
+                'apiname'    => 'GBP',
+                'name'       => '£',
+                'apirate'    => '8.66',
+                'rate'       => '8.76',
                 'created_at' => Carbon::now()
             ],
             [
-                'id'        => 4,
-                'apiname'   => 'EUR',
-                'name'      => '€',
-                'apirate'   => '7.61',
-                'rate'      => '7.71',
+                'id'         => 4,
+                'apiname'    => 'EUR',
+                'name'       => '€',
+                'apirate'    => '7.61',
+                'rate'       => '7.71',
                 'created_at' => Carbon::now()
             ],
             [
-                'id'        => 5,
-                'apiname'   => 'JPY',
-                'name'      => 'JPY¥',
-                'apirate'   => '0.06',
-                'rate'      => '0.16',
+                'id'         => 5,
+                'apiname'    => 'JPY',
+                'name'       => 'JPY¥',
+                'apirate'    => '0.06',
+                'rate'       => '0.16',
                 'created_at' => Carbon::now()
             ]
         ]);
@@ -166,29 +196,37 @@ class DatabaseSeeder extends Seeder
                 'value' => '30',
             ],
         ]);
-
+        DB::table('faqs')->insert([
+            [
+                'id'         => 1,
+                'q'          => '你们是什么平台？',
+                'a'          => '我们是达购海外代购平台。',
+                'created_at' => '2017-06-23 05:57:35',
+                'updated_at' => '2017-06-23 05:57:35',
+            ],
+        ]);
         // create a user.
         Administrator::truncate();
         Administrator::create([
-            'username'  => 'dagogadmin',
-            'password'  => bcrypt('dago8888'),
-            'name'      => '超管就是我',
+            'username' => 'dagogadmin',
+            'password' => bcrypt('dago8888'),
+            'name'     => '超管就是我',
         ]);
         Administrator::create([
-            'username'  => 'dagoadmin',
-            'password'  => bcrypt('dago8888'),
-            'name'      => 'Dago管理员',
+            'username' => 'dagoadmin',
+            'password' => bcrypt('dago8888'),
+            'name'     => 'Dago管理员',
         ]);
 
         // create a role.
         Role::truncate();
         Role::create([
-            'name'  => '超级管理员',
-            'slug'  => 'administrator',
+            'name' => '超级管理员',
+            'slug' => 'administrator',
         ]);
         Role::create([
-            'name'  => '后台管理员',
-            'slug'  => 'admin',
+            'name' => '后台管理员',
+            'slug' => 'admin',
         ]);
 
         // add role to user.
@@ -296,11 +334,27 @@ class DatabaseSeeder extends Seeder
                 'icon'      => 'fa-question-circle',
                 'uri'       => 'faq',
             ],
+            [
+                'parent_id' => 12,
+                'order'     => 15,
+                'title'     => '轮播图',
+                'icon'      => 'fa-picture-o',
+                'uri'       => 'banner',
+            ],
         ]);
 
         // add role to menu.
         Menu::find(2)->roles()->save(Role::first());
         Menu::find(8)->roles()->save(Role::first());
 
+//        $this->call(BannersTableSeeder::class);
+//        $this->call(ExchangeRatesTableSeeder::class);
+//        $this->call(GconfigsTableSeeder::class);
+//        $this->call(AdminUsersTableSeeder::class);
+//        $this->call(AdminRolesTableSeeder::class);
+//        $this->call(AdminMenuTableSeeder::class);
+//        $this->call(AdminRoleUsersTableSeeder::class);
+//        $this->call(AdminRoleMenuTableSeeder::class);
+//        $this->call(FaqsTableSeeder::class);
     }
 }

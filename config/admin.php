@@ -53,7 +53,7 @@ return [
             'file'   => 'file',
         ],
 
-        'host' => '/upfile/admin',
+        'host' => 'http://localhost/upfile/admin',
     ],
 
     /*
