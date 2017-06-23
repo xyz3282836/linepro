@@ -46,8 +46,7 @@ location / {
 1. 解压zip包到web目录
 2. 将解压目录中.env文件进行编辑
 3. 在项目目录根目录下执行以下命令，初始化数据库
-4. php artisan admin:install
 ```
 php artisan migrate
+php artisan db:seed
 ```
-4. 将支付宝二维码图片命名为pay.png上传到项目根目录 ./public/img/下，覆盖掉
