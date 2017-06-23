@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'lock_golds', 'balance', 'lock_balance', 'reg_time'
+        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'lock_golds', 'balance', 'lock_balance', 'last_login_time'
     ];
 
     protected $appends = ['level_text'];

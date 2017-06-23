@@ -341,6 +341,27 @@ class DatabaseSeeder extends Seeder
                 'icon'      => 'fa-picture-o',
                 'uri'       => 'banner',
             ],
+            [
+                'parent_id'  => 0,
+                'order'      => 16,
+                'title'      => '网站数据',
+                'icon'       => 'fa-database',
+                'uri'        => '',
+            ],
+            [
+                'parent_id'  => 16,
+                'order'      => 17,
+                'title'      => '用户列表',
+                'icon'       => 'fa-user',
+                'uri'        => 'user',
+            ],
+            [
+                'parent_id'  => 16,
+                'order'      => 18,
+                'title'      => '订单列表',
+                'icon'       => 'fa-reorder',
+                'uri'        => 'order',
+            ],
         ]);
 
         // add role to menu.

@@ -32,7 +32,7 @@ class Order extends Model
     protected $fillable = [
         'uid', 'type', 'payment_type', 'orderid', 'alipay_orderid', 'balance', 'price', 'golds', 'rate', 'status'
     ];
-    protected $appends = ['type_text', 'status_text', 'payment_type_text'];
+    protected $appends = ['type_text', 'status_text', 'payment_type_text', 'pay'];
 
     /**
      * 充值金币
@@ -267,5 +267,10 @@ class Order extends Model
     {
         $arr = config('linepro.order_ptype');
         return $arr[$this->payment_type];
+    }
+
+    public function getPayAttribute()
+    {
+        return round($this->price - $this->balance,2);
     }
 }

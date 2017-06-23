@@ -37,7 +37,7 @@ class FaqController extends Controller
         return Admin::grid(Faq::class, function (Grid $grid) {
             $grid->id('ID')->sortable();
             $grid->q('问题')->editable();
-            $grid->a('答案')->editable();
+            $grid->a('答案');
         });
     }
 

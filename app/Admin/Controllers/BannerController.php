@@ -5,7 +5,9 @@
  * Date: 2017/6/23
  * Time: 上午10:32
  */
+
 namespace App\Admin\Controllers;
+
 
 use App\Banner;
 use App\Http\Controllers\Controller;
@@ -15,7 +17,6 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
-use Request;
 
 class BannerController extends Controller
 {
@@ -33,11 +34,9 @@ class BannerController extends Controller
     protected function grid()
     {
         return Admin::grid(Banner::class, function (Grid $grid) {
-            $grid->id('ID');
             $grid->title();
             $grid->pic()->image();
             $grid->created_at();
-
         });
     }
 
@@ -53,11 +52,11 @@ class BannerController extends Controller
     public function form()
     {
         return Admin::form(Banner::class, function (Form $form) {
-            $form->text('title','图片标题');
-            $form->image('pic','图片')->uniqueName()->move('banner')->rules('required');
+            $form->text('title', '图片标题');
+            $form->image('pic', '图片')->uniqueName()->move('banner')->rules('required');
 
-            $form->display('created_at','创建时间');
-            $form->display('updated_at','更新时间');
+            $form->display('created_at', '创建时间');
+            $form->display('updated_at', '更新时间');
         });
     }
 

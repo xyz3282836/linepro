@@ -19,7 +19,6 @@
                                 <th>会员有效天数</th>
                                 <th>到期时间</th>
                                 <th>充值时间</th>
-                                <th>充值详情</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -29,7 +28,6 @@
                                     <td>{{$v->days}}</td>
                                     <td>{{$v->validity}}</td>
                                     <td>{{$v->created_at}}</td>
-                                    <td><a href="{{url('viewrecharge/'.$v->rid)}}">查看</a></td>
                                 </tr>
                             @empty
                                 <tr>

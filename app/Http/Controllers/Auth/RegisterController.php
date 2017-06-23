@@ -74,9 +74,8 @@ class RegisterController extends Controller
                 'name'     => $data['name'],
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
-                'reg_time' => Carbon::now()
             ]);
-            Bill::getGoldByReg(gconfig('registergold'),$user);
+            Bill::getGoldBySys(gconfig('registergold'),$user);
             DB::commit();
             return $user;
         }catch (\Throwable $e){

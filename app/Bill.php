@@ -37,7 +37,7 @@ class Bill extends Model
      * @param $gold
      * @param null $uid
      */
-    public static function getGoldByReg($golds, $user = null)
+    public static function getGoldBySys($golds, $user = null)
     {
         $user        = $user != null ? $user : Auth::user();
         $user->golds = $golds;

@@ -18,4 +18,8 @@ Route::group([
 
     $router->resource('banner','BannerController');
 
+    $router->resource('user','UserController');
+
+    $router->resource('order','OrderController');
+
 });

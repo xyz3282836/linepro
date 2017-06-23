@@ -34,10 +34,10 @@ class CreateUsersTable extends Migration
             $table->integer('is_lock')->default(0);//锁住余额和金币
             $table->dateTime('validity')->nullable();//认证会员有效期
             $table->rememberToken();
-            $table->dateTime('reg_time');//上一次登入时间
+            $table->dateTime('last_login_time')->nullable();//上一次登入时间
             $table->timestamps();
 
-            $table->index('mobile');
+            $table->index('level');
         });
     }
 

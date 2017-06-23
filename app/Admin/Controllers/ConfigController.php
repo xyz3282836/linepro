@@ -34,16 +34,16 @@ class ConfigController extends Controller
         return Admin::grid(Gconfig::class, function (Grid $grid) {
             $grid->key('标识')->label('danger');
             $grid->desc('描述');
-            $grid->value('值')->editable();
-
+            $grid->value('值')->display(function ($value) {
+                return htmlspecialchars($value);
+            });
+            $grid->disableFilter();
+            $grid->disableExport();
+            $grid->disablePagination();
             $grid->disableCreation();
+            $grid->disableRowSelector();
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
-            });
-            $grid->tools(function ($tools) {
-                $tools->batch(function ($batch) {
-                    $batch->disableDelete();
-                });
             });
         });
     }
@@ -77,7 +77,7 @@ class ConfigController extends Controller
 
     public function update($id)
     {
-        set_gconfig($id,request('value'));
+        set_gconfig($id, request('value'));
         return $this->form()->update($id);
     }
 }

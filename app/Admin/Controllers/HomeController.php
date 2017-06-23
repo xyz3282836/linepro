@@ -3,6 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Order;
+use App\User;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
@@ -21,18 +23,20 @@ use Encore\Admin\Widgets\Table;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
+    protected function store(){
         return Admin::content(function (Content $content) {
 
             $content->header('Dashboard');
             $content->description('Description...');
-
-            $content->row(function ($row) {
-                $row->column(3, new InfoBox('New Users', 'users', 'aqua', '/admin/users', '1024'));
-                $row->column(3, new InfoBox('New Orders', 'shopping-cart', 'green', '/admin/orders', '150%'));
-                $row->column(3, new InfoBox('Articles', 'book', 'yellow', '/admin/articles', '2786'));
-                $row->column(3, new InfoBox('Documents', 'file', 'red', '/admin/files', '698726'));
+            $user_count     = User::count();
+            $vip_count      = User::where('level', 2)->count();
+            $order_count    = Order::where('type', Order::TYPE_CONSUME)->count();
+            $recharge_count = Order::where('type', Order::TYPE_RECHARGE)->count();
+            $content->row(function ($row) use ($user_count, $vip_count, $order_count, $recharge_count) {
+                $row->column(3, new InfoBox('用户', 'users', 'aqua', '/admin/users', $user_count));
+                $row->column(3, new InfoBox('会员', 'user', 'green', '/admin/orders', $vip_count));
+                $row->column(3, new InfoBox('订单', 'shopping-cart', 'yellow', '/admin/articles', $order_count));
+                $row->column(3, new InfoBox('充值订单', 'dollar', 'red', '/admin/files', $recharge_count));
             });
 
             $content->row(function (Row $row) {
@@ -60,10 +64,10 @@ class HomeController extends Controller
                     $bar = new Bar(
                         ["January", "February", "March", "April", "May", "June", "July"],
                         [
-                            ['First', [40,56,67,23,10,45,78]],
-                            ['Second', [93,23,12,23,75,21,88]],
-                            ['Third', [33,82,34,56,87,12,56]],
-                            ['Forth', [34,25,67,12,48,91,16]],
+                            ['First', [40, 56, 67, 23, 10, 45, 78]],
+                            ['Second', [93, 23, 12, 23, 75, 21, 88]],
+                            ['Third', [33, 82, 34, 56, 87, 12, 56]],
+                            ['Forth', [34, 25, 67, 12, 48, 91, 16]],
                         ]
                     );
                     $collapse->add('Bar', $bar);
@@ -101,7 +105,7 @@ class HomeController extends Controller
             });
 
             $headers = ['Id', 'Email', 'Name', 'Company', 'Last Login', 'Status'];
-            $rows = [
+            $rows    = [
                 [1, 'labore21@yahoo.com', 'Ms. Clotilde Gibson', 'Goodwin-Watsica', '1997-08-13 13:59:21', 'open'],
                 [2, 'omnis.in@hotmail.com', 'Allie Kuhic', 'Murphy, Koepp and Morar', '1988-07-19 03:19:08', 'blocked'],
                 [3, 'quia65@hotmail.com', 'Prof. Drew Heller', 'Kihn LLC', '1978-06-19 11:12:57', 'blocked'],
@@ -110,6 +114,25 @@ class HomeController extends Controller
             ];
 
             $content->row((new Box('Table', new Table($headers, $rows)))->style('info')->solid());
+        });
+    }
+    public function index()
+    {
+        return Admin::content(function (Content $content) {
+
+            $content->header('Dashboard');
+            $content->description('Description...');
+            $user_count     = User::count();
+            $vip_count      = User::where('level', 2)->count();
+            $order_count    = Order::where('type', Order::TYPE_CONSUME)->count();
+            $recharge_count = Order::where('type', Order::TYPE_RECHARGE)->count();
+            $content->row(function ($row) use ($user_count, $vip_count, $order_count, $recharge_count) {
+                $row->column(3, new InfoBox('用户', 'users', 'aqua', 'user', $user_count));
+                $row->column(3, new InfoBox('会员', 'user', 'green', 'user', $vip_count));
+                $row->column(3, new InfoBox('订单', 'shopping-cart', 'yellow', 'order', $order_count));
+                $row->column(3, new InfoBox('充值订单', 'dollar', 'red', 'order', $recharge_count));
+            });
+
         });
     }
 }

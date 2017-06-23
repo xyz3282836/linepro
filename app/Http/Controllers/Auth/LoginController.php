@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,11 @@ class LoginController extends Controller
             'password' => 'required|string',
             'captcha' => 'required|captcha',
         ]);
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $user->last_login_time = Carbon::now();
+        $user->save();
     }
 }

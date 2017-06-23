@@ -54,7 +54,7 @@
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->price}} 元</td>
                                     <td>{{$v->balance}} 元</td>
-                                    <td>{{$v->price - $v->balance}} 元</td>
+                                    <td>{{$v->pay}} 元</td>
                                     <td>{{$v->golds}} G</td>
                                     <td>
                                         <a v-if="{{$v->status}} == 1" href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>

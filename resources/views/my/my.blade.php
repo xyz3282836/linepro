@@ -30,8 +30,12 @@
                                 <label class="col-md-6 control-label">{{ $user->level_text }}</label>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-4 control-label">最后一次登入时间</label>
+                                <label class="col-md-6 control-label">{{ $user->last_login_time }}</label>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-4 control-label">注册时间</label>
-                                <label class="col-md-6 control-label">{{ $user->reg_time }}</label>
+                                <label class="col-md-6 control-label">{{ $user->created_at }}</label>
                             </div>
                         </form>
                     </div>
