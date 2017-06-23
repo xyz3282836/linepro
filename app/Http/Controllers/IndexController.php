@@ -30,7 +30,7 @@ class IndexController extends Controller
         return captcha_img('flat');
     }
 
-    public function faq(){
+    public function faqs(){
         return view('index.faq')->with('list',Faq::getFaqs());
     }
 

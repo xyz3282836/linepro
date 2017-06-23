@@ -79,4 +79,20 @@ class FaqController extends Controller
         Cache::forget('faqs');
         return $this->form()->update($id);
     }
+
+    public function destroy($id)
+    {
+        if ($this->form()->destroy($id)) {
+            Cache::forget('faqs');
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::lang.delete_succeeded'),
+            ]);
+        } else {
+            return response()->json([
+                'status'  => false,
+                'message' => trans('admin::lang.delete_failed'),
+            ]);
+        }
+    }
 }
