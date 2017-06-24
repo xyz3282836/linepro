@@ -150,6 +150,8 @@
                                 </ul>
                             </li>
                         @endif
+                        <li><a href="{{ url('faqs') }}">帮助</a></li>
+                        <li><a href="#">在线客服</a></li>
                     </ul>
                 </div>
             </div>

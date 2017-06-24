@@ -9,7 +9,7 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         .navbar-default {
             background-color: black;
@@ -23,6 +23,20 @@
         }
         .navbar {
             margin-bottom: 0;
+        }
+        #download{
+            position: absolute;
+            right: 250px;
+            bottom: -20px;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .vedio h1{
+            margin-bottom: 40px;
+        }
+        footer{
+            min-height: 100px;
         }
     </style>
 
@@ -69,7 +83,7 @@
                     <div class="item @if($k == 0) active @endif">
                         <img src="{{$v['pic']}}" alt="">
                         <div class="carousel-caption">
-                            {{$v['title']}}
+
                         </div>
                     </div>
                    @endforeach
@@ -84,10 +98,28 @@
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+
+                <a id="download" class="btn btn-danger btn-lg" href="#" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 立即下载</a>
             </div>
         </div>
     </div>
+    <div class="container vedio">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="text-center">一分钟快速入门，了解达购海淘</h1>
+                <div class="text-center">
+                    <embed src='http://player.youku.com/player.php/sid/XMjg0MDE4NDcxNg==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="container">
+        <div class="row">
+            <div class="col-xs-12">
 
+            </div>
+        </div>
+    </footer>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

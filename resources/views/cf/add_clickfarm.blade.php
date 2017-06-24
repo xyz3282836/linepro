@@ -6,8 +6,12 @@
 
 @section('css')
     <style type="text/css">
-        .col-md-6.control-label {
+        .col-md-6.control-label,.col-md-1.control-label {
             text-align: left;
+            font-size: 1.3em;
+        }
+        .col-md-1.control-label a{
+            color: black;
         }
     </style>
 @endsection
@@ -79,7 +83,7 @@
                             {{--单价--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span>
-                                    最终价格(包含运费)</label>
+                                    最终价格(包含亚马逊运费)</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input readonly type="number" required class="form-control" name="final_price" min="0" max="999999" v-model="final_price">
@@ -98,6 +102,9 @@
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
+                                <label class="col-md-1 control-label">
+                                    <a href="{{url('faqs')}}" target="_blank">?</a>
+                                </label>
                             </div>
 
                             <div class="form-group">
@@ -111,9 +118,9 @@
                             </div>
 
                             <div class="form-group" v-show="delivery_type == 2">
-                                <label class="col-md-4 control-label"></label>
+                                <label class="col-md-4 control-label">国内转运地址</label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="国内转运地址" class="form-control" name="delivery_addr" maxlength="50" value="{{Auth::user()->shipping_addr}}">
+                                    <input type="text" placeholder="" class="form-control" name="delivery_addr" maxlength="50" value="{{Auth::user()->shipping_addr}}">
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -128,13 +135,19 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"> 转运费</label>
+                                <label class="col-md-4 control-label"> 国内转运费</label>
                                 <label class="col-md-6 control-label" v-text="gettrans"></label>
+                                <label class="col-md-1 control-label">
+                                    <a href="{{url('faqs')}}" target="_blank">?</a>
+                                </label>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"> 服务费</label>
                                 <label class="col-md-6 control-label" v-text="getservice"></label>
+                                <label class="col-md-1 control-label">
+                                    <a href="{{url('faqs')}}" target="_blank">?</a>
+                                </label>
                             </div>
 
                             <div class="form-group">
@@ -175,7 +188,7 @@
                 getservice: function () {
                     var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);
                     tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
-                    return tmp + 'G';
+                    return tmp + 'G (费率' + (this.srate[this.time_type].rate * 100).toFixed(0) + '%)';
                 },
                 gettrans: function () {
                     this.delivery_type == 1 ? this.alltrans = 0 : this.alltrans = this.task_num * this.trans;
