@@ -101,6 +101,7 @@ class PayController extends Controller
         ]);
         p((float)$amount);
         p($redirectUrl);
+        p($response->getData());
         die();
         return redirect($redirectUrl);
     }
