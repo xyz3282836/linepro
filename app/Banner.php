@@ -14,7 +14,7 @@ class Banner extends Model
         if (Cache::has('banners')) {
             return Cache::get('banners');
         } else {
-            $list    = self::where('type', 1)->all();
+            $list    = self::where('type', 1)->get();
             $banners = [];
             foreach ($list as $v) {
                 $banners[] = [
