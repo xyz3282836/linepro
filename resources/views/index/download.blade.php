@@ -71,10 +71,9 @@
             <div id="dg-carousel" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#dg-carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#dg-carousel" data-slide-to="1"></li>
-                    <li data-target="#dg-carousel" data-slide-to="2"></li>
-                    <li data-target="#dg-carousel" data-slide-to="3"></li>
+                    @foreach($list as $k=>$v)
+                        <li data-target="#dg-carousel" data-slide-to="{{$k}}" class="@if($k == 0) active @endif"></li>
+                    @endforeach
                 </ol>
 
                 <!-- Wrapper for slides -->
