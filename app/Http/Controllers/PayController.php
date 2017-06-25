@@ -99,7 +99,8 @@ class PayController extends Controller
             'subject'      => $subject,
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
-        die($redirectUrl);
+        p((float)$amount);
+        die();
         return redirect($redirectUrl);
     }
 
