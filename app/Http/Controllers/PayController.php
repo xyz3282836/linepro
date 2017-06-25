@@ -185,9 +185,10 @@ class PayController extends Controller
             $one     = Order::consumeByPartRecharge($price, $golds, $balance, $list);
             $gateway = get_alipay();
             $request = $gateway->purchase();
+            $total_amount = round($one->price - $one->balance,2);
             $request->setBizContent([
                 'out_trade_no' => $one->orderid,
-                'total_amount' => $one->price - $one->balance,
+                'total_amount' => $total_amount,
                 'subject'      => '代购支付',
                 'product_code' => 'FAST_INSTANT_TRADE_PAY',
             ]);
