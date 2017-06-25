@@ -53,7 +53,7 @@ return [
             'file'   => 'file',
         ],
 
-        'host' => 'http://localhost/upfile/admin',
+        'host' => 'http://www.dagobuy.com/upfile/admin',
     ],
 
     /*
