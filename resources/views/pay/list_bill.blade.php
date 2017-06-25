@@ -44,7 +44,6 @@
                                 <th>人名币支出</th>
                                 <th>金币收入</th>
                                 <th>金币支出</th>
-                                <th>详情</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -59,7 +58,6 @@
                                     <td :class="{'color-green': {{$v->out}}>0.00}">- {{$v->out}}</td>
                                     <td :class="{'color-red': {{$v->gin}}>0.00}">+ {{$v->gin}}</td>
                                     <td :class="{'color-green': {{$v->gout}}>0.00}">- {{$v->gout}}</td>
-                                    <td><a href="{{url('getbilldesc?&taskid='.$v->taskid)}}">查看</a></td>
                                 </tr>
                             @empty
                                 <tr>
