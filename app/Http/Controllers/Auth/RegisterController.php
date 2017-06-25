@@ -69,16 +69,17 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         DB::beginTransaction();
-        try{
+        try {
             $user = User::create([
-                'name'     => $data['name'],
-                'email'    => $data['email'],
-                'password' => bcrypt($data['password']),
+                'name'            => $data['name'],
+                'email'           => $data['email'],
+                'password'        => bcrypt($data['password']),
+                'last_login_time' => Carbon::now()
             ]);
-            Bill::getGoldBySys(gconfig('registergold'),$user);
+            Bill::getGoldBySys(gconfig('registergold'), $user);
             DB::commit();
             return $user;
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw new MsgException('注册失败');
         }
