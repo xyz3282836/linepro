@@ -60,8 +60,9 @@ class PayController extends Controller
         return redirect($redirectUrl);
     }
 
-    public function jumpAlipay(){
-        $id = request('id',0);
+    public function jumpAlipay()
+    {
+        $id  = request('id', 0);
         $one = Order::find($id);
         if (!$one) {
             return error(MODEL_NOT_FOUNT);
@@ -72,14 +73,14 @@ class PayController extends Controller
         if ($one->status != 1) {
             return error('已支付');
         }
-        switch ($one->type){
+        switch ($one->type) {
             case Order::TYPE_RECHARGE:
                 $subject = '充值金币';
-                $amount = $one->golds / $one->rate;
+                $amount  = round($one->golds / $one->rate, 2);
                 break;
             case Order::TYPE_CONSUME:
                 $subject = '代购支付';
-                $amount = $one->price - $one->balance;
+                $amount  = round($one->price - $one->balance, 2);
                 break;
         }
         $gateway = get_alipay();
@@ -182,10 +183,10 @@ class PayController extends Controller
         $balance = $user->balance - $user->lock_balance;
         if ($price > $balance) {
             //余额+充值 跳转 不生成bill
-            $one     = Order::consumeByPartRecharge($price, $golds, $balance, $list);
-            $gateway = get_alipay();
-            $request = $gateway->purchase();
-            $total_amount = round($one->price - $one->balance,2);
+            $one          = Order::consumeByPartRecharge($price, $golds, $balance, $list);
+            $gateway      = get_alipay();
+            $request      = $gateway->purchase();
+            $total_amount = round($one->price - $one->balance, 2);
             $request->setBizContent([
                 'out_trade_no' => $one->orderid,
                 'total_amount' => $total_amount,
