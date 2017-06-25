@@ -46,16 +46,26 @@ class BannerController extends Controller
         return Admin::content(function (Content $content) use ($id) {
             $content->header('header');
             $content->description('description');
-            $content->body($this->form()->edit($id));
+            $one = Banner::find($id);
+            $content->body($this->form($one->type)->edit($id));
         });
     }
 
-    public function form()
+    public function form($type = 1)
     {
-        return Admin::form(Banner::class, function (Form $form) {
-            $form->text('title', '图片标题');
-            $form->image('pic', '图片')->uniqueName()->move('banner')->rules('required');
+        return Admin::form(Banner::class, function (Form $form)use($type) {
+            $form->radio('type','图片类型')->options(['1' => 'Banner(1920x600)', '2'=> 'Logo(100x50)'])->default('1')->rules('required');
+            switch ($type){
+                case 1:
+                    $form->text('title', '图片标题')->default('banner')->rules('required');
+                    $form->image('pic', '图片')->resize(1920, 600)->uniqueName()->move('banner')->rules('required|dimensions:min_width=1920,min_height=600');
+                    break;
+                case 2:
+                    $form->text('title', '图片标题')->default('logo')->rules('required');
+                    $form->image('pic', '图片')->resize(100, 50)->uniqueName()->move('banner')->rules('required|dimensions:min_width=100,min_height=50');
 
+                    break;
+            }
             $form->display('created_at', '创建时间');
             $form->display('updated_at', '更新时间');
         });
@@ -74,14 +84,15 @@ class BannerController extends Controller
     {
         Cache::forget('banners');
         Cache::forget('logo');
-        return $this->form()->store();
+        return $this->form(request('type'))->store();
     }
 
     public function update($id)
     {
         Cache::forget('banners');
         Cache::forget('logo');
-        return $this->form()->update($id);
+        $one = Banner::find($id);
+        return $this->form($one->type)->update($id);
     }
 
     public function destroy($id)

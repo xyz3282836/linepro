@@ -183,7 +183,7 @@ return [
 
         Encore\Admin\Providers\AdminServiceProvider::class,
 
-//        'Image' => Intervention\Image\Facades\Image::class
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -241,7 +241,7 @@ return [
 
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
-//        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class
 
 
 
