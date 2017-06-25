@@ -87,7 +87,7 @@ class PayController extends Controller
         $request = $gateway->purchase();
         $request->setBizContent([
             'out_trade_no' => $one->orderid,
-            'total_amount' => $amount,
+            'total_amount' => (string)$amount,
             'subject'      => $subject,
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
@@ -99,10 +99,6 @@ class PayController extends Controller
             'subject'      => $subject,
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
-        p((float)$amount);
-        p($redirectUrl);
-        p($response->getData());
-        die();
         return redirect($redirectUrl);
     }
 
