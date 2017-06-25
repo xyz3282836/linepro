@@ -127,10 +127,10 @@ class HomeController extends Controller
             $order_count    = Order::where('type', Order::TYPE_CONSUME)->count();
             $recharge_count = Order::where('type', Order::TYPE_RECHARGE)->count();
             $content->row(function ($row) use ($user_count, $vip_count, $order_count, $recharge_count) {
-                $row->column(3, new InfoBox('用户', 'users', 'aqua', 'user', $user_count));
-                $row->column(3, new InfoBox('会员', 'user', 'green', 'user', $vip_count));
-                $row->column(3, new InfoBox('订单', 'shopping-cart', 'yellow', 'order', $order_count));
-                $row->column(3, new InfoBox('充值订单', 'dollar', 'red', 'order', $recharge_count));
+                $row->column(3, new InfoBox('用户', 'users', 'aqua', 'admin/user', $user_count));
+                $row->column(3, new InfoBox('会员', 'user', 'green', 'admin/user', $vip_count));
+                $row->column(3, new InfoBox('订单', 'shopping-cart', 'yellow', 'admin/order', $order_count));
+                $row->column(3, new InfoBox('充值订单', 'dollar', 'red', 'admin/order', $recharge_count));
             });
 
         });
