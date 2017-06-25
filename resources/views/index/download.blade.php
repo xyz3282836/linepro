@@ -59,7 +59,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="javascript:;">
-                    <img alt="Brand" height="50" src="https://zos.alipayobjects.com/rmsportal/ZBtrIlcNSvkudzvriZvZ.png">
+                    <img alt="Brand" height="50" src="{{$logo}}">
                 </a>
             </div>
 

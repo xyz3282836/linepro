@@ -35,6 +35,6 @@ class IndexController extends Controller
     }
 
     public function download(){
-        return view('index.download')->with('list',Banner::getBanners());
+        return view('index.download')->with(['list'=>Banner::getBanners(),'logo'=>Banner::getLogo()]);
     }
 }

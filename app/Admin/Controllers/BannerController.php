@@ -34,6 +34,7 @@ class BannerController extends Controller
     protected function grid()
     {
         return Admin::grid(Banner::class, function (Grid $grid) {
+            $grid->type_text('类型')->label();
             $grid->title('图片标题');
             $grid->pic('图片')->image();
             $grid->created_at('创建时间');
@@ -72,12 +73,14 @@ class BannerController extends Controller
     public function store()
     {
         Cache::forget('banners');
+        Cache::forget('logo');
         return $this->form()->store();
     }
 
     public function update($id)
     {
         Cache::forget('banners');
+        Cache::forget('logo');
         return $this->form()->update($id);
     }
 

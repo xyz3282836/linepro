@@ -7,21 +7,42 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
-    public static function getBanners(){
-        if (Cache::has('banners')){
+    protected $appends = ['type_text'];
+
+    public static function getBanners()
+    {
+        if (Cache::has('banners')) {
             return Cache::get('banners');
-        }else{
-            $list = self::all();
+        } else {
+            $list    = self::where('type', 1)->all();
             $banners = [];
             foreach ($list as $v) {
                 $banners[] = [
-                    'title'=>$v->title,
-                    'pic'=>url('upfile/admin/'.$v->pic)
+                    'title' => $v->title,
+                    'pic'   => url('upfile/admin/' . $v->pic)
                 ];
             }
-            Cache::forever('banners',$banners);
+            Cache::forever('banners', $banners);
             return $banners;
         }
+    }
+
+    public static function getLogo()
+    {
+        if (Cache::has('logo')) {
+            return Cache::get('logo');
+        } else {
+            $logo = self::where('type', 2)->first();
+            $logo = url('upfile/admin/' . $logo->pic);
+            Cache::forever('banners', $logo);
+            return $logo;
+        }
+    }
+
+    public function getTypeTextAttribute()
+    {
+        $arr = config('linepro.banner_type_text');
+        return $arr[$this->type];
     }
 
 }

@@ -82,7 +82,10 @@ return [
         1 => '普通会员',
         2 => '认证会员'
     ],
-
+    'banner_type_text'    => [
+        1 => '轮播banner',
+        2 => 'logo'
+    ],
     /**
      * db-text
      */
