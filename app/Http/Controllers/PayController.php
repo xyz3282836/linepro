@@ -93,6 +93,12 @@ class PayController extends Controller
         ]);
         $response    = $request->send();
         $redirectUrl = $response->getRedirectUrl();
+        p([
+            'out_trade_no' => $one->orderid,
+            'total_amount' => $amount,
+            'subject'      => $subject,
+            'product_code' => 'FAST_INSTANT_TRADE_PAY',
+        ]);
         die($redirectUrl);
         return redirect($redirectUrl);
     }
