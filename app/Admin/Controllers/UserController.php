@@ -43,7 +43,7 @@ class UserController extends Controller
             $grid->id('ID')->sortable();
             $grid->name('用户名');
             $grid->email('Email');
-            $grid->level_text('会员等级');
+            $grid->level_text('会员等级')->label();
             $grid->balance('余额(￥)');
             $grid->golds('金币(G)');
             $grid->validity('会员有效期');

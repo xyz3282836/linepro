@@ -43,14 +43,14 @@ class OrderController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->uid('用户ID');
-            $grid->type_text('订单类型');
+            $grid->type_text('订单类型')->label();
             $grid->orderid('订单号');
             $grid->alipay_orderid('支付宝订单号');
             $grid->golds('金币');
             $grid->price('共计');
             $grid->balance('余额支付');
             $grid->pay('充值支付');
-            $grid->status_text('订单状态');
+            $grid->status_text('订单状态')->label();
             $grid->created_at('订单创建时间');
             $grid->disableCreation();
             $grid->disableActions();
