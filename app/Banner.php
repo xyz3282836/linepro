@@ -34,7 +34,7 @@ class Banner extends Model
         } else {
             $logo = self::where('type', 2)->first();
             $logo = url('upfile/admin/' . $logo->pic);
-            Cache::forever('banners', $logo);
+            Cache::forever('logo', $logo);
             return $logo;
         }
     }
