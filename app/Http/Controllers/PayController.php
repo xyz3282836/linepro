@@ -93,6 +93,7 @@ class PayController extends Controller
         ]);
         $response    = $request->send();
         $redirectUrl = $response->getRedirectUrl();
+        die($redirectUrl);
         return redirect($redirectUrl);
     }
 
