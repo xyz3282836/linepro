@@ -271,6 +271,15 @@ class Order extends Model
 
     public function getPayAttribute()
     {
-        return round($this->price - $this->balance,2);
+        return round($this->price - $this->balance, 2);
+    }
+
+    public function scopeType($query, $type)
+    {
+        if (!in_array($type, [self::TYPE_RECHARGE, self::TYPE_CONSUME, self::TYPE_REFUND])) {
+            return $query;
+        }
+
+        return $query->where('type', $type);
     }
 }

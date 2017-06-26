@@ -2,15 +2,13 @@
 
 namespace App\Admin\Controllers;
 
-use App\Order;
-
-use App\User;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
+use App\Admin\Extensions\Tools\TableType;
 use App\Http\Controllers\Controller;
+use App\Order;
 use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 
 class OrderController extends Controller
 {
@@ -40,7 +38,7 @@ class OrderController extends Controller
     protected function grid()
     {
         return Admin::grid(Order::class, function (Grid $grid) {
-
+            $grid->model()->type(request('type', 0));
             $grid->id('ID')->sortable();
             $grid->uid('用户ID');
             $grid->type_text('订单类型')->label('info');
@@ -56,10 +54,14 @@ class OrderController extends Controller
             $grid->disableActions();
             $grid->disableRowSelector();//tools不能公用
 
-            $grid->filter(function($filter){
+            $grid->filter(function ($filter) {
                 $filter->is('orderid', '订单id');
                 $filter->is('uid', '用户id');
                 $filter->is('alipay_orderid', '支付宝订单号');
+            });
+
+            $grid->tools(function ($tools) {
+                $tools->append(new TableType(config('linepro.admin_order_type')));
             });
         });
     }

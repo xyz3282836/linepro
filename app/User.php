@@ -55,4 +55,15 @@ class User extends Authenticatable
         }
         return true;
     }
+
+    const TYPE_REGULAR = 1;
+    const TYPE_VIP     = 2;
+
+    public function scopeType($query, $type)
+    {
+        if (!in_array($type, [self::TYPE_REGULAR, self::TYPE_VIP])) {
+            return $query;
+        }
+        return $query->where('level', $type);
+    }
 }

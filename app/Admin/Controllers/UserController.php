@@ -2,14 +2,14 @@
 
 namespace App\Admin\Controllers;
 
-use App\User;
-
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
+use App\Admin\Extensions\Tools\TableType;
+use App\Admin\Extensions\Tools\UserType;
 use App\Http\Controllers\Controller;
+use App\User;
 use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Facades\Admin;
+use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 
 class UserController extends Controller
 {
@@ -39,7 +39,7 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(User::class, function (Grid $grid) {
-
+            $grid->model()->type(request('type', 0));
             $grid->id('ID')->sortable();
             $grid->name('用户名');
             $grid->email('Email');
@@ -52,6 +52,9 @@ class UserController extends Controller
             $grid->disableCreation();
             $grid->actions(function ($actions) {
                 $actions->disableEdit();
+            });
+            $grid->tools(function ($tools) {
+                $tools->append(new TableType(config('linepro.admin_user_level')));
             });
         });
     }
