@@ -68,6 +68,7 @@
                                             <thead>
                                             <tr>
                                                 <th>商品标题</th>
+                                                <th>站点</th>
                                                 <th>下单方式</th>
                                                 <th>单价</th>
                                                 <th>当前货币汇率</th>
@@ -83,6 +84,7 @@
                                             @foreach($v->cfs as $vv)
                                                 <tr>
                                                     <td><a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a></td>
+                                                    <td>{{$vv->from_site_text}}</td>
                                                     <td>{{$vv->delivery_type_text}}</td>
                                                     <td>{{$vv->final_price_text}}</td>
                                                     <td>{{$vv->rate}}</td>
