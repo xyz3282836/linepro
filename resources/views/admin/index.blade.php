@@ -37,6 +37,9 @@
             max-width: 300px!important;
             word-wrap: break-word
         }
+        table td img{
+            background-color: burlywood;
+        }
     </style>
 </head>
 
