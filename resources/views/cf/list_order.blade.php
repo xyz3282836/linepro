@@ -73,6 +73,7 @@
                                                 <th>当前货币汇率</th>
                                                 <th>商品数量</th>
                                                 <th>转运费</th>
+                                                <th>手续费率</th>
                                                 <th>手续费</th>
                                                 <th>合计总价</th>
                                                 <th>操作</th>
@@ -87,6 +88,7 @@
                                                     <td>{{$vv->rate}}</td>
                                                     <td>{{$vv->task_num}}</td>
                                                     <td>{{$vv->transport}} 元</td>
+                                                    <td>{{$vv->srate * 100}} %</td>
                                                     <td>{{$vv->golds}} G</td>
                                                     <td>{{$vv->amount}} 元</td>
                                                     <td>
