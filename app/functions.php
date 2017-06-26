@@ -164,6 +164,7 @@ function get_cf_price($cf)
     $tmp           = $tmp < $srate[$cf->time_type]['mingolds'] ? $srate[$cf->time_type]['mingolds'] : $tmp;
     $cf->golds     = $tmp;
     $cf->rate      = $rate;
+    $cf->srate     = $srate[$cf->time_type]['rate'];
     $cf->grate     = $rmbtogold;
     $cf->transport = $cf->delivery_type == 1 ? 0 : round($cf->task_num * $trans, 2);
     $cf->amount    = round(($cf->task_num * $cf->final_price * $rate + $cf->transport), 2);

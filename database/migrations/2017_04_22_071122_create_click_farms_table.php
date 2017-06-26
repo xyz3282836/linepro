@@ -29,6 +29,7 @@ class CreateClickFarmsTable extends Migration
             $table->integer('task_num')->default(1);//刷单件数
             $table->decimal('final_price',10,2)->default(0.00);//美元价格
             $table->decimal('rate',10,2)->default(0.00);//外币汇率
+            $table->decimal('srate',10,2)->default(0.00);//服务费率
             $table->decimal('grate',10,2)->default(0.00);//rmbtogold
 
             //3.0
