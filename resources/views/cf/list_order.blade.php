@@ -68,6 +68,7 @@
                                             <thead>
                                             <tr>
                                                 <th>商品标题</th>
+                                                <th>下单方式</th>
                                                 <th>商品数量</th>
                                                 <th>转运费</th>
                                                 <th>手续费</th>
@@ -79,6 +80,7 @@
                                             @foreach($v->cfs as $vv)
                                                 <tr>
                                                     <td><a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a></td>
+                                                    <td>{{$vv->delivery_type_text}}</td>
                                                     <td>{{$vv->task_num}}</td>
                                                     <td>{{$vv->transport}} 元</td>
                                                     <td>{{$vv->golds}} G</td>
