@@ -38,7 +38,7 @@
             word-wrap: break-word
         }
         table td img{
-            background-color: burlywood;
+            background-color: burlywood!important;
         }
     </style>
 </head>
