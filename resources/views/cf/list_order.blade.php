@@ -39,6 +39,10 @@
                                 <th>类型</th>
                                 <th>时间</th>
                                 <th>订单号</th>
+                                <th>单价</th>
+                                <th>转运费</th>
+                                <th>数量</th>
+                                <th>当前货币汇率</th>
                                 <th>总价</th>
                                 <th>余额支出</th>
                                 <th>充值支出</th>
@@ -52,6 +56,10 @@
                                     <td>{{$v->type_text}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->orderid}}</td>
+                                    <td>{{$v->final_price_text}}</td>
+                                    <td>{{$v->transport}} 元</td>
+                                    <td>{{$v->task_num}}</td>
+                                    <td>{{$v->rate}}</td>
                                     <td>{{$v->price}} 元</td>
                                     <td>{{$v->balance}} 元</td>
                                     <td>{{$v->pay}} 元</td>
