@@ -22,6 +22,7 @@ class IndexController extends Controller
      */
     public function getInfo()
     {
+        p(\Carbon\Carbon::now());
         phpinfo();
     }
 
