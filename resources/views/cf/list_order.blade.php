@@ -58,7 +58,7 @@
                                     <td>{{$v->golds}} G</td>
                                     <td>
                                         <a v-if="{{$v->status}} == 1" href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
-                                        <button v-if="{{$v->status}} == 1" class="btn btn-success btn-sm ladda-button"
+                                        <button v-if="{{$v->status}} == 1" class="btn btn-danger btn-sm ladda-button"
                                                 data-style="contract" @click="del({{$v->id}})">取消订单
                                         </button>
                                     </td>
