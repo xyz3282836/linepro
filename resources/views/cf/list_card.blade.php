@@ -100,7 +100,7 @@
             },
             methods: {
                 payall: function () {
-                    axios.post("{{url('pay')}}", {type: 'cf', id: this.ids}).then(function (d) {
+                    axios.post("{{url('pay')}}", {id: this.ids}).then(function (d) {
                         var data = d.data;
                         if (!data.code) {
                             layer.msg(data.msg, {icon: 2});
@@ -111,7 +111,7 @@
                     })
                 },
                 pay: function (id) {
-                    axios.post("{{url('pay')}}", {type: 'cf', id: [id]}).then(function (d) {
+                    axios.post("{{url('pay')}}", {id: [id]}).then(function (d) {
                         var data = d.data;
                         if (!data.code) {
                             layer.msg(data.msg, {icon: 2});

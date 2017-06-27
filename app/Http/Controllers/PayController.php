@@ -60,6 +60,29 @@ class PayController extends Controller
         return redirect($redirectUrl);
     }
 
+    /**
+     * 删除订单
+     */
+    public function delOrder()
+    {
+        $id  = request('id', 0);
+        $one = Order::find($id);
+        if (!$one) {
+            return error(MODEL_NOT_FOUNT);
+        }
+        if ($one->uid != Auth::user()->id) {
+            return error(NO_ACCESS);
+        }
+        if ($one->status != Order::STATUS_UNPAID) {
+            return error(NO_ACCESS);
+        }
+        Order::delOrder($one);
+        return success();
+    }
+
+    /**
+     * 支付订单，跳转
+     */
     public function jumpAlipay()
     {
         $id  = request('id', 0);

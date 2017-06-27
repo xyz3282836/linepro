@@ -58,6 +58,9 @@
                                     <td>{{$v->golds}} G</td>
                                     <td>
                                         <a v-if="{{$v->status}} == 1" href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
+                                        <button v-if="{{$v->status}} == 1" class="btn btn-success btn-sm ladda-button"
+                                                data-style="contract" @click="del({{$v->id}})">取消订单
+                                        </button>
                                     </td>
                                 </tr>
                                 @if($v->type == 2)
@@ -139,6 +142,19 @@
                 type: "{{$type}}",
                 typec: {!! json_encode(config('linepro.order_statuss')) !!}
             },
+            methods:{
+                del: function (id) {
+                    axios.post("{{url('delorder')}}", {id: id}).then(function (d) {
+                        var data = d.data;
+                        if (!data.code) {
+                            layer.msg(data.msg, {icon: 2});
+                        } else {
+                            layer.msg('操作成功', {icon: 1});
+                            window.location.reload();
+                        }
+                    })
+                },
+            }
 
         })
     </script>

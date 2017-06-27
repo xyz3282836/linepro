@@ -246,6 +246,29 @@ class Order extends Model
         }
     }
 
+    /**
+     * 删除订单
+     * @param Order $order
+     * @throws MsgException
+     */
+    public static function delOrder(self $order)
+    {
+        $user = Auth::user();
+        DB::beginTransaction();
+        try {
+            $user->lock_golds   = $user->lock_golds - $order->golds;
+            $user->lock_balance = $user->lock_balance - $order->balance;
+            $user->save();
+            $order->status = self::STATUS_DEL;
+            $order->save();
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw new MsgException();
+        }
+    }
+
+
     public function cfs()
     {
         return $this->hasMany(ClickFarm::class, 'oid');

@@ -140,6 +140,9 @@ class CfController extends Controller
         return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list);
     }
 
+    /**
+     * 订单列表
+     */
     public function listOrder(){
         $start = request('start');
         $end   = request('end');

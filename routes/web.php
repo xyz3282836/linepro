@@ -52,6 +52,7 @@ Route::get('rechargelist', 'PayController@listRecharge');
 //pay 支付产品
 Route::post('pay', 'PayController@postPay');
 Route::get('jumppay', 'PayController@jumpAlipay');
+Route::get('delorder', 'PayController@delOrder');
 
 //资金流水
 Route::get('billlist', 'PayController@listBill');
