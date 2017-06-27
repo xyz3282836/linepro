@@ -36,6 +36,12 @@ class User extends Authenticatable
         return $arr[$this->level];
     }
 
+    public function getEvaluateAttribute()
+    {
+        $arr = config('linepro.user_evaluate');
+        return $arr[$this->is_evaluate];
+    }
+
     public function checkInfoIsCompleted()
     {
         if ($this->mobile == '') {

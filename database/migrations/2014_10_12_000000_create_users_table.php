@@ -31,7 +31,6 @@ class CreateUsersTable extends Migration
             $table->char('idcardno', 18)->default('');//身份证号码
             $table->char('idcardpic', 100)->default('');//身份证图片 正反
             $table->integer('is_evaluate')->default(1);//是否禁止评价
-            $table->integer('is_lock')->default(0);//锁住余额和金币
             $table->dateTime('validity')->nullable();//认证会员有效期
             $table->rememberToken();
             $table->dateTime('last_login_time')->nullable();//上一次登入时间

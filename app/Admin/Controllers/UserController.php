@@ -49,6 +49,7 @@ class UserController extends Controller
             $grid->lock_balance('系统锁定余额(￥)');
             $grid->golds('金币(G)');
             $grid->lock_golds('系统锁定金币(G)');
+            $grid->evaluate('代购评价')->label('warning');
             $grid->validity('会员有效期');
             $grid->last_login_time('最后登入时间');
             $grid->created_at('注册时间');

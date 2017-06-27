@@ -86,6 +86,10 @@ return [
         1 => '轮播banner',
         2 => 'logo'
     ],
+    'user_evaluate' => [
+        0 => '可评价',
+        1 => '禁止评价'
+    ],
     /**
      * db-text
      */
