@@ -22,6 +22,7 @@ class IndexController extends Controller
      */
     public function getInfo()
     {
+        date_default_timezone_set("CST");
         p(date('Y-m-d H:i:s'));
         p(\Carbon\Carbon::now());
         phpinfo();
