@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 
@@ -44,8 +45,10 @@ class UserController extends Controller
             $grid->name('用户名');
             $grid->email('Email');
             $grid->level_text('会员等级')->label('info');
-            $grid->balance('余额(￥)');
+            $grid->balance('余额(￥)')->editable();
+            $grid->lock_balance('系统锁定余额(￥)');
             $grid->golds('金币(G)');
+            $grid->lock_golds('系统锁定金币(G)');
             $grid->validity('会员有效期');
             $grid->last_login_time('最后登入时间');
             $grid->created_at('注册时间');
@@ -56,6 +59,13 @@ class UserController extends Controller
             $grid->tools(function ($tools) {
                 $tools->append(new TableType(config('linepro.admin_user_level')));
             });
+        });
+    }
+
+    protected function form()
+    {
+        return Admin::form(User::class, function (Form $form) {
+            $form->text('balance', '余额')->rules('required');
         });
     }
 
