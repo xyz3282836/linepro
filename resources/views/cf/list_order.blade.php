@@ -88,7 +88,7 @@
                                                 <tr>
                                                     <td><a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a></td>
                                                     <td>{{$vv->from_site_text}}</td>
-                                                    <td>{{$vv->delivery_type_text}}</td>
+                                                    <td>{{$vv->time_type_text}}</td>
                                                     <td>{{$vv->final_price_text}}</td>
                                                     <td>{{$vv->rate}}</td>
                                                     <td>{{$vv->task_num}}</td>
