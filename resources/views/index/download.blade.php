@@ -26,7 +26,7 @@
         }
         #download{
             position: absolute;
-            right: 10%;
+            right: 15%;
             bottom: -20px;
         }
         .text-center{
