@@ -8,15 +8,31 @@
     <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 @endsection
-
+@section('css')
+    <style type="text/css">
+        .ad{
+            width: 500px;
+            height: 42px;
+            position: absolute;
+            background: orange;
+            padding: 10px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            right: 15px;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
+                    <div class="ad">
+                        <p>Banner(500X42)</p>
+                    </div>
                     <div class="panel-heading">{{$tname}}</div>
                     <div class="panel-body">
-
                         <form class="form-inline margin-bottom-30" action="{{url('orderlist')}}" method="get">
                             <div class="form-group">
                                 <div class="input-daterange input-group" id="datepicker">

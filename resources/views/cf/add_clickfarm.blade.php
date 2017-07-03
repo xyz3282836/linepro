@@ -13,6 +13,16 @@
         .col-md-1.control-label a{
             color: black;
         }
+        .ad{
+            width: 150px;
+            height: 150px;
+            position: fixed;
+            background: orange;
+            padding: 10px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
     </style>
 @endsection
 
@@ -28,6 +38,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">添加代购任务</div>
                     <div class="panel-body">
+                        <div class="ad">
+                            <p>Banner(150X150)</p>
+                        </div>
                         <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
                             {{--asin--}}
