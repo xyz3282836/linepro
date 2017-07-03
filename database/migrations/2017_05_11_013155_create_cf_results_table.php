@@ -17,6 +17,7 @@ class CreateCfResultsTable extends Migration
             $table->increments('id');
             $table->integer('uid')->default(0);//用户id
             $table->integer('cfid')->nullable();//任务id
+            $table->integer('oid')->nullable();//退款订单id
             $table->char('asin',24)->default('');//购买的asin
             $table->char('shop_id',20)->default('');//店铺id
             // 亚马逊
@@ -36,6 +37,7 @@ class CreateCfResultsTable extends Migration
 
             //索引
             $table->index('uid');
+            $table->index('oid');
             $table->index('cfid');
             $table->index('status');
             $table->index('asin','status');

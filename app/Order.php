@@ -153,7 +153,6 @@ class Order extends Model
             return $one;
         } catch (\Throwable $e) {
             DB::rollBack();
-            dd($e);
             throw new MsgException();
         }
     }
@@ -272,6 +271,11 @@ class Order extends Model
     public function cfs()
     {
         return $this->hasMany(ClickFarm::class, 'oid');
+    }
+
+    public function cfrs()
+    {
+        return $this->hasOne(CfResults::class, 'oid');
     }
 
     public function getTypeTextAttribute()

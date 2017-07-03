@@ -10,10 +10,12 @@
 namespace App;
 
 use Auth;
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class CfResult extends Model
 {
+    const STATUS_ERROR           = 0;//购买失败
     const STATUS_WAITING         = 1;//待发货
     const STATUS_REMAIN_EVALUATE = 2;//待评价
     const STATUS_SUBMIT          = 3;//已提交
@@ -31,6 +33,44 @@ class CfResult extends Model
     protected $appends = ['status_text'];
     private $msg = '';
 
+    /**
+     * 购买失败退款
+     * @param CfResult $one
+     */
+    public function refund(self $one)
+    {
+        DB::beginTransaction();
+        try {
+            $result         = $one;
+            $result->status = self::STATUS_ERROR;
+            $result->save();
+            $uid   = $result->uid;
+            $user  = $result->user;
+            $cf    = $result->cf;
+            $price = round(($cf->transport + $cf->amount) / $cf->task_num, 2);
+            $golds = round($cf->golds / $cf->task_num, 2);
+            Order::create([
+                'uid'     => $uid,
+                'type'    => Order::TYPE_REFUND,
+                'orderid' => get_order_id(),
+                'price'   => $price,
+                'golds'   => $golds,
+                'rate'    => $cf->rate,
+                'status'  => 1
+            ]);
+            $user->balance = $price;
+            $user->golds   = $golds;
+            $user->save();
+            DB::commit();
+            return true;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return false;
+        }
+
+    }
+
     public function getStatusTextAttribute()
     {
         $arr = config('linepro.cfresult_status');
@@ -45,23 +85,34 @@ class CfResult extends Model
         return $this->msg;
     }
 
-    public function evaluate($user=null){
-        $one = ClickFarm::find($this->cfid);
-        $user = $user!=null?$user:Auth::user();
-        if ($user->level == 1){
+    public function evaluate($user = null)
+    {
+        $one  = ClickFarm::find($this->cfid);
+        $user = $user != null ? $user : Auth::user();
+        if ($user->level == 1) {
             $weight = gconfig('regular.evaluate');
-        }else{
+        } else {
             $weight = gconfig('vip.evaluate');
         }
-        $waitcount = CfResult::where('cfid',$this->cfid)->whereIn('status',[1,2])->count();
-        $count = CfResult::where('cfid',$this->cfid)->count();
+        $waitcount = CfResult::where('cfid', $this->cfid)->whereIn('status', [1, 2])->count();
+        $count     = CfResult::where('cfid', $this->cfid)->count();
         $waitcount--;
-        if ($waitcount>=0){
-            if(($one->golds/$one->grate/($count-$waitcount)-20-$weight) <= 0){
+        if ($waitcount >= 0) {
+            if (($one->golds / $one->grate / ($count - $waitcount) - 20 - $weight) <= 0) {
                 $user->is_evaluate = 0;
                 $user->save();
             }
         }
 
+    }
+
+    public function cf()
+    {
+        return $this->belongsTo(ClickFarm::class, 'cfid');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'uid');
     }
 }
