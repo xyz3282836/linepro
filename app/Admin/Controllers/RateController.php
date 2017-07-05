@@ -35,7 +35,7 @@ class RateController extends Controller
             $grid->currency('货币');
             $grid->apiname('英文标识');
             $grid->name('符号标识');
-            $grid->apirate('基准汇率')->editable();
+            $grid->apirate('基准汇率');
             $grid->rate('使用汇率');
             $grid->updated_at('更新时间');
             $grid->disableFilter();
