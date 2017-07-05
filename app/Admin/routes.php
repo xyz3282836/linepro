@@ -22,4 +22,6 @@ Route::group([
 
     $router->resource('order','OrderController');
 
+    $router->resource('rate','RateController');
+
 });

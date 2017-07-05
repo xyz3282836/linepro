@@ -23,8 +23,16 @@ class ExchangeRate extends Model
     const SITE_NL = 9;//
     const SITE_IT = 10;//意大利4
 
-    public static function getCurrency($site){
-        switch ($site){
+    protected $appends = ['currency'];
+
+    public static function getCurrencyText($site)
+    {
+        return self::where('id', self::getCurrency($site))->value('name');
+    }
+
+    public static function getCurrency($site)
+    {
+        switch ($site) {
             case self::SITE_US:
                 return self::CURRENCY_USD;
                 break;
@@ -59,11 +67,14 @@ class ExchangeRate extends Model
         return self::CURRENCY_USD;
     }
 
-    public static function getCurrencyText($site){
-        return self::where('id',self::getCurrency($site))->value('name');
+    public static function getRate($site)
+    {
+        return self::where('id', self::getCurrency($site))->value('rate');
     }
 
-    public static function getRate($site){
-        return self::where('id',self::getCurrency($site))->value('rate');
+    public function getCurrencyAttribute()
+    {
+        $arr = config('linepro.currency');
+        return $arr[$this->id];
     }
 }
