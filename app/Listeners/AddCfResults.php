@@ -34,7 +34,7 @@ class AddCfResults
                 'cfid'       => $model->id,
                 'asin'       => $model->asin,
                 'shop_id'    => $model->shop_id,
-                'status'     => rand(1,5),
+                'status'     => CfResult::STATUS_WAITING,
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ];

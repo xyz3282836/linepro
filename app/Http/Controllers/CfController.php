@@ -143,12 +143,13 @@ class CfController extends Controller
     /**
      * 订单列表
      */
-    public function listOrder(){
+    public function listOrder()
+    {
         $start = request('start');
         $end   = request('end');
         $type  = request('type', 1);
 
-        $table = Order::with('cfs')->where('uid', Auth::user()->id)->where('status',$type);
+        $table = Order::with('cfs')->where('uid', Auth::user()->id)->where('status', $type);
         if ($start != null && $end != null) {
             $table->whereBetween('created_at', [$start, $end]);
         }
@@ -206,7 +207,7 @@ class CfController extends Controller
         $list = $list->where('status', $status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_cf_result')->with('tname', '已购买商品详情列表')->with([
             'list'   => $list,
-            'id'  => $model->id,
+            'id'     => $model->id,
             'start'  => $start,
             'end'    => $end,
             'asin'   => $asin,
@@ -232,10 +233,10 @@ class CfController extends Controller
         if ($model->uid != $user->id) {
             return error(NO_ACCESS);
         }
-        if($model->status != CfResult::STATUS_REMAIN_EVALUATE){
+        if ($model->status != CfResult::STATUS_REMAIN_EVALUATE) {
             return error(NO_ACCESS);
         }
-        if(!$user->is_evaluate){
+        if (!$user->is_evaluate) {
             return error('此账号已被封禁');
         }
         $model->star    = $star;
