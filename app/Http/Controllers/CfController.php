@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Banner;
 use App\CfResult;
 use App\ClickFarm;
 use App\Order;
@@ -38,6 +39,7 @@ class CfController extends Controller
             'srate'     => json_encode(get_srate()),
             'trans'     => $trans,
             'rmbtogold' => $rmbtogold,
+            'ad'        => Banner::getAd(4),
         ]);
     }
 
@@ -137,7 +139,7 @@ class CfController extends Controller
     public function listCardClickFarm()
     {
         $list = ClickFarm::where('uid', Auth::user()->id)->where('status', 1)->orderBy('id', 'desc')->get()->toJson();
-        return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list);
+        return view('cf.list_card')->with('tname', '购物车商品列表')->with('list', $list)->with('ad', Banner::getAd(3));
     }
 
     /**
@@ -157,7 +159,8 @@ class CfController extends Controller
         return view('cf.list_order')->with('tname', '订单管理')->with('list', $list)->with([
             'start' => $start,
             'end'   => $end,
-            'type'  => $type
+            'type'  => $type,
+            'ad'    => Banner::getAd(3)
         ]);
     }
 

@@ -17,11 +17,14 @@
             width: 150px;
             height: 150px;
             position: fixed;
-            background: orange;
             padding: 10px;
             display: flex;
             align-items:center;
             justify-content: center;
+        }
+        .ad img{
+            width: 150px;
+            height: 150px;
         }
     </style>
 @endsection
@@ -39,7 +42,7 @@
                     <div class="panel-heading">添加代购任务</div>
                     <div class="panel-body">
                         <div class="ad">
-                            <p>Banner(150X150)</p>
+                            <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
                         </div>
                         <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}

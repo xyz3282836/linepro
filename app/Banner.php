@@ -39,6 +39,24 @@ class Banner extends Model
         }
     }
 
+    public static function getAd($place)
+    {
+        $key = 'banner-' . $place;
+        if (Cache::has($key)) {
+            return Cache::get($key);
+        } else {
+            $ad   = self::where('type', $place)->first();
+            if($ad){
+                $pic  = url('upfile/admin/' . $ad->pic);
+                $link = $ad->title;
+                $val  = ['pic' => $pic, 'link' => $link];
+                Cache::forever($key, $val);
+            }
+            $val  = ['pic' => '', 'link' => 'http://www.dagobuy.com'];
+            return $val;
+        }
+    }
+
     public function getTypeTextAttribute()
     {
         $arr = config('linepro.banner_type_text');

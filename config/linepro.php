@@ -91,7 +91,9 @@ return [
     ],
     'banner_type_text' => [
         1 => '轮播banner',
-        2 => 'logo'
+        2 => 'logo',
+        3 => '购物车页banner',
+        4 => '新建页面banner',
     ],
     'user_evaluate'    => [
         0 => '禁止评价',

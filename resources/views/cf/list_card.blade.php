@@ -5,12 +5,15 @@
             width: 500px;
             height: 42px;
             position: absolute;
-            background: orange;
             padding: 10px;
             display: flex;
             align-items:center;
             justify-content: center;
             right: 15px;
+        }
+        .ad img{
+            width: 500px;
+            height: 42px;
         }
     </style>
 @endsection
@@ -20,7 +23,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="ad">
-                        <p>Banner(500X42)</p>
+                        <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
                     </div>
                     <div class="panel-heading">{{$tname}}</div>
                     <div class="panel-body">

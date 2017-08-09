@@ -54,16 +54,20 @@ class BannerController extends Controller
     public function form($type = 1)
     {
         return Admin::form(Banner::class, function (Form $form)use($type) {
-            $form->radio('type','图片类型')->options(['1' => 'Banner(1920x600)', '2'=> 'Logo(100x50)'])->default('1')->rules('required');
+            $form->radio('type','图片类型')->options(['1' => 'Banner(1920x600)', '2'=> 'Logo(100x50)', '3'=>'购物车页banner','4'=>'新建页面banner'])->default('1')->rules('required');
             switch ($type){
                 case 1:
                     $form->text('title', '图片标题')->default('banner')->rules('required');
                     $form->image('pic', '图片')->resize(1920, 600)->uniqueName()->move('banner')->rules('required|dimensions:min_width=1920,min_height=600');
                     break;
                 case 2:
-                    $form->text('title', '图片标题')->default('logo')->rules('required');
+                    $form->text('title', 'logo图片标题')->default('logo')->rules('required');
                     $form->image('pic', '图片')->resize(100, 50)->uniqueName()->move('banner')->rules('required|dimensions:min_width=100,min_height=50');
-
+                    break;
+                case 3:
+                case 4:
+                    $form->text('title', '广告连接')->default('')->rules('required');
+                    $form->image('pic', '图片')->uniqueName()->move('banner')->rules('required');
                     break;
             }
             $form->display('created_at', '创建时间');
@@ -83,6 +87,8 @@ class BannerController extends Controller
     public function store()
     {
         Cache::forget('banners');
+        Cache::forget('banner-3');
+        Cache::forget('banner-4');
         Cache::forget('logo');
         return $this->form(request('type'))->store();
     }
@@ -90,6 +96,8 @@ class BannerController extends Controller
     public function update($id)
     {
         Cache::forget('banners');
+        Cache::forget('banner-3');
+        Cache::forget('banner-4');
         Cache::forget('logo');
         $one = Banner::find($id);
         return $this->form($one->type)->update($id);
@@ -99,6 +107,9 @@ class BannerController extends Controller
     {
         if ($this->form()->destroy($id)) {
             Cache::forget('banners');
+            Cache::forget('banner-3');
+            Cache::forget('banner-4');
+            Cache::forget('logo');
             return response()->json([
                 'status'  => true,
                 'message' => trans('admin::lang.delete_succeeded'),
