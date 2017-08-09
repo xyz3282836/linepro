@@ -52,6 +52,20 @@ class DatabaseSeeder extends Seeder
                 'created_at' => null,
                 'updated_at' => null,
             ],
+            [
+                'type'       => 3,
+                'title'      => 'http://www.baidu.com',
+                'pic'        => 'banner/adbnner1.png',
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            [
+                'type'       => 4,
+                'title'      => 'http://www.baidu.com',
+                'pic'        => 'banner/adbnner2.png',
+                'created_at' => null,
+                'updated_at' => null,
+            ],
         ]);
         DB::table('exchange_rates')->insert([
             [

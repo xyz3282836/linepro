@@ -46,14 +46,10 @@ class Banner extends Model
             return Cache::get($key);
         } else {
             $ad = self::where('type', $place)->first();
-            if ($ad) {
-                $pic  = url('upfile/admin/' . $ad->pic);
-                $link = $ad->title;
-                $val  = ['pic' => $pic, 'link' => $link];
-                Cache::forever($key, $val);
-            } else {
-                $val = ['pic' => '', 'link' => 'http://www.dagobuy.com'];
-            }
+            $pic  = url('upfile/admin/' . $ad->pic);
+            $link = $ad->title;
+            $val  = ['pic' => $pic, 'link' => $link];
+            Cache::forever($key, $val);
             return $val;
         }
     }
