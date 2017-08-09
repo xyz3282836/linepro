@@ -160,7 +160,11 @@ class DatabaseSeeder extends Seeder
                 'desc'  => '认证会员评价权重',
                 'value' => '0',
             ],
-
+            [
+                'key'   => 'evaluate.cost',
+                'desc'  => '评价成本',
+                'value' => '20',
+            ],
             [
                 'key'   => 'regular.service.one.rate',
                 'desc'  => '普通会员限时下单服务费率',
