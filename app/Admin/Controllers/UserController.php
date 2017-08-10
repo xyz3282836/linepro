@@ -49,7 +49,7 @@ class UserController extends Controller
             $grid->lock_balance('系统锁定余额(￥)');
             $grid->golds('金币(G)');
             $grid->lock_golds('系统锁定金币(G)');
-            $grid->evaluate('代购评价')->label('warning');
+            $grid->is_evaluate('可评价')->switch();
             $grid->validity('会员有效期');
             $grid->last_login_time('最后登入时间');
             $grid->created_at('注册时间');
@@ -67,6 +67,7 @@ class UserController extends Controller
     {
         return Admin::form(User::class, function (Form $form) {
             $form->text('balance', '余额')->rules('required');
+            $form->text('is_evaluate', '可评价')->rules('required');
         });
     }
 

@@ -2,25 +2,24 @@
 
 namespace App;
 
-use DB;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
+    const TYPE_REGULAR = 1;
+    const TYPE_VIP     = 2;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'lock_golds', 'balance', 'lock_balance', 'last_login_time'
+        'name', 'email', 'shop_id', 'password', 'mobile', 'addr', 'management_type', 'shipping_addr', 'real_name', 'idcardpic', 'idcardno', 'golds', 'lock_golds', 'balance', 'lock_balance', 'last_login_time', 'is_evaluate'
     ];
-
     protected $appends = ['level_text'];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -61,9 +60,6 @@ class User extends Authenticatable
         }
         return true;
     }
-
-    const TYPE_REGULAR = 1;
-    const TYPE_VIP     = 2;
 
     public function scopeType($query, $type)
     {
