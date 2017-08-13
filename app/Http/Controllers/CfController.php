@@ -49,6 +49,10 @@ class CfController extends Controller
      */
     public function postAddClickFarm()
     {
+        $isfba = request('is_fba', 1);
+        if ($isfba != 1) {
+            return error('可能收不到货，本系统暂不支持非亚马逊发货海淘');
+        }
         $this->validate(request(), [
             'asin'          => 'required|min:1|max:24',
             'amazon_url'    => 'required|active_url',
@@ -60,7 +64,6 @@ class CfController extends Controller
             'task_num'      => 'required|integer',
             'delivery_addr' => 'max:50',
             'from_site'     => 'required|integer',
-            'time_type'     => 'required|integer',
             'delivery_type' => 'required|integer',
         ]);
 
@@ -107,10 +110,10 @@ class CfController extends Controller
         $model->amazon_title  = $pdata['amazon_title'];
         $model->delivery_addr = $pdata['delivery_addr'];
         $model->from_site     = $pdata['from_site'];
-        $model->time_type     = $pdata['time_type'];
         $model->delivery_type = $pdata['delivery_type'];
         $model->shop_name     = $pdata['shop_name'];
         //1.0
+        $model->time_type        = 1;
         $model->is_fba           = 1;
         $model->discount_code    = '';
         $model->is_reviews       = 0;

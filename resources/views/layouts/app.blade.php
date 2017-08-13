@@ -74,7 +74,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
 
-                        <li><a href="{{url('addTask?asin=asin2&detailUrl=https%3a%2f%2fdetail.tmall.com%2fitem.htm%3fid%3d522680881881%26spm%3da223v.7835278.t0.5.ZRVMe7%26pvid%3dc4201459-df69-4afa-8e37-6d701fd7cbe0%26scm%3d1007.12144.81309.9011_8949%26sku_properties%3d5919063%3a6536025&picUrl=https://img.alicdn.com/imgextra/i4/2099020602/TB2Swqygb_0UKFjy1XaXXbKfXXa_!!2099020602.jpg_430x430q90.jpg&title=title&shopName=dagoshop&shopId=12345&totalPrice='.rand(3,50).'&site='.rand(1,6))}}">模拟新建代购任务</a></li>
+                        <li><a href="{{url('addTask?asin=asin2&detailUrl=https%3a%2f%2fdetail.tmall.com%2fitem.htm%3fid%3d522680881881%26spm%3da223v.7835278.t0.5.ZRVMe7%26pvid%3dc4201459-df69-4afa-8e37-6d701fd7cbe0%26scm%3d1007.12144.81309.9011_8949%26sku_properties%3d5919063%3a6536025&picUrl=https://img.alicdn.com/imgextra/i4/2099020602/TB2Swqygb_0UKFjy1XaXXbKfXXa_!!2099020602.jpg_430x430q90.jpg&title=title&shopName=dagoshop&shopId=12345&isFba=1&totalPrice='.rand(3,50).'&site='.rand(1,6))}}">模拟新建代购任务</a></li>
 
                         <li>
                             <a href="{{url('card')}}">购物车</a>

@@ -44,7 +44,7 @@
                         <div class="ad">
                             <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
                         </div>
-                        <form class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
+                        <form id="dgform" class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
                             {{--asin--}}
                             <div class="form-group">
@@ -96,6 +96,17 @@
                                 </div>
                             </div>
 
+                            {{--发货方式--}}
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"><span class="color-red">*</span> 发货方式</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline" v-for="(v,k) in is_fbac">
+                                        <input disabled type="radio" v-model="is_fba" name="is_fba" :value="k">@{{ v }}
+                                    </label>
+                                    <p class="help-block with-errors"></p>
+                                </div>
+                            </div>
+
                             {{--单价--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span>
@@ -110,24 +121,24 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label"><span class="color-red">*</span> 下单方式</label>
-                                <div class="col-md-6">
-                                    <label class="radio-inline" v-for="(v,k) in time_typec">
-                                        <input type="radio" v-model="time_type" name="time_type" :value="k" required>@{{ v }}
-                                    </label>
-                                    <p class="help-block with-errors"></p>
-                                </div>
-                                <label class="col-md-1 control-label">
-                                    <a href="{{url('faqs')}}" target="_blank">?</a>
-                                </label>
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--<label class="col-md-4 control-label"><span class="color-red">*</span> 下单方式</label>--}}
+                                {{--<div class="col-md-6">--}}
+                                    {{--<label class="radio-inline" v-for="(v,k) in time_typec">--}}
+                                        {{--<input type="radio" v-model="time_type" name="time_type" :value="k" required>@{{ v }}--}}
+                                    {{--</label>--}}
+                                    {{--<p class="help-block with-errors"></p>--}}
+                                {{--</div>--}}
+                                {{--<label class="col-md-1 control-label">--}}
+                                    {{--<a href="{{url('faqs')}}" target="_blank">?</a>--}}
+                                {{--</label>--}}
+                            {{--</div>--}}
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 配送方式</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline" v-for="(v,k) in delivery_typec">
-                                        <input type="radio" v-model="delivery_type" name="delivery_type" :value="k" required>@{{ v }}
+                                        <input type="radio" v-model="delivery_type" name="delivery_type" :value="k">@{{ v }}
                                     </label>
                                     <p class="help-block with-errors"></p>
                                 </div>
@@ -189,7 +200,7 @@
 
 @section('js')
     <script>
-        new Vue({
+        const APP = new Vue({
             el: '#app',
             methods: {},
             mounted: function () {
@@ -209,7 +220,7 @@
                 gettrans: function () {
                     this.delivery_type == 1 ? this.alltrans = 0 : this.alltrans = this.task_num * this.trans;
                     return this.alltrans.toFixed(2) + '元';
-                },
+                }
             },
             data: {
                 alltrans: 0,
@@ -220,11 +231,17 @@
                 final_price:{{request('totalPrice')}},
                 task_num: 1,
                 time_type: 1,
-                time_typec: {!! json_encode(config('linepro.time_typec')) !!},
+                is_fba: {{request('isFba')}},
+                is_fbac: {!! json_encode(config('linepro.is_fba')) !!},
                 delivery_type: 1,
                 delivery_typec: {!! json_encode(config('linepro.delivery_type')) !!},
             }
         });
-
+        $('#dgform').validator().on('submit', function (e) {
+           if(APP.is_fba == 0){
+               layer.msg('本系统暂不支持非亚马逊发货海淘');
+               return false;
+           }
+        })
     </script>
 @endsection
