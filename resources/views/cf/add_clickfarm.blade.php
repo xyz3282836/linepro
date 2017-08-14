@@ -77,12 +77,12 @@
                             </div>
 
                             {{--title--}}
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('amazon_title') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span>
                                     亚马逊产品title</label>
                                 <div class="col-md-6">
                                     <input readonly type="text" placeholder="" minlength="2" maxlength="50" value="{{request('title')}}" class="form-control" name="amazon_title" required>
-                                    <p class="help-block with-errors"></p>
+                                    <p class="help-block with-errors">{{ $errors->first('amazon_title') }}</p>
                                 </div>
                             </div>
 
