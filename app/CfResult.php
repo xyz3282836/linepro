@@ -21,6 +21,7 @@ class CfResult extends Model
     const STATUS_SUBMIT          = 3;//已提交
     const STATUS_SUCCESS         = 4;//评价成功
     const STATUS_FAILURE         = 5;//评价失败
+    const STATUS_GOING           = 6;//
 
     /**
      * The attributes that are mass assignable.
