@@ -57,7 +57,7 @@ class CfController extends Controller
             'asin'          => 'required|min:1|max:24',
             'amazon_url'    => 'required|active_url',
             'amazon_pic'    => 'required|active_url',
-            'amazon_title'  => 'required|min:2|max:50',
+            'amazon_title'  => 'required|min:2|max:1024',
             'shop_id'       => 'required|min:2|max:50',
             'shop_name'     => 'max:50',
             'final_price'   => 'required',

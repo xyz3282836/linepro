@@ -24,7 +24,7 @@ class CreateClickFarmsTable extends Migration
             //amazon
             $table->string('amazon_url',500)->default('');//亚马逊详情页
             $table->string('amazon_pic',500)->default('');//亚马逊产品图片
-            $table->char('amazon_title',50)->default('');//亚马逊产品title
+            $table->string('amazon_title',1024)->default('');//亚马逊产品title
             $table->char('shop_id',50)->default('');//店铺id
             $table->integer('task_num')->default(1);//刷单件数
             $table->decimal('final_price',10,2)->default(0.00);//美元价格
