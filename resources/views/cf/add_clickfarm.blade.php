@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"> 服务费</label>
+                                <label class="col-md-4 control-label"> 服务费(100G=1元)</label>
                                 <label class="col-md-6 control-label" v-text="getservice"></label>
                                 <label class="col-md-1 control-label">
                                     <a href="{{url('faqs')}}" target="_blank">?</a>
@@ -210,7 +210,7 @@
             },
             computed: {
                 getall: function () {
-                    return (this.task_num * this.final_price * this.rate + this.alltrans).toFixed(2) + '元';
+                    return (this.task_num * this.final_price * this.rate + this.alltrans).toFixed(2) + '元(商品原价×汇率×服务费费率+商品原价)';
                 },
                 getservice: function () {
                     var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);

@@ -37,9 +37,9 @@
                                         </label>
                                     </div>
                                 </th>
+                                <th>商品图片</th>
                                 <th>ASIN</th>
                                 <th>亚马逊商品标题</th>
-                                <th>商品图片</th>
                                 <th>商铺名称</th>
                                 <th>站点</th>
                                 <th>配送方式</th>
@@ -48,7 +48,7 @@
                                 <th>单价</th>
                                 <th>数量</th>
                                 <th>当时汇率</th>
-                                <th>手续费(G)</th>
+                                <th>手续费<img src="/img/gold.png" /></th>
                                 <th>国内转运费</th>
                                 <th>合计总价</th>
                                 <th>订单生成时间</th>
@@ -64,9 +64,9 @@
                                         </label>
                                     </div>
                                 </td>
+                                <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="50" alt=""></a></td>
                                 <td v-text="one.asin"></td>
                                 <td><a :href="one.amazon_url" v-text="one.amazon_title"></a></td>
-                                <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="50" alt=""></a></td>
                                 <td v-text="one.shop_id"></td>
                                 <td v-text="one.from_site_text"></td>
                                 <td v-text="one.delivery_type_text"></td>

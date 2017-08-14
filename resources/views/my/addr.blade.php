@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="form-group {{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
-                                <label for="shipping_addr" class="col-md-4 control-label">发货地址</label>
+                                <label for="shipping_addr" class="col-md-4 control-label">收货地址</label>
 
                                 <div class="col-md-6">
                                     <input id="shipping_addr" type="text" class="form-control" name="shipping_addr" value="{{ old('shipping_addr') }}" minlength="5" maxlength="50" required>
