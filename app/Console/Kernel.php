@@ -27,32 +27,36 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $showapi_appid  = '40811';
-            $showapi_secret = 'eab8fb3f739540ea8dcb649bd4f57512';
-            $paramArr       = [
-                'showapi_appid' => $showapi_appid,
-                'code'          => ""
-            ];
-            $param          = $this->createParam($paramArr, $showapi_secret);
-            $url            = 'http://route.showapi.com/105-30?' . $param;
-            $client         = new Client();
-            $res            = $client->request('GET', $url);
-            $body           = $res->getBody()->getContents();
-            $arr            = json_decode($body, true);
-            if (isset($arr['showapi_res_body']['list'])) {
-                foreach ($arr['showapi_res_body']['list'] as $v) {
-                    if (in_array($v['code'], ['USD', 'CAD', 'GBP', 'EUR', 'JPY'])) {
-                        $one          = ExchangeRate::where('apiname', $v['code'])->first();
-                        $apirate      = ($v['hui_in'] + $v['hui_out'] + $v['chao_in'] + $v['chao_out']) / 400;
-                        $rate         = $apirate + 0.1;
-                        $one->apirate = $apirate;
-                        $one->rate    = $rate;
-                        $one->save();
-                    }
-                }
-            }
+
         })->daily();
 
+    }
+
+    private function getRate(){
+        $showapi_appid  = '40811';
+        $showapi_secret = 'eab8fb3f739540ea8dcb649bd4f57512';
+        $paramArr       = [
+            'showapi_appid' => $showapi_appid,
+            'code'          => ""
+        ];
+        $param          = $this->createParam($paramArr, $showapi_secret);
+        $url            = 'http://route.showapi.com/105-30?' . $param;
+        $client         = new Client();
+        $res            = $client->request('GET', $url);
+        $body           = $res->getBody()->getContents();
+        $arr            = json_decode($body, true);
+        if (isset($arr['showapi_res_body']['list'])) {
+            foreach ($arr['showapi_res_body']['list'] as $v) {
+                if (in_array($v['code'], ['USD', 'CAD', 'GBP', 'EUR', 'JPY'])) {
+                    $one          = ExchangeRate::where('apiname', $v['code'])->first();
+                    $apirate      = ($v['hui_in'] + $v['hui_out'] + $v['chao_in'] + $v['chao_out']) / 400;
+                    $rate         = $apirate + 0.1;
+                    $one->apirate = $apirate;
+                    $one->rate    = $rate;
+                    $one->save();
+                }
+            }
+        }
     }
 
     private function createParam($paramArr, $showapi_secret)
