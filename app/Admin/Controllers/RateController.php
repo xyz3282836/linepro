@@ -50,7 +50,7 @@ class RateController extends Controller
 
     protected function form()
     {
-        return Admin::form(User::class, function (Form $form) {
+        return Admin::form(ExchangeRate::class, function (Form $form) {
             $form->text('rate', '使用汇率')->rules('required');
         });
     }
