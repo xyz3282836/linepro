@@ -89,6 +89,7 @@
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
+                                                <th>商品图片</th>
                                                 <th>商品标题</th>
                                                 <th>站点</th>
                                                 <th>下单方式</th>
@@ -105,6 +106,7 @@
                                             <tbody>
                                             @foreach($v->cfs as $vv)
                                                 <tr>
+                                                    <td><a href="{{$vv->amazon_pic}}"><img src="{{$vv->amazon_pic}}" alt=""></a></td>
                                                     <td><a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a></td>
                                                     <td>{{$vv->from_site_text}}</td>
                                                     <td>{{$vv->time_type_text}}</td>
