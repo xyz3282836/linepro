@@ -12,6 +12,7 @@ use App\ExchangeRate;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
+use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 
@@ -36,7 +37,7 @@ class RateController extends Controller
             $grid->apiname('英文标识');
             $grid->name('符号标识');
             $grid->apirate('基准汇率');
-            $grid->rate('使用汇率');
+            $grid->rate('使用汇率')->editable();
             $grid->updated_at('更新时间');
             $grid->disableFilter();
             $grid->disableExport();
@@ -44,6 +45,13 @@ class RateController extends Controller
             $grid->disableCreation();
             $grid->disableActions();
             $grid->disableRowSelector();//tools不能公用
+        });
+    }
+
+    protected function form()
+    {
+        return Admin::form(User::class, function (Form $form) {
+            $form->text('rate', '使用汇率')->rules('required');
         });
     }
 
