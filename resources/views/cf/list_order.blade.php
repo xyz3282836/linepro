@@ -106,7 +106,7 @@
                                             <tbody>
                                             @foreach($v->cfs as $vv)
                                                 <tr>
-                                                    <td><a href="{{$vv->amazon_pic}}"><img src="{{$vv->amazon_pic}}" alt=""></a></td>
+                                                    <td><a href="{{$vv->amazon_pic}}"><img src="{{$vv->amazon_pic}}" width="50" alt=""></a></td>
                                                     <td><a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a></td>
                                                     <td>{{$vv->from_site_text}}</td>
                                                     <td>{{$vv->time_type_text}}</td>
