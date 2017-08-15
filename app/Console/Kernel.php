@@ -26,9 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//        $schedule->call(function () {
-//
-//        })->daily();
+        $schedule->call(function () {
+            $this->getRate();
+        })->daily();
 
     }
 
@@ -50,9 +50,7 @@ class Kernel extends ConsoleKernel
                 if (in_array($v['code'], ['USD', 'CAD', 'GBP', 'EUR', 'JPY'])) {
                     $one          = ExchangeRate::where('apiname', $v['code'])->first();
                     $apirate      = ($v['hui_in'] + $v['hui_out'] + $v['chao_in'] + $v['chao_out']) / 400;
-                    $rate         = $apirate + 0.1;
                     $one->apirate = $apirate;
-                    $one->rate    = $rate;
                     $one->save();
                 }
             }
