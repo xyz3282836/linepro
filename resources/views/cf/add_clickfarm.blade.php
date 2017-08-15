@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"> 服务费(100<img src="/img/gold.png" />=1元)</label>
+                                <label class="col-md-4 control-label"> 服务费(100<img width="15" src="/img/gold.png" />=1元)</label>
                                 <label class="col-md-6 control-label" v-text="getservice"></label>
                                 <label class="col-md-1 control-label">
                                     <a href="{{url('faqs')}}" target="_blank">?</a>
