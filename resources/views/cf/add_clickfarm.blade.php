@@ -170,7 +170,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"> 服务费(100G=1元)</label>
+                                <label class="col-md-4 control-label"> 服务费(100<img src="/img/gold.png" />=1元)</label>
                                 <label class="col-md-6 control-label" v-text="getservice"></label>
                                 <label class="col-md-1 control-label">
                                     <a href="{{url('faqs')}}" target="_blank">?</a>
@@ -215,7 +215,7 @@
                 getservice: function () {
                     var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);
                     tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
-                    return tmp + 'G (费率' + (this.srate[this.time_type].rate * 100).toFixed(0) + '%)';
+                    return tmp + '<img src="/img/gold.png" />';
                 },
                 gettrans: function () {
                     this.delivery_type == 1 ? this.alltrans = 0 : this.alltrans = this.task_num * this.trans;
