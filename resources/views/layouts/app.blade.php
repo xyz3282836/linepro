@@ -39,6 +39,10 @@
         table td{
             max-width: 300px;
         }
+        table th,table td{
+            text-align: center;
+        }
+
     </style>
     @yield('css')
     <!-- Scripts -->
