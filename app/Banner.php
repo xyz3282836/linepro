@@ -45,10 +45,24 @@ class Banner extends Model
         if (Cache::has($key)) {
             return Cache::get($key);
         } else {
-            $ad = self::where('type', $place)->first();
+            $ad   = self::where('type', $place)->first();
             $pic  = url('upfile/admin/' . $ad->pic);
             $link = $ad->title;
             $val  = ['pic' => $pic, 'link' => $link];
+            Cache::forever($key, $val);
+            return $val;
+        }
+    }
+
+    public static function getIndex()
+    {
+        $key = 'index';
+        if (Cache::has($key)) {
+            return Cache::get($key);
+        } else {
+            $pic  = self::where('type', 5)->first();
+            $logo = self::where('type', 6)->first();
+            $val  = ['pic' => url('upfile/admin/' . $pic->pic), 'logo' => url('upfile/admin/' . $logo->pic)];
             Cache::forever($key, $val);
             return $val;
         }

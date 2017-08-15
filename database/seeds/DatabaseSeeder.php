@@ -66,6 +66,20 @@ class DatabaseSeeder extends Seeder
                 'created_at' => null,
                 'updated_at' => null,
             ],
+            [
+                'type'       => 5,
+                'title'      => '首页图片',
+                'pic'        => 'banner/banner1.png',
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            [
+                'type'       => 6,
+                'title'      => '首页logo',
+                'pic'        => 'banner/logo.png',
+                'created_at' => null,
+                'updated_at' => null,
+            ],
         ]);
         DB::table('exchange_rates')->insert([
             [
