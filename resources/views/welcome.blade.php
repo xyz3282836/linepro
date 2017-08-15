@@ -31,12 +31,14 @@
             top: 18px;
         }
 
-        .content {
-            text-align: center;
+        .top-left {
+            position: absolute;
+            left: 10px;
+            top: 18px;
         }
 
-        .title {
-            font-size: 84px;
+        .content {
+            text-align: center;
         }
 
         .links > a {
@@ -49,14 +51,14 @@
             text-transform: uppercase;
         }
 
-        .m-b-md {
-            margin-bottom: 30px;
-        }
     </style>
 @endsection
 
 @section('body')
     <div class="flex-center position-ref full-height">
+        <div class="top-left">
+            <img src="{{App\Banner::getIndex()['logo']}}" alt="">
+        </div>
         @if (Route::has('login'))
             <div class="top-right links">
                 @if (Auth::check())
@@ -69,9 +71,7 @@
         @endif
 
         <div class="content">
-            <div class="title m-b-md">
-                {{ gconfig('site.name') }}
-            </div>
+            <img src="{{App\Banner::getIndex()['pic']}}" alt="{{ gconfig('site.name') }}" width="100%">
         </div>
     </div>
 @endsection
