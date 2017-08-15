@@ -95,6 +95,8 @@ return [
         2 => 'logo',
         3 => '购物车页banner',
         4 => '新建页面banner',
+        5 => '首页图片',
+        6 => '首页logo',
     ],
     'user_evaluate'    => [
         0 => '禁止评价',

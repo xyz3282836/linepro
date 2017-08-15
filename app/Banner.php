@@ -68,4 +68,10 @@ class Banner extends Model
         }
     }
 
+    public function getTypeTextAttribute()
+    {
+        $arr = config('linepro.banner_type_text');
+        return $arr[$this->type];
+    }
+
 }
