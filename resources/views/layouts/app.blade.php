@@ -43,7 +43,13 @@
             text-align: center;
             vertical-align:middle!important;
         }
-
+        table .limit{
+            max-width: 150px;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->

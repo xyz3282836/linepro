@@ -64,9 +64,9 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="50" alt=""></a></td>
+                                <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="100" alt=""></a></td>
                                 <td v-text="one.asin"></td>
-                                <td><a :href="one.amazon_url" v-text="one.amazon_title"></a></td>
+                                <td class="limit"><a :href="one.amazon_url" v-text="one.amazon_title"></a></td>
                                 <td v-text="one.shop_id"></td>
                                 <td v-text="one.from_site_text"></td>
                                 <td v-text="one.delivery_type_text"></td>
