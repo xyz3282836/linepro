@@ -48,7 +48,7 @@
                                 <th>单价</th>
                                 <th>数量</th>
                                 <th>当时汇率</th>
-                                <th>手续费<img src="/img/gold.png" /></th>
+                                <th>手续费<img width="18" src="/img/gold.png" /></th>
                                 <th>国内转运费</th>
                                 <th>合计总价</th>
                                 <th>订单生成时间</th>

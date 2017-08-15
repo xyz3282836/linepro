@@ -170,8 +170,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label"> 服务费(100<img width="15" src="/img/gold.png" />=1元)</label>
-                                <label class="col-md-6 control-label" v-text="getservice"></label>
+                                <label class="col-md-4 control-label"> 所需<img width="15" src="/img/gold.png" />(1<img width="15" src="/img/gold.png" />=0.01元)</label>
+                                <label class="col-md-6 control-label"><span v-text="getservice"></span><img width="15" src="/img/gold.png" /></label>
                                 <label class="col-md-1 control-label">
                                     <a href="{{url('faqs')}}" target="_blank">?</a>
                                 </label>
@@ -210,12 +210,12 @@
             },
             computed: {
                 getall: function () {
-                    return (this.task_num * this.final_price * this.rate + this.alltrans).toFixed(2) + '元(商品原价×汇率×服务费费率+商品原价)';
+                    return (this.task_num * this.final_price * this.rate + this.alltrans).toFixed(2) + '元(售价'+this.final_price+'* 数量'+this.task_num+'* 汇率'+this.rate+' + 运费'+this.alltrans+')';
                 },
                 getservice: function () {
                     var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);
                     tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
-                    return tmp;
+                    return tmp ;
                 },
                 gettrans: function () {
                     this.delivery_type == 1 ? this.alltrans = 0 : this.alltrans = this.task_num * this.trans;
