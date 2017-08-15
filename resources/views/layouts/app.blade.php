@@ -41,6 +41,7 @@
         }
         table th,table td{
             text-align: center;
+            vertical-align:middle!important;
         }
 
     </style>
