@@ -215,7 +215,7 @@
                 getservice: function () {
                     var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);
                     tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
-                    return tmp + '<img src="/img/gold.png" />';
+                    return tmp;
                 },
                 gettrans: function () {
                     this.delivery_type == 1 ? this.alltrans = 0 : this.alltrans = this.task_num * this.trans;
