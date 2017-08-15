@@ -130,7 +130,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">正文：</label>
-                            <textarea class="form-control" name="content" id="content" required></textarea>
+                            <textarea class="form-control" name="content" id="content" minlength="30" required></textarea>
                             <p class="help-block with-errors"></p>
                         </div>
                         <input type="hidden" name="id" id="eid">
