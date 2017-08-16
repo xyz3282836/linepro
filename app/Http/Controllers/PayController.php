@@ -148,11 +148,10 @@ class PayController extends Controller
                     $flag = true;
                 }
             } else {
-                $flag = false;
+                $flag = true;
             }
         } catch (Exception $e) {
             $flag = false;
-            dd($e);
         } finally {
             if ($flag) {
                 $text = '支付成功';
