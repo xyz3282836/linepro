@@ -117,7 +117,7 @@
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{Auth::user()->level_text}}
-                                    金币:<span class="color-red">{{Auth::user()->golds}}G</span>
+                                    金币:<span class="color-red">{{Auth::user()->golds}}<img width="15" src="/img/gold.png" /></span>
                                     <span class="caret"></span>
                                 </a>
 

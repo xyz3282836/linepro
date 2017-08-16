@@ -24,6 +24,9 @@
             width: 500px;
             height: 42px;
         }
+        .table .table {
+            background-color: white;
+        }
     </style>
 @endsection
 @section('content')
@@ -74,7 +77,7 @@
                                     <td>{{$v->price}} 元</td>
                                     <td>{{$v->balance}} 元</td>
                                     <td>{{$v->pay}} 元</td>
-                                    <td>{{$v->golds}} G</td>
+                                    <td>{{$v->golds}} <img width="12" src="/img/gold.png" /></td>
                                     <td>
                                         <a v-if="{{$v->status}} == 1" href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
                                         <button v-if="{{$v->status}} == 1" class="btn btn-danger btn-sm ladda-button"
@@ -115,7 +118,7 @@
                                                     <td>{{$vv->task_num}}</td>
                                                     <td>{{$vv->transport}} 元</td>
                                                     <td>{{$vv->srate * 100}} %</td>
-                                                    <td>{{$vv->golds}} G</td>
+                                                    <td>{{$vv->golds}} <img width="12" src="/img/gold.png" /></td>
                                                     <td>{{$vv->amount}} 元</td>
                                                     <td>
                                                         @if($v->status > 1)
