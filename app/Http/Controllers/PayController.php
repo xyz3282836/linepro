@@ -146,9 +146,11 @@ class PayController extends Controller
                             break;
                     }
                     $flag = true;
+                }elseif ($model->status == Order::STATUS_PAID){
+                    $flag = true;
                 }
             } else {
-                $flag = true;
+                $flag = false;
             }
         } catch (Exception $e) {
             $flag = false;
