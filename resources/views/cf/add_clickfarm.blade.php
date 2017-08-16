@@ -171,7 +171,7 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label"> 所需<img width="15" src="/img/gold.png" /></label>
-                                <label class="col-md-6 control-label"><span v-text="getservice"></span><img width="15" src="/img/gold.png" />&nbsp;&nbsp;(1<img width="15" src="/img/gold.png" />=0.01元)</label>
+                                <label class="col-md-6 control-label"><span v-text="getservice"></span><img width="15" src="/img/gold.png" />&nbsp;&nbsp;&nbsp;&nbsp;(1<img width="15" src="/img/gold.png" />=0.01元)</label>
                                 <label class="col-md-1 control-label">
                                     <a href="{{url('faqs')}}" target="_blank">?</a>
                                 </label>
