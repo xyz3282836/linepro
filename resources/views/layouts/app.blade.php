@@ -47,7 +47,7 @@
             max-width: 150px;
             text-align: left;
         }
-        table,.font-yahei{
+        table,.font-yahei,form{
             font-family: "Microsoft YaHei";
         }
 
