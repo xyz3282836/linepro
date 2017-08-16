@@ -47,6 +47,10 @@
             max-width: 150px;
             text-align: left;
         }
+        table{
+            font-family: "Microsoft YaHei";
+        }
+
     </style>
     @yield('css')
     <!-- Scripts -->
