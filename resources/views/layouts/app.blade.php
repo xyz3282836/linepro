@@ -184,5 +184,8 @@
         })
     </script>
     @yield('js')
+
+    {!! gconfig('site.overview1') !!}
+    {!! gconfig('site.overview2') !!}
 </body>
 </html>
