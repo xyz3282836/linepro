@@ -21,7 +21,7 @@ class CfResult extends Model
     const STATUS_SUBMIT          = 3;//已提交
     const STATUS_SUCCESS         = 4;//评价成功
     const STATUS_FAILURE         = 5;//评价失败
-    const STATUS_GOING           = 6;//
+    const STATUS_GOING           = 6;//进行中
 
     /**
      * The attributes that are mass assignable.
@@ -67,10 +67,11 @@ class CfResult extends Model
                     'gin'     => $golds,
                     'rate'    => gconfig('rmbtogold'),
                 ]);
-                $user->balance = $price;
-                $user->golds   = $golds;
+                $user->balance += $price;
+                $user->golds   += $golds;
                 $user->save();
-                $result->oid = $order->id;
+                $result->oid    = $order->id;
+                $result->status = -1;
                 $result->save();
                 DB::commit();
                 return true;

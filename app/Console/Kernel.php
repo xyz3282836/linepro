@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\CfResult;
 use App\ExchangeRate;
 use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Schedule;
@@ -29,10 +30,27 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $this->getRate();
         })->daily();
-
+        $schedule->call(function () {
+            $this->dealRefund();
+        })->everyFiveMinutes();
     }
 
-    private function getRate(){
+    /**
+     * 退款
+     */
+    private function dealRefund()
+    {
+        $list = CfResult::where('status', 0)->get();
+        foreach ($list as $v) {
+            $v->refund();
+        }
+    }
+
+    /**
+     * 获取汇率
+     */
+    private function getRate()
+    {
         $showapi_appid  = '40811';
         $showapi_secret = 'eab8fb3f739540ea8dcb649bd4f57512';
         $paramArr       = [
