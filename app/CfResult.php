@@ -38,38 +38,48 @@ class CfResult extends Model
      * 购买失败退款
      * @param CfResult $one
      */
-    public function refund(self $one)
+    public function refund()
     {
-        DB::beginTransaction();
-        try {
-            $result         = $one;
-            $result->status = self::STATUS_ERROR;
-            $result->save();
-            $uid   = $result->uid;
-            $user  = $result->user;
-            $cf    = $result->cf;
-            $price = round(($cf->transport + $cf->amount) / $cf->task_num, 2);
-            $golds = round($cf->golds / $cf->task_num, 2);
-            Order::create([
-                'uid'     => $uid,
-                'type'    => Order::TYPE_REFUND,
-                'orderid' => get_order_id(),
-                'price'   => $price,
-                'golds'   => $golds,
-                'rate'    => $cf->rate,
-                'status'  => 1
-            ]);
-            $user->balance = $price;
-            $user->golds   = $golds;
-            $user->save();
-            DB::commit();
-            return true;
-        } catch (\Throwable $e) {
-            DB::rollBack();
-
-            return false;
+        if ($this->status == self::STATUS_ERROR) {
+            DB::beginTransaction();
+            try {
+                $result = $this;
+                $uid    = $result->uid;
+                $user   = $result->user;
+                $cf     = $result->cf;
+                $price  = round(($cf->transport + $cf->amount) / $cf->task_num, 2);
+                $golds  = round($cf->golds / $cf->task_num, 2);
+                $order  = Order::create([
+                    'uid'     => $uid,
+                    'type'    => Order::TYPE_REFUND,
+                    'orderid' => get_order_id(),
+                    'price'   => $price,
+                    'golds'   => $golds,
+                    'rate'    => gconfig('rmbtogold'),
+                    'status'  => Order::STATUS_PAID
+                ]);
+                Bill::create([
+                    'uid'     => $user->id,
+                    'oid'     => $order->id,
+                    'type'    => Bill::TYPE_REFUND,
+                    'orderid' => $order->orderid,
+                    'in'      => $price,
+                    'gin'     => $golds,
+                    'rate'    => gconfig('rmbtogold'),
+                ]);
+                $user->balance = $price;
+                $user->golds   = $golds;
+                $user->save();
+                $result->oid = $order->id;
+                $result->save();
+                DB::commit();
+                return true;
+            } catch (\Throwable $e) {
+                DB::rollBack();
+                return false;
+            }
         }
-
+        return false;
     }
 
     public function getStatusTextAttribute()
