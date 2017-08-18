@@ -55,7 +55,7 @@ class OrderController extends Controller
             $grid->disableRowSelector();//tools不能公用
 
             $grid->filter(function ($filter) {
-                $filter->is('orderid', '订单id');
+                $filter->is('orderid', '订单号');
                 $filter->is('uid', '用户id');
                 $filter->is('alipay_orderid', '支付宝订单号');
             });
