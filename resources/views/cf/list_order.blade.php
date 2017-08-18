@@ -58,20 +58,20 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>类型</th>
+                                <th>#</th>
                                 <th>时间</th>
                                 <th>订单号</th>
                                 <th>总价</th>
                                 <th>余额支出</th>
                                 <th>充值支出</th>
-                                <th>金币充值/支出</th>
+                                <th>金币支出</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($list as $v)
                                 <tr>
-                                    <td>{{$v->type_text}}</td>
+                                    <td>{{$v->id}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->price}} 元</td>

@@ -154,7 +154,7 @@ class CfController extends Controller
         $end   = request('end');
         $type  = request('type', 1);
 
-        $table = Order::with('cfs')->where('uid', Auth::user()->id)->where('status', $type);
+        $table = Order::with('cfs')->where('uid', Auth::user()->id)->where('status', $type)->where('type', Order::TYPE_CONSUME);
         if ($start != null && $end != null) {
             $table->whereBetween('created_at', [$start, $end]);
         }
