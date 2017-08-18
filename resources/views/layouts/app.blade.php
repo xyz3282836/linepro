@@ -121,7 +121,7 @@
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{Auth::user()->level_text}}
-                                    金币:<span class="color-red font-yahei">{{Auth::user()->golds}}<img width="15" src="/img/gold.png" /></span>
+                                    金币:<span class="color-red font-yahei">{{Auth::user()->golds - Auth::user()->lock_golds}}<img width="15" src="/img/gold.png" /></span>
                                     <span class="caret"></span>
                                 </a>
 
@@ -135,7 +135,7 @@
                             <li class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }}
-                                    余额:<span class="color-red font-yahei">{{Auth::user()->balance}}元</span>
+                                    余额:<span class="color-red font-yahei">{{Auth::user()->balance - Auth::user()->lock_balance}}元</span>
                                     <span class="caret"></span>
                                 </a>
 
