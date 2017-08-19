@@ -67,7 +67,7 @@
                                     <td>{{$v->amazon_logistics_orderid}}</td>
                                     <td width="300">
                                         @if($v->status > 2)
-                                        <p>评价星级：{{$v->star}}</p>
+                                        <p>评价星级：@if(in_array($v->status,[3,4,5])){{$v->star}} @endif</p>
                                         <p>评价标题：{{$v->title}}</p>
                                         <p>评价内容：{{$v->content}}</p>
                                         @endif
