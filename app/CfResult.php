@@ -107,7 +107,7 @@ class CfResult extends Model
             $weight = gconfig('vip.evaluate');
         }
         $waitcount = CfResult::where('cfid', $this->cfid)->whereIn('status', [1, 2, 6])->count();
-        $failcount = CfResult::where('cfid', $this->cfid)->whereIn('status', 0)->count();
+        $failcount = CfResult::where('cfid', $this->cfid)->where('status', 0)->count();
         $count     = CfResult::where('cfid', $this->cfid)->count() - $failcount;
         $waitcount--;
         if ($waitcount >= 0) {
