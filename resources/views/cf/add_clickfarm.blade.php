@@ -47,11 +47,11 @@
                         <form id="dgform" class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
                             {{--asin--}}
-                            <div class="form-group">
+                            <div class="form-group {{ $errors->has('asin') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
                                     <input readonly type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" value="{{request('asin')}}" required>
-                                    <p class="help-block with-errors"></p>
+                                    <p class="help-block with-errors">{{ $errors->first('asin') }}</p>
                                 </div>
                             </div>
 
