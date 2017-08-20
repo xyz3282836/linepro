@@ -115,7 +115,6 @@ class CfResult extends Model
                 $user->save();
             }
         }
-
     }
 
     public function cf()
