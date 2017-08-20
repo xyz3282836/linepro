@@ -33,7 +33,10 @@ class Banner extends Model
             return Cache::get('logo');
         } else {
             $logo = self::where('type', 2)->first();
-            $logo = url('upfile/admin/' . $logo->pic);
+            if ($logo) {
+                $logo = url('upfile/admin/' . $logo->pic);
+            }
+            $logo = '';
             Cache::forever('logo', $logo);
             return $logo;
         }
@@ -62,7 +65,13 @@ class Banner extends Model
         } else {
             $pic  = self::where('type', 5)->first();
             $logo = self::where('type', 6)->first();
-            $val  = ['pic' => url('upfile/admin/' . $pic->pic), 'logo' => url('upfile/admin/' . $logo->pic)];
+            $val  = ['pic' => '', 'logo' => ''];
+            if ($pic) {
+                $val['pic'] = url('upfile/admin/' . $pic->pic);
+            }
+            if ($logo) {
+                $val['logo'] = url('upfile/admin/' . $logo->pic);
+            }
             Cache::forever($key, $val);
             return $val;
         }
