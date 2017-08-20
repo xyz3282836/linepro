@@ -109,7 +109,6 @@ class CfResult extends Model
         $waitcount = CfResult::where('cfid', $this->cfid)->whereIn('status', [1, 2, 6])->count();
         $failcount = CfResult::where('cfid', $this->cfid)->where('status', 0)->count();
         $count     = CfResult::where('cfid', $this->cfid)->count() - $failcount;
-        $waitcount--;
         if ($waitcount >= 0) {
             if (($one->golds / $one->grate / ($count - $waitcount) - gconfig('evaluate.cost') - $weight) <= 0) {
                 $user->is_evaluate = 0;
