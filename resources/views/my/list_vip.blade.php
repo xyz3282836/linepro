@@ -6,7 +6,7 @@
     </style>
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -31,7 +31,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="99">no data</td>
+                                    <td colspan="99">暂无数据</td>
                                 </tr>
                             @endforelse
                             </tbody>
