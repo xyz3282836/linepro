@@ -61,7 +61,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="99">no data</td>
+                                    <td colspan="99">暂无数据</td>
                                 </tr>
                             @endforelse
                             </tbody>
