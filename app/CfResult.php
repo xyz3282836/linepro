@@ -20,6 +20,7 @@ class CfResult extends Model
     const STATUS_WAITING   = 1;//代购中
     const STATUS_DELIVERED = 2;//已发货
     const STATUS_SUCCESS   = 3;//成功送达
+    const STATUS_WAITSEND  = 4;//待发货
 
     const ESTATUS_BEFORE_SUBMIT = 1;//未提交
     const ESTATUS_SUBMIT        = 2;//已提交
@@ -36,7 +37,7 @@ class CfResult extends Model
     protected $fillable = [
         'uid', 'cfid', 'asin', 'shop_id', 'status'
     ];
-    protected $appends = ['status_text','estatus_text'];
+    protected $appends = ['status_text', 'estatus_text'];
     private $msg = '';
 
     /**
