@@ -94,7 +94,7 @@
                             <a href="{{url('card')}}">购物车</a>
                         </li>
                         <li>
-                            <a href="{{url('orderlist')}}">订单管理</a>
+                            <a href="{{url('orderlist')}}">我的订单</a>
                         </li>
                     </ul>
                     @endif
