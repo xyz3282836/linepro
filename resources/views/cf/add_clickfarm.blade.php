@@ -26,6 +26,9 @@
             width: 150px;
             height: 150px;
         }
+        .layui-layer-page .layui-layer-content {
+            padding: 20px 30px;
+        }
     </style>
 @endsection
 
