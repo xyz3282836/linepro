@@ -63,10 +63,12 @@
                                         <p>评价标题：{{$v->title}}</p>
                                         <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
                                     </td>
-                                    <td>{{$v->estatus_text}}</td>
+                                    <td>{{$v->status_text}}</td>
                                     <td>
                                         @if($v->estatus < 4)
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">评价</button>
+                                        @else
+                                            {{$v->estatus_text}}
                                         @endif
                                     </td>
                                 </tr>
