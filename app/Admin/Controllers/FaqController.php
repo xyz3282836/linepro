@@ -64,7 +64,7 @@ class FaqController extends Controller
         return Admin::form(Faq::class, function (Form $form) {
             $form->display('id', 'ID');
             $form->text('q', '问题')->rules('required|min:2');
-            $form->textarea('a', '回答')->rules('required|min:2');
+            $form->weditor('a', '回答')->rules('required');
         });
     }
 

@@ -24,4 +24,7 @@ Route::group([
 
     $router->resource('rate','RateController');
 
+    //上传图片(富文本编辑器需要使用)
+    $router->post('upload', 'FileController@upload');
+
 });

@@ -19,7 +19,7 @@
                             <h3 class="panel-title">{{$v['q']}}</h3>
                         </div>
                         <div class="panel-body">
-                            {{$v['a']}}
+                            {!! $v['a'] !!}
                         </div>
                     </div>
                 @endforeach
