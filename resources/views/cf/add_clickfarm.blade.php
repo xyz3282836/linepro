@@ -204,19 +204,21 @@
             el: '#app',
             methods: {
                 getOne(){
+                    var one = {!! \App\Faq::getFaq(1) !!};
                     layer.open({
                         type: 1,
                         skin: 'layui-layer-rim', //加上边框
                         area: ['800px', '600px'], //宽高
-                        content: '{!! \App\Faq::getFaq(1) !!}'
+                        content: one.a
                     });
                 },
                 getTwo(){
+                    var one = {!! \App\Faq::getFaq(2) !!};
                     layer.open({
                         type: 1,
                         skin: 'layui-layer-rim', //加上边框
                         area: ['800px', '600px'], //宽高
-                        content: '{!! \App\Faq::getFaq(2) !!}'
+                        content: one.a
                     });
                 }
             },

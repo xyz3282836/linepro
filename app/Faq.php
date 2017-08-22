@@ -28,7 +28,7 @@ class Faq extends Model
     public static function getFaq($id){
         $arr = self::getFaqs();
         if(isset($arr[$id])){
-            return $arr[$id]['a'];
+            return json_encode($arr[$id]);
         }else{
             return '';
         }
