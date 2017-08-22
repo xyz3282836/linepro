@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('csslib')
-    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/css/bootstrap-datepicker.min.css"
-          rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="{{url('flagicon/css/flag-icon.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('jslib')
@@ -135,7 +135,7 @@
                                                             <a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a>
                                                         </div>
                                                     </td>
-                                                    <td>{{$vv->from_site_text}}</td>
+                                                    <td><span class="flag-icon flag-icon-{{App\ExchangeRate::getFlag($vv->from_site)}}"></span></td>
                                                     <td>{{$vv->time_type_text}}</td>
                                                     <td>{{$vv->final_price_text}}</td>
                                                     <td>{{$vv->rate}}</td>

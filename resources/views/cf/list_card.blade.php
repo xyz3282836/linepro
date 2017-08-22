@@ -28,7 +28,9 @@
         }
     </style>
 @endsection
-
+@section('csslib')
+    <link href="{{url('flagicon/css/flag-icon.min.css')}}" rel="stylesheet">
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -88,7 +90,7 @@
                                     </div>
                                 </td>
                                 <td v-text="one.shop_id"></td>
-                                <td v-text="one.from_site_text"></td>
+                                <td><span class="flag-icon" :class="'flag-icon-'+one.flag"></span></td>
                                 <td v-text="one.delivery_type_text"></td>
                                 <td v-text="one.delivery_addr"></td>
                                 <td v-text="one.time_type_text"></td>

@@ -30,6 +30,42 @@ class ExchangeRate extends Model
         return self::where('id', self::getCurrency($site))->value('name');
     }
 
+    public static function getFlag($site){
+        switch ($site) {
+            case self::SITE_US:
+                return "um";
+                break;
+            case self::SITE_CA:
+                return "ca";
+                break;
+            case self::SITE_UK:
+                return 'gb';
+                break;
+            case self::SITE_DE:
+                return 'de';
+                break;
+            case self::SITE_FR:
+                return 'fr';
+                break;
+            case self::SITE_JP:
+                return 'jp';
+                break;
+            case self::SITE_IN:
+                return 'in';
+                break;
+            case self::SITE_ES:
+                return 'es';
+                break;
+            case self::SITE_NL:
+                return 'nl';
+                break;
+            case self::SITE_IT:
+                return 'it';
+                break;
+        }
+        return 'um';
+    }
+
     public static function getCurrency($site)
     {
         switch ($site) {

@@ -56,6 +56,10 @@
         .breadcrumb {
              background-color: transparent;
         }
+        .flag-icon {
+            width: 4em;
+            line-height: 4em;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->

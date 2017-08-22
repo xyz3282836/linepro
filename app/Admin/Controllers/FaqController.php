@@ -35,7 +35,8 @@ class FaqController extends Controller
     protected function grid()
     {
         return Admin::grid(Faq::class, function (Grid $grid) {
-            $grid->id('ID')->sortable();
+            $grid->id('ID');
+            $grid->order('排序权重')->editable()->sortable();
             $grid->q('问题')->editable();
             $grid->a('答案');
         });
@@ -63,6 +64,7 @@ class FaqController extends Controller
     {
         return Admin::form(Faq::class, function (Form $form) {
             $form->display('id', 'ID');
+            $form->text('order', '排序权重')->rules('required|integer');
             $form->text('q', '问题')->rules('required|min:2');
             $form->weditor('a', '回答')->rules('required');
         });
