@@ -66,7 +66,7 @@
                                     <td>{{$v->status_text}}</td>
                                     <td>
                                         @if($v->estatus < 4)
-                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">评价</button>
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">$v->estatus_text</button>
                                         @else
                                             {{$v->estatus_text}}
                                         @endif
