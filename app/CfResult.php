@@ -20,7 +20,6 @@ class CfResult extends Model
     const STATUS_WAITING   = 1;//代购中
     const STATUS_DELIVERED = 2;//已发货
     const STATUS_SUCCESS   = 3;//成功送达
-    const STATUS_FAILURE   = 4;//代购失败
 
     const ESTATUS_BEFORE_SUBMIT = 1;//未提交
     const ESTATUS_SUBMIT        = 2;//已提交
