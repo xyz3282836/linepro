@@ -30,7 +30,7 @@ class Faq extends Model
         if(isset($arr[$id])){
             return json_encode($arr[$id]);
         }else{
-            return '';
+            return json_encode(['a'=>'','q'=>'']);
         }
     }
 
