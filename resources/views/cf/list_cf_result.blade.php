@@ -14,45 +14,39 @@
     </style>
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="/">首页</a></li>
+                    <li><a href="{{url('orderlist')}}">订单管理</a></li>
+                    <li class="active">订单详情</li>
+                </ol>
                 <div class="panel panel-default">
                     <div class="panel-heading">{{$tname}}</div>
                     <div class="panel-body">
-                        <form class="form-inline margin-bottom-30" action="{{url('viewclickfarm/'.$id)}}" method="get">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="ASIN" name="asin" value="{{$asin}}">
+                        <div class="media margin-bottom-15">
+                            <div class="media-left media-middle">
+                                <a href="#">
+                                    <a href="{{$cf->amazon_pic}}"><img src="{{$cf->amazon_pic}}" width="100" alt=""></a>
+                                </a>
                             </div>
-                            <div class="form-group">
-                                <div class="input-daterange input-group" id="datepicker">
-                                    <input type="text" class="form-control" name="start" value="{{$start}}" />
-                                    <span class="input-group-addon">to</span>
-                                    <input type="text" class="form-control" name="end" value="{{$end}}" />
-                                </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{$cf->amazon_title}}</h4>
                             </div>
-                            <div class="form-group">
-                                <select class="form-control select-sm" name="status" required v-model="status">
-                                    <option v-for="(v,k) in statusc" v-text="v" :value="k"></option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary ladda-button" data-style="contract">查询</button>
-                        </form>
+                        </div>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    {{--<th>商品图片</th>--}}
-                                    {{--<th>商品title</th>--}}
                                     <th>店铺id</th>
                                     <th>ASIN</th>
-                                    <th>账号邮箱</th>
                                     <th>亚马逊订单号</th>
                                     <th>物流</th>
                                     <th>物流单号</th>
                                     <th>评价详情</th>
                                     <th>状态</th>
-                                    <th>操作</th>
+                                    <th>评价</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,34 +55,30 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->shop_id}}</td>
                                     <td>{{$v->asin}}</td>
-                                    <td>{{$v->amazon_email}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
                                     <td>{{$v->amazon_logistics_company}}</td>
                                     <td>{{$v->amazon_logistics_orderid}}</td>
                                     <td width="300" style="text-align: left">
-                                        @if($v->status > 2)
-                                        <p>评价星级：@if(in_array($v->status,[3,4,5])){{$v->star}} @endif</p>
+                                        <p>评价星级：@if($v->estatus > 1){{$v->star}} @endif</p>
                                         <p>评价标题：{{$v->title}}</p>
                                         <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
-                                        @endif
                                     </td>
-                                    <td>{{$v->status_text}}</td>
+                                    <td>{{$v->estatus_text}}</td>
                                     <td>
-                                        @if($v->status == 2)
-                                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">评价</button>
+                                        @if($v->estatus < 4)
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">评价</button>
                                         @endif
-
                                     </td>
                                 </tr>
                                 @empty
                                  <tr>
-                                     <td colspan="99">no data</td>
+                                     <td colspan="99">暂无数据</td>
                                  </tr>
                                 @endforelse
                             </tbody>
                         </table>
                         @if($list)
-                            {!!  $list->appends(['asin'=>$asin,'start'=>$start,'end'=>$end,'status'=>$status])->links() !!}
+                            {!!  $list->links() !!}
                         @endif
                     </div>
                 </div>
@@ -178,8 +168,7 @@
         new Vue({
             el: '#app',
             data:{
-                statusc: {!! json_encode(config('linepro.cfresult_status')) !!},
-                status:'{{$status}}'
+
             },
             methods: {
             },

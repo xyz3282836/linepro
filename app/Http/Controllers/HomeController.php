@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CfResult;
 use App\Events\Vip;
 use App\VipBill;
 use Auth;
@@ -29,6 +30,10 @@ class HomeController extends Controller
     public function index()
     {
         event(new Vip(Auth::user()));
+        $list = CfResult::where('status', 0)->get();
+        foreach ($list as $v) {
+            $v->refund();
+        }
         return view('home');
     }
 

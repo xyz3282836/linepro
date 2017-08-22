@@ -15,13 +15,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class CfResult extends Model
 {
-    const STATUS_ERROR           = 0;//购买失败
-    const STATUS_WAITING         = 1;//待发货
-    const STATUS_REMAIN_EVALUATE = 2;//待评价
-    const STATUS_SUBMIT          = 3;//已提交
-    const STATUS_SUCCESS         = 4;//评价成功
-    const STATUS_FAILURE         = 5;//评价失败
-    const STATUS_GOING           = 6;//进行中
+    const STATUS_REFUND    = -1;//购买失败,已退款
+    const STATUS_ERROR     = 0;//购买失败
+    const STATUS_WAITING   = 1;//代购中
+    const STATUS_DELIVERED = 2;//已发货
+    const STATUS_SUCCESS   = 3;//成功送达
+    const STATUS_FAILURE   = 4;//代购失败
+
+    const ESTATUS_BEFORE_SUBMIT = 1;//未提交
+    const ESTATUS_SUBMIT        = 2;//已提交
+    const ESTATUS_SYNC          = 3;//同步
+    const ESTATUS_LOCK          = 4;//锁定
+    const ESTATUS_SUCCESS       = 5;//评价成功
+    const ESTATUS_FAILURE       = 6;//评价失败
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +37,7 @@ class CfResult extends Model
     protected $fillable = [
         'uid', 'cfid', 'asin', 'shop_id', 'status'
     ];
-    protected $appends = ['status_text'];
+    protected $appends = ['status_text','estatus_text'];
     private $msg = '';
 
     /**
@@ -71,7 +77,7 @@ class CfResult extends Model
                 $user->golds   += $golds;
                 $user->save();
                 $result->oid    = $order->id;
-                $result->status = -1;
+                $result->status = self::STATUS_REFUND;
                 $result->save();
                 DB::commit();
                 return true;
@@ -81,12 +87,6 @@ class CfResult extends Model
             }
         }
         return false;
-    }
-
-    public function getStatusTextAttribute()
-    {
-        $arr = config('linepro.cfresult_status');
-        return $arr[$this->status];
     }
 
     /**
@@ -125,5 +125,17 @@ class CfResult extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'uid');
+    }
+
+    public function getEstatusTextAttribute()
+    {
+        $arr = config('linepro.cfresult_estatuss');
+        return $arr[$this->estatus];
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $arr = config('linepro.cfresult_statuss');
+        return $arr[$this->status];
     }
 }

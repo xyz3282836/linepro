@@ -27,12 +27,27 @@
         .table .table {
             background-color: white;
         }
+        table .limit{
+            text-align: left;
+            height: 120px;
+            line-height: 30px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="/">首页</a></li>
+                    <li class="active">订单管理</li>
+                </ol>
                 <div class="panel panel-default">
                     <div class="ad">
                         <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
@@ -79,10 +94,15 @@
                                     <td>{{$v->pay}} 元</td>
                                     <td>{{$v->golds}} <img width="12" src="/img/gold.png" /></td>
                                     <td>
-                                        <a v-if="{{$v->status}} == 1" href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
-                                        <button v-if="{{$v->status}} == 1" class="btn btn-danger btn-sm ladda-button"
-                                                data-style="contract" @click="del({{$v->id}})">取消订单
-                                        </button>
+                                        @if($v->status == 1)
+                                            <a href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
+                                            <button class="btn btn-danger btn-sm ladda-button"
+                                                    data-style="contract" @click="del({{$v->id}})">取消订单
+                                            </button>
+                                        @else
+                                            {{$v->status_text}}
+                                        @endif
+
                                     </td>
                                 </tr>
                                 @if($v->type == 2)
@@ -110,7 +130,11 @@
                                             @foreach($v->cfs as $vv)
                                                 <tr>
                                                     <td><a href="{{$vv->amazon_pic}}"><img src="{{$vv->amazon_pic}}" width="100" alt=""></a></td>
-                                                    <td class="limit"><a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a></td>
+                                                    <td>
+                                                        <div class="limit">
+                                                            <a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a>
+                                                        </div>
+                                                    </td>
                                                     <td>{{$vv->from_site_text}}</td>
                                                     <td>{{$vv->time_type_text}}</td>
                                                     <td>{{$vv->final_price_text}}</td>
@@ -122,7 +146,7 @@
                                                     <td>{{$vv->amount}} 元</td>
                                                     <td>
                                                         @if($v->status > 1)
-                                                        <a href="{{url('viewclickfarm/'.$vv->id)}}">追踪</a>
+                                                        <a class="btn btn-primary btn-sm" href="{{url('viewclickfarm/'.$vv->id)}}">详情</a>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -134,7 +158,7 @@
                                 @endif
                             @empty
                                 <tr>
-                                    <td colspan="99">no data</td>
+                                    <td colspan="99">暂无数据</td>
                                 </tr>
                             @endforelse
                             </tbody>

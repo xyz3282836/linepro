@@ -35,8 +35,9 @@ class Banner extends Model
             $logo = self::where('type', 2)->first();
             if ($logo) {
                 $logo = url('upfile/admin/' . $logo->pic);
+            }else{
+                $logo = '';
             }
-            $logo = '';
             Cache::forever('logo', $logo);
             return $logo;
         }
@@ -52,26 +53,6 @@ class Banner extends Model
             $pic  = url('upfile/admin/' . $ad->pic);
             $link = $ad->title;
             $val  = ['pic' => $pic, 'link' => $link];
-            Cache::forever($key, $val);
-            return $val;
-        }
-    }
-
-    public static function getIndex()
-    {
-        $key = 'index';
-        if (Cache::has($key)) {
-            return Cache::get($key);
-        } else {
-            $pic  = self::where('type', 5)->first();
-            $logo = self::where('type', 6)->first();
-            $val  = ['pic' => '', 'logo' => ''];
-            if ($pic) {
-                $val['pic'] = url('upfile/admin/' . $pic->pic);
-            }
-            if ($logo) {
-                $val['logo'] = url('upfile/admin/' . $logo->pic);
-            }
             Cache::forever($key, $val);
             return $val;
         }

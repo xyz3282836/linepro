@@ -54,7 +54,7 @@ class BannerController extends Controller
     public function form($type = 1)
     {
         return Admin::form(Banner::class, function (Form $form) use ($type) {
-            $form->radio('type', '图片类型')->options(['1' => 'Banner(1920x600)', '2' => 'Logo(100x50)', '3' => '购物车页banner', '4' => '新建页面banner', '5' => '首页图片(1920x600)', '6' => '首页logo(100x50)'])->default('1')->rules('required');
+            $form->radio('type', '图片类型')->options(['1' => 'Banner(1920x600)', '2' => 'Logo(100x50)', '3' => '购物车页banner', '4' => '新建页面banner'])->default('1')->rules('required');
             switch ($type) {
                 case 1:
                     $form->text('title', '图片标题')->default('banner')->rules('required');
@@ -69,15 +69,8 @@ class BannerController extends Controller
                     $form->text('title', '广告连接')->default('')->rules('required');
                     $form->image('pic', '图片')->uniqueName()->move('banner')->rules('required');
                     break;
-                case 5:
-                    $form->text('title', '图片标题')->default('首页图片')->rules('required');
-                    $form->image('pic', '图片')->resize(1920, 600)->uniqueName()->move('banner')->rules('required|dimensions:min_width=1920,min_height=600');
-                    break;
-                case 6:
-                    $form->text('title', '图片标题')->default('首页logo')->rules('required');
-                    $form->image('pic', '图片')->resize(100, 50)->uniqueName()->move('banner')->rules('required|dimensions:min_width=100,min_height=50');
-                    break;
-
+                default:
+                    return false;
             }
             $form->display('created_at', '创建时间');
             $form->display('updated_at', '更新时间');
@@ -105,7 +98,6 @@ class BannerController extends Controller
         Cache::forget('banner-3');
         Cache::forget('banner-4');
         Cache::forget('logo');
-        Cache::forget('index');
     }
 
     public function update($id)

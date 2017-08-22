@@ -15,12 +15,28 @@
             width: 500px;
             height: 42px;
         }
+        table .limit{
+            text-align: left;
+            height: 120px;
+            line-height: 30px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 @endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li><a href="/">首页</a></li>
+                    <li class="active">购物车</li>
+                </ol>
                 <div class="panel panel-default">
                     <div class="ad">
                         <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
@@ -66,7 +82,11 @@
                                 </td>
                                 <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="100" alt=""></a></td>
                                 <td v-text="one.asin"></td>
-                                <td class="limit"><a :href="one.amazon_url" v-text="one.amazon_title"></a></td>
+                                <td>
+                                    <div class="limit">
+                                        <a :href="one.amazon_url" v-text="one.amazon_title"></a>
+                                    </div>
+                                </td>
                                 <td v-text="one.shop_id"></td>
                                 <td v-text="one.from_site_text"></td>
                                 <td v-text="one.delivery_type_text"></td>
@@ -81,20 +101,30 @@
                                 <td v-text="one.created_at"></td>
                                 <td>
                                     <button v-if="one.status == 1" class="btn btn-danger btn-sm ladda-button"
-                                            data-style="contract" @click="cancle(one.id)">删除代购商品
+                                            data-style="contract" @click="cancle(one.id)">删除
                                     </button>
                                     <button v-if="one.status == 1" class="btn btn-success btn-sm ladda-button"
-                                            data-style="contract" @click="pay(one.id)">立刻购买
+                                            data-style="contract" @click="pay(one.id)">购买
                                     </button>
-                                    <a v-if="one.status > 1" :href="'viewclickfarm/'+one.id">查看详情</a>
                                 </td>
+                            </tr>
+                            <tr v-if="cardlist.length == 0">
+                                <td colspan="99">暂无数据</td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="pull-right">
-                            <p>总金币：<span class="color-red" v-text="allgold"></span> G</p>
-                            <p>总价格：<span class="color-red" v-text="allprice"></span> 元</p>
+                            <div class="col-xs-6">
+                                <p>总金币：<span class="color-red" v-text="allgold"></span> <img width="18" src="/img/gold.png" /></p>
+                                <p>抵扣金币：<span class="color-red" v-text="payg"></span> <img width="18" src="/img/gold.png" /></p>
+                                <p>需要充值：<span class="color-red" v-text="needPay"></span> 元</p>
+                            </div>
+                            <div class="col-xs-6">
+                                <p>总价格：<span class="color-red" v-text="allprice"></span> 元</p>
+                                <p>抵扣余额：<span class="color-red" v-text="rmb"></span> 元</p>
+                                <p>待支付：<span class="color-red" v-text="needRmb"></span> 元</p>
 
+                            </div>
                             <button :disabled="ids.length == 0" class="btn btn-danger btn-md ladda-button"
                                     data-style="contract" @click="payall">支付下单
                             </button>
@@ -111,12 +141,15 @@
         new Vue({
             el: '#app',
             data: {
+                grate:{{gconfig('rmbtogold')}},
                 cardlist:{!! $list !!},
                 allgold: 0,
                 allprice: 0,
                 allc: false,
                 ids: [],
-                allids: []
+                allids: [],
+                deduction_gold: {{Auth::user()->golds - Auth::user()->lock_golds}},
+                deduction_balance: {{Auth::user()->balance - Auth::user()->lock_balance}},
             },
             methods: {
                 payall: function () {
@@ -137,7 +170,11 @@
                             layer.msg(data.msg, {icon: 2});
                         } else {
                             layer.msg('操作成功', {icon: 1});
-                            window.location.href = data.data;
+                            if(data.data == ''){
+                                window.location.href = "{{url('orderlist')}}";
+                            }else{
+                                window.location.href = data.data;
+                            }
                         }
                     })
                 },
@@ -153,7 +190,6 @@
                     })
                 },
                 selectone(){
-                    console.log(this.ids)
                     this.getAll()
                 },
                 selectall(){
@@ -171,13 +207,38 @@
                         }
                     });
                     this.allprice = this.allprice.toFixed(2)
+                },
+            },
+            computed:{
+                payg(){
+                    if(this.deduction_gold >= this.allgold){
+                        return this.allgold;
+                    }else{
+                        return this.deduction_gold;
+                    }
+                },
+                rmb(){
+                    if(this.deduction_balance >= this.allprice){
+                        return this.allprice;
+                    }else{
+                        return this.deduction_balance;
+                    }
+                },
+                needPay(){
+                    return ((this.allgold - this.payg)/this.grate).toFixed(2);
+                },
+                needRmb(){
+                    return (this.allprice - this.rmb).toFixed(2);
                 }
             },
             mounted: function () {
-                this.$nextTick(() =>
+                this.$nextTick(() => {
                     this.cardlist.forEach((v, k) => {
                         this.allids.push(v.id)
-                    }))
+                        })
+                    }
+                )
+
             }
         });
     </script>

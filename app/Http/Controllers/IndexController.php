@@ -33,8 +33,4 @@ class IndexController extends Controller
     public function faqs(){
         return view('index.faq')->with('list',Faq::getFaqs());
     }
-
-    public function download(){
-        return view('index.download')->with(['list'=>Banner::getBanners(),'logo'=>Banner::getLogo()]);
-    }
 }

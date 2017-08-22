@@ -32,6 +32,7 @@ class CreateCfResultsTable extends Migration
 
             // 非业务字段
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('estatus')->default(1);
 
             $table->timestamps();
 

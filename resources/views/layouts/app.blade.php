@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     {{--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">--}}
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/Ladda/1.0.0/ladda-themeless.min.css" rel="stylesheet">
 
     @yield('csslib')
@@ -37,20 +38,24 @@
             margin-bottom: 30px;
         }
         table td{
-            max-width: 300px;
+            max-width: 150px;
         }
         table th,table td{
             text-align: center;
             vertical-align:middle!important;
         }
-        table .limit{
-            max-width: 150px;
-            text-align: left;
-        }
         table,.font-yahei,form{
             font-family: "Microsoft YaHei";
         }
-
+        .navbar-brand {
+            padding: 0;
+        }
+        .margin-bottom-15{
+            margin-bottom: 15px;
+        }
+        .breadcrumb {
+             background-color: transparent;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->
@@ -77,7 +82,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ gconfig('site.name') }}
+                        <img src="{{App\Banner::getLogo()}}" alt="">
                     </a>
                 </div>
 
@@ -88,15 +93,8 @@
                         <li>
                             <a href="{{url('card')}}">购物车</a>
                         </li>
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                订单管理 <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{url('orderlist')}}">我的订单</a>
-                                </li>
-                            </ul>
+                        <li>
+                            <a href="{{url('orderlist')}}">订单管理</a>
                         </li>
                     </ul>
                     @endif

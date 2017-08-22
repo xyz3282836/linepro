@@ -150,15 +150,25 @@ class CfController extends Controller
      */
     public function listOrder()
     {
-        $start = request('start');
-        $end   = request('end');
-        $type  = request('type', 1);
-
-        $table = Order::with('cfs')->where('uid', Auth::user()->id)->where('status', $type)->where('type', Order::TYPE_CONSUME);
-        if ($start != null && $end != null) {
-            $table->whereBetween('created_at', [$start, $end]);
+        $start = request('start', date("Y-m-d", strtotime("-1 month")));
+        $dend = $end   = request('end', date("Y-m-d"));
+        if($end == date("Y-m-d")){
+            $dend = date('Y-m-d H:i:s');
         }
-        $list = $table->orderBy('id', 'desc')->paginate(10);
+        $type  = request('type', 0);
+        $list  = Order::with('cfs')->where('uid', Auth::user()->id)->where('type', Order::TYPE_CONSUME);
+        switch ($type) {
+            case 1:
+                $list = $list->where('status', 1);
+                break;
+            case 2:
+                $list = $list->where('status', '>', 1);
+                break;
+            default:
+                $list = $list->where('status', '>', 0);
+        }
+
+        $list = $list->whereBetween('created_at', [$start, $dend])->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_order')->with('tname', '订单管理')->with('list', $list)->with([
             'start' => $start,
             'end'   => $end,
@@ -195,29 +205,15 @@ class CfController extends Controller
      */
     public function listCfResult($id)
     {
-        $start  = request('start');
-        $end    = request('end');
-        $asin   = request('asin');
-        $status = request('status', 1);
-        $model  = ClickFarm::find($id);
+        $model = ClickFarm::find($id);
         if (!$model) {
             return error(MODEL_NOT_FOUNT);
         }
         $list = CfResult::where('cfid', $id);
-        if ($start != null && $end != null) {
-            $list->whereBetween('updated_at', [$start, $end]);
-        }
-        if ($asin != null) {
-            $list->where('asin', $asin);
-        }
-        $list = $list->where('status', $status)->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
-        return view('cf.list_cf_result')->with('tname', '已购买商品详情列表')->with([
-            'list'   => $list,
-            'id'     => $model->id,
-            'start'  => $start,
-            'end'    => $end,
-            'asin'   => $asin,
-            'status' => $status,
+        $list = $list->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        return view('cf.list_cf_result')->with('tname', '已购买商品代购任务列表')->with([
+            'list' => $list,
+            'cf'   => $model,
         ]);
     }
 
@@ -239,18 +235,16 @@ class CfController extends Controller
         if ($model->uid != $user->id) {
             return error(NO_ACCESS);
         }
-        if ($model->status != CfResult::STATUS_REMAIN_EVALUATE) {
-            return error(NO_ACCESS);
+        if ($model->estatus >= CfResult::ESTATUS_LOCK) {
+            return error('评价已经提交同步，不可更改');
         }
-        if (!$user->is_evaluate) {
-            return error('此账号已被封禁');
+        if($model->estatus == 1){
+            $model->estatus = CfResult::ESTATUS_SUBMIT;
         }
         $model->star    = $star;
         $model->title   = $title;
         $model->content = $content;
-        $model->status  = 3;
         $model->save();
-        $model->evaluate($user);
         return success();
     }
 
