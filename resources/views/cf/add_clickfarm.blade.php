@@ -165,7 +165,7 @@
                                 <label class="col-md-4 control-label"> 国内转运费</label>
                                 <label class="col-md-6 control-label" v-text="gettrans"></label>
                                 <label class="col-md-1 control-label">
-                                    <a href="{{url('faqs')}}" target="_blank">?</a>
+                                    <a href="javascript:;" @click="getOne">?</a>
                                 </label>
                             </div>
 
@@ -173,7 +173,7 @@
                                 <label class="col-md-4 control-label"> 所需<img width="15" src="/img/gold.png" /></label>
                                 <label class="col-md-6 control-label"><span v-text="getservice"></span><img width="15" src="/img/gold.png" />&nbsp;&nbsp;&nbsp;&nbsp;(1<img width="15" src="/img/gold.png" />=0.01元)</label>
                                 <label class="col-md-1 control-label">
-                                    <a href="{{url('faqs')}}" target="_blank">?</a>
+                                    <a href="javascript:;" @click="getTwo">?</a>
                                 </label>
                             </div>
 
@@ -202,7 +202,24 @@
     <script>
         const APP = new Vue({
             el: '#app',
-            methods: {},
+            methods: {
+                getOne(){
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['800px', '600px'], //宽高
+                        content: '{!! \App\Faq::getFaq(1) !!}'
+                    });
+                },
+                getTwo(){
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['800px', '600px'], //宽高
+                        content: '{!! \App\Faq::getFaq(2) !!}'
+                    });
+                }
+            },
             mounted: function () {
                 this.$nextTick(()=>{
 

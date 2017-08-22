@@ -100,6 +100,9 @@
                         <li>
                             <a href="{{url('orderlist')}}">我的订单</a>
                         </li>
+                        <li>
+                            <a href="{{url('mycfrlist')}}">我要评价</a>
+                        </li>
                     </ul>
                     @endif
 

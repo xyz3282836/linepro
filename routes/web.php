@@ -26,6 +26,7 @@ Route::post('addclickfarm', 'CfController@postAddClickFarm');
 Route::get('card', 'CfController@listCardClickFarm');
 Route::post('canclecf', 'CfController@postCancle');
 Route::get('viewclickfarm/{id}', 'CfController@listCfResult');
+Route::get('mycfrlist', 'CfController@listMycfr');
 Route::get('orderlist', 'CfController@listOrder');
 
 //cf 评价

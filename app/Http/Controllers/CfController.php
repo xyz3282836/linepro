@@ -151,12 +151,12 @@ class CfController extends Controller
     public function listOrder()
     {
         $start = request('start', date("Y-m-d", strtotime("-1 month")));
-        $dend = $end   = request('end', date("Y-m-d"));
-        if($end == date("Y-m-d")){
+        $dend  = $end = request('end', date("Y-m-d"));
+        if ($end == date("Y-m-d")) {
             $dend = date('Y-m-d H:i:s');
         }
-        $type  = request('type', 0);
-        $list  = Order::with('cfs')->where('uid', Auth::user()->id)->where('type', Order::TYPE_CONSUME);
+        $type = request('type', 0);
+        $list = Order::with('cfs')->where('uid', Auth::user()->id)->where('type', Order::TYPE_CONSUME);
         switch ($type) {
             case 1:
                 $list = $list->where('status', 1);
@@ -218,6 +218,29 @@ class CfController extends Controller
     }
 
     /**
+     * 所有刷单任务表
+     * @return $this
+     */
+    public function listMycfr()
+    {
+        $type = request('type', 1);
+        $list = CfResult::where('uid', Auth::user()->id);
+        switch ($type) {
+            case 2:
+                $list = $list->where('status', 1);
+                break;
+            case 1:
+            default:
+                $list = $list->where('status', '>', 1);
+        }
+        $list = $list->orderBy('id', 'created_at')->paginate(config('linepro.perpage'));
+        return view('cf.list_all_cfr')->with('tname', '评价任务列表')->with([
+            'list' => $list,
+            'type' => $type
+        ]);
+    }
+
+    /**
      * 刷单评价
      */
     public function evaluate()
@@ -238,7 +261,7 @@ class CfController extends Controller
         if ($model->estatus >= CfResult::ESTATUS_LOCK) {
             return error('评价已经提交同步，不可更改');
         }
-        if($model->estatus == 1){
+        if ($model->estatus == 1) {
             $model->estatus = CfResult::ESTATUS_SUBMIT;
         }
         $model->star    = $star;

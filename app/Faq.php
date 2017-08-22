@@ -15,13 +15,22 @@ class Faq extends Model
             $list = self::orderBy('order', 'desc')->get();
             $faqs = [];
             foreach ($list as $v) {
-                $faqs[] = [
+                $faqs[$v->id] = [
                     'q' => $v->q,
                     'a' => $v->a,
                 ];
             }
             Cache::forever('faqs', $faqs);
             return $faqs;
+        }
+    }
+
+    public static function getFaq($id){
+        $arr = self::getFaqs();
+        if(isset($arr[$id])){
+            return $arr[$id]['a'];
+        }else{
+            return '';
         }
     }
 
