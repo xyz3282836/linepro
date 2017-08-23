@@ -136,6 +136,9 @@ class CfResult extends Model
     public function getStatusTextAttribute()
     {
         $arr = config('linepro.cfresult_statuss');
-        return $arr[$this->status];
+        if(isset($arr[$this->status])){
+            return $arr[$this->status];
+        }
+        return '';
     }
 }
