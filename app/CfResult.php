@@ -37,7 +37,7 @@ class CfResult extends Model
     protected $fillable = [
         'uid', 'cfid', 'asin', 'shop_id', 'status'
     ];
-    protected $appends = ['status_text', 'estatus_text'];
+    protected $appends = ['status_text', 'estatus_text', 'etime'];
     private $msg = '';
 
     /**
@@ -140,5 +140,9 @@ class CfResult extends Model
             return $arr[$this->status];
         }
         return '';
+    }
+
+    public function getEtime(){
+        return date('Y-m-d',strtotime("+7 day",strtotime($this->updated_at)));
     }
 }

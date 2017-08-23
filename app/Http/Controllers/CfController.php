@@ -258,7 +258,7 @@ class CfController extends Controller
         if ($model->uid != $user->id) {
             return error(NO_ACCESS);
         }
-        if ($model->estatus >= CfResult::ESTATUS_LOCK) {
+        if (in_array($model->estatus, [4, 5, 6])) {
             return error('评价已经提交同步，不可更改');
         }
         if ($model->estatus == 1) {
