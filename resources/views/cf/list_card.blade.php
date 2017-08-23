@@ -155,30 +155,72 @@
             },
             methods: {
                 payall: function () {
-                    axios.post("{{url('pay')}}", {id: this.ids}).then(function (d) {
-                        var data = d.data;
-                        if (!data.code) {
-                            layer.msg(data.msg, {icon: 2});
-                        } else {
-                            layer.msg('操作成功', {icon: 1});
-                            window.location.href = data.data;
-                        }
-                    })
+                    layer.confirm('确定支付？', {
+                        btn: ['是','再想想'],
+                        closeBtn: 0
+                    }, function(index){
+                        close(index);
+                        axios.post("{{url('pay')}}", {id: this.ids}).then(function (d) {
+                            var data = d.data;
+                            if (!data.code) {
+                                layer.msg(data.msg, {icon: 2});
+                            } else {
+                                layer.msg('操作成功', {icon: 1});
+                                if(data.data == ''){
+                                    window.location.href = "{{url('orderlist')}}";
+                                }else{
+                                    window.open(data.data);
+                                    layer.confirm('支付完成？', {
+                                        btn: ['已完成支付','支付遇到问题'],
+                                        closeBtn: 0
+                                    }, function(index){
+                                        close(index);
+                                        window.location.href = "{{url('orderlist')}}";
+                                    }, function(index){
+                                        close(index);
+                                        layer.msg('请联系管理员')
+                                        window.location.href = "{{url('orderlist')}}";
+                                    });
+                                }
+                            }
+                        })
+                    }, function(index){
+                        close(index);
+                    });
                 },
                 pay: function (id) {
-                    axios.post("{{url('pay')}}", {id: [id]}).then(function (d) {
-                        var data = d.data;
-                        if (!data.code) {
-                            layer.msg(data.msg, {icon: 2});
-                        } else {
-                            layer.msg('操作成功', {icon: 1});
-                            if(data.data == ''){
-                                window.location.href = "{{url('orderlist')}}";
-                            }else{
-                                window.location.href = data.data;
+                    layer.confirm('确定支付？', {
+                        btn: ['是','再想想'],
+                        closeBtn: 0
+                    }, function(index){
+                        close(index);
+                        axios.post("{{url('pay')}}", {id: [id]}).then(function (d) {
+                            var data = d.data;
+                            if (!data.code) {
+                                layer.msg(data.msg, {icon: 2});
+                            } else {
+                                layer.msg('操作成功', {icon: 1});
+                                if(data.data == ''){
+                                    window.location.href = "{{url('orderlist')}}";
+                                }else{
+                                    window.open(data.data);
+                                    layer.confirm('支付完成？', {
+                                        btn: ['已完成支付','支付遇到问题'],
+                                        closeBtn: 0
+                                    }, function(index){
+                                        close(index);
+                                        window.location.href = "{{url('orderlist')}}";
+                                    }, function(index){
+                                        close(index);
+                                        layer.msg('请联系管理员')
+                                        window.location.href = "{{url('orderlist')}}";
+                                    });
+                                }
                             }
-                        }
-                    })
+                        })
+                    }, function(index){
+                        close(index);
+                    });
                 },
                 cancle: function (id) {
                     axios.post("{{url('canclecf')}}", {id: id}).then(function (d) {
