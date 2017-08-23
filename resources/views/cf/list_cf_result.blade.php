@@ -176,10 +176,10 @@
             });
         });
 
-        new Vue({
+        var app = new Vue({
             el: '#app',
             data:{
-                start:0,
+                star:0,
                 title:'',
                 content:''
             },

@@ -116,7 +116,7 @@
                         </div>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">标题：</label>
-                            <input type="text" class="form-control" name="title" id="title"  v-model="title" required>
+                            <input type="text" class="form-control" name="title" id="title" v-model="title" required>
                             <p class="help-block with-errors"></p>
                         </div>
                         <div class="form-group">
@@ -178,7 +178,7 @@
             data:{
                 type: "{{$type}}",
                 typec: {!! json_encode(config('linepro.cfr_typec')) !!},
-                start:0,
+                star:0,
                 title:'',
                 content:''
             },
