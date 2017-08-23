@@ -128,7 +128,8 @@ class PayController extends Controller
         $gateway = get_alipay();
         $request = $gateway->completePurchase();
         $request->setParams(array_merge($_POST, $_GET));
-        $flag = false;
+        $flag    = false;
+        $typeurl = Order::TYPE_RECHARGE;
         try {
             $response = $request->send();
             if ($response->isPaid()) {
@@ -142,11 +143,12 @@ class PayController extends Controller
                             Order::payRechargeGolds($model, $alipay_orderid);
                             break;
                         case Order::TYPE_CONSUME:
+                            $typeurl = Order::TYPE_CONSUME;
                             Order::payOrder($model, $alipay_orderid);
                             break;
                     }
                     $flag = true;
-                }elseif ($model->status == Order::STATUS_PAID){
+                } elseif ($model->status == Order::STATUS_PAID) {
                     $flag = true;
                 }
             } else {
@@ -163,8 +165,11 @@ class PayController extends Controller
                 $json = 'fail';
             }
             if (request()->isMethod('get')) {
-                return redirect('recharge')
-                    ->with(['status' => $text]);
+                if ($typeurl == Order::TYPE_RECHARGE) {
+                    return redirect('orderlist');
+                } else {
+                    return redirect('rechargelist');
+                }
             } else {
                 die($json);
             }
@@ -208,18 +213,7 @@ class PayController extends Controller
         if ($price > $balance) {
             //余额+充值 跳转 不生成bill
             $one          = Order::consumeByPartRecharge($price, $golds, $balance, $list);
-            $gateway      = get_alipay();
-            $request      = $gateway->purchase();
-            $total_amount = round($one->price - $one->balance, 2);
-            $request->setBizContent([
-                'out_trade_no' => $one->orderid,
-                'total_amount' => (string)$total_amount,
-                'subject'      => '代购支付',
-                'product_code' => 'FAST_INSTANT_TRADE_PAY',
-            ]);
-            $response    = $request->send();
-            $redirectUrl = $response->getRedirectUrl();
-            return success($redirectUrl);
+            return success($one->id);
         }
         //余额 生成bill
         Order::consumeByBalance($price, $golds, $list);
