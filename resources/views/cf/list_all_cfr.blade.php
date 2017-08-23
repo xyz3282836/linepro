@@ -152,7 +152,9 @@
                 var star = td.data('star');
                 var title = td.data('title');
                 var content = td.data('content');
-                app.star = estatus > 1?star:0;
+                app.star = star;
+                if(estatus==1)
+                    app.star = 0;
                 app.title = title;
                 app.content = content;
             });
