@@ -62,13 +62,13 @@
                                     </td>
                                     <td>{{$v->status_text}}</td>
                                     <td>
-                                        @if(in_array($v->estatus,[1,2,3,7]))
+                                        @if(in_array($v->estatus,[1,2,3]))
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
-                                        @else
-                                            {{$v->estatus_text}}
+                                        @elseif($v->estatus == 7)
+                                            <button class="btn btn-primary btn-sm color-red" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @endif
                                         <br>
-                                            预计{{$v->etime}}后留评
+                                        预计{{$v->etime}}后留评
                                     </td>
                                 </tr>
                                 @empty
