@@ -155,7 +155,7 @@
                 app.star = estatus > 1?star:0;
                 app.title = title;
                 app.content = content;
-                $('#eform').validator('update')
+                $('#eform').validator('validate')
             });
 
             $('#eform').validator().on('submit', function (e) {
