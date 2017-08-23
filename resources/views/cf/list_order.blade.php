@@ -115,7 +115,7 @@
                                                 <th>商品图片</th>
                                                 <th>商品标题</th>
                                                 <th>站点</th>
-                                                <th>下单方式</th>
+                                                {{--<th>下单方式</th>--}}
                                                 <th>单价</th>
                                                 <th>当前货币汇率</th>
                                                 <th>商品数量</th>
@@ -136,7 +136,7 @@
                                                         </div>
                                                     </td>
                                                     <td><span class="flag-icon flag-icon-{{App\ExchangeRate::getFlag($vv->from_site)}}"></span></td>
-                                                    <td>{{$vv->time_type_text}}</td>
+{{--                                                    <td>{{$vv->time_type_text}}</td>--}}
                                                     <td>{{$vv->final_price_text}}</td>
                                                     <td>{{$vv->rate}}</td>
                                                     <td>{{$vv->task_num}}</td>
