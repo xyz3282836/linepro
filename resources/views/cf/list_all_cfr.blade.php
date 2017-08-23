@@ -147,11 +147,11 @@
                 var id = button.data('id');
                 var modal = $(this);
                 modal.find('#eid').val(id);
-                var tr = button.closest('tr');
-                var estatus = Number(tr.data('estatus'));
-                var star = tr.data('star');
-                var title = tr.data('title');
-                var content = tr.data('content');
+                var td = button.closest('td');
+                var estatus = Number(td.data('estatus'));
+                var star = td.data('star');
+                var title = td.data('title');
+                var content = td.data('content');
                 app.star = estatus > 1?star:0;
                 app.title = title;
                 app.content = content;
