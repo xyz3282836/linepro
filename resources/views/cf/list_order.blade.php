@@ -95,7 +95,7 @@
                                     <td>{{$v->golds}} <img width="12" src="/img/gold.png" /></td>
                                     <td>
                                         @if($v->status == 1)
-                                            <a href="{{url('jumppay?id='.$v->id)}}" class="btn btn-success btn-sm">支付订单</a>
+                                            <a href="javascript:;" @click="pay({{$v->id}})" class="btn btn-success btn-sm">支付订单</a>
                                             <button class="btn btn-danger btn-sm ladda-button"
                                                     data-style="contract" @click="del({{$v->id}})">取消订单
                                             </button>
@@ -191,7 +191,7 @@
                 typec: {!! json_encode(config('linepro.order_statuss')) !!}
             },
             methods:{
-                del: function (id) {
+                del(id) {
                     axios.post("{{url('delorder')}}", {id: id}).then(function (d) {
                         var data = d.data;
                         if (!data.code) {
@@ -201,6 +201,20 @@
                             window.location.reload();
                         }
                     })
+                },
+                pay(id) {
+                    window.open('/jumppay?id='+ id);
+                    layer.confirm('支付完成？', {
+                        btn: ['已完成支付','支付遇到问题'],
+                        closeBtn: 0
+                    }, function(index){
+                        close(index);
+                        window.location.href = "{{url('orderlist')}}";
+                    }, function(index){
+                        close(index);
+                        layer.msg('请联系管理员')
+                        window.location.href = "{{url('orderlist')}}";
+                    });
                 },
             }
 
