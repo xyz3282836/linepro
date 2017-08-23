@@ -39,7 +39,7 @@
                                     <th>店铺id</th>
                                     <th>ASIN</th>
                                     <th>亚马逊订单号</th>
-                                    <th>物流</th>
+                                    {{--<th>物流</th>--}}
                                     <th>物流单号</th>
                                     <th>评价详情</th>
                                     <th>状态</th>
