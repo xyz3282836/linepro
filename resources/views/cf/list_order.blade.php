@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <div class="input-daterange input-group" id="datepicker">
                                     <input type="text" class="form-control" name="start" value="{{$start}}"/>
-                                    <span class="input-group-addon">to</span>
+                                    <span class="input-group-addon">-</span>
                                     <input type="text" class="form-control" name="end" value="{{$end}}"/>
                                 </div>
                             </div>
