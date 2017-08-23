@@ -29,7 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        event(new Vip(Auth::user()));
+//        event(new Vip(Auth::user()));
         $list = CfResult::where('status', 0)->get();
         foreach ($list as $v) {
             $v->refund();
@@ -138,7 +138,8 @@ class HomeController extends Controller
     public function listVip()
     {
         if (Auth::user()->level == 2) {
-            $tname = '会有有效期截止 <span class="color-red">' . substr(Auth::user()->validity, 0, 10) . '</span>';
+//            $tname = '会有有效期截止 <span class="color-red">' . substr(Auth::user()->validity, 0, 10) . '</span>';
+            $tname = '会有有效期 <span class="color-red">长期</span>';
         } else {
             $tname = '会员有效期记录';
         }

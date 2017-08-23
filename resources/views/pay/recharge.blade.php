@@ -64,6 +64,7 @@
                         </form>
                     </div>
                 </div>
+                <img src="{{\App\Banner::getAd(5)['pic']}}" alt="">
             </div>
         </div>
     </div>

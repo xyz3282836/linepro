@@ -30,42 +30,6 @@ class ExchangeRate extends Model
         return self::where('id', self::getCurrency($site))->value('name');
     }
 
-    public static function getFlag($site){
-        switch ($site) {
-            case self::SITE_US:
-                return "um";
-                break;
-            case self::SITE_CA:
-                return "ca";
-                break;
-            case self::SITE_UK:
-                return 'gb';
-                break;
-            case self::SITE_DE:
-                return 'de';
-                break;
-            case self::SITE_FR:
-                return 'fr';
-                break;
-            case self::SITE_JP:
-                return 'jp';
-                break;
-            case self::SITE_IN:
-                return 'in';
-                break;
-            case self::SITE_ES:
-                return 'es';
-                break;
-            case self::SITE_NL:
-                return 'nl';
-                break;
-            case self::SITE_IT:
-                return 'it';
-                break;
-        }
-        return 'um';
-    }
-
     public static function getCurrency($site)
     {
         switch ($site) {
@@ -103,9 +67,71 @@ class ExchangeRate extends Model
         return self::CURRENCY_USD;
     }
 
+    public static function getFlag($site)
+    {
+        switch ($site) {
+            case self::SITE_US:
+                return "um";
+                break;
+            case self::SITE_CA:
+                return "ca";
+                break;
+            case self::SITE_UK:
+                return 'gb';
+                break;
+            case self::SITE_DE:
+                return 'de';
+                break;
+            case self::SITE_FR:
+                return 'fr';
+                break;
+            case self::SITE_JP:
+                return 'jp';
+                break;
+            case self::SITE_IN:
+                return 'in';
+                break;
+            case self::SITE_ES:
+                return 'es';
+                break;
+            case self::SITE_NL:
+                return 'nl';
+                break;
+            case self::SITE_IT:
+                return 'it';
+                break;
+        }
+        return 'um';
+    }
+
     public static function getRate($site)
     {
         return self::where('id', self::getCurrency($site))->value('rate');
+    }
+
+    public static function getPanel()
+    {
+        $list = self::all();
+        $arr  = [
+            ['c' => '美国', 'id' => 1],
+            ['c' => '英国', 'id' => 3],
+            ['c' => '日本', 'id' => 6],
+            ['c' => '法国', 'id' => 5],
+            ['c' => '德国', 'id' => 4],
+            ['c' => '意大利', 'id' => 10],
+            ['c' => '西班牙', 'id' => 8],
+            ['c' => '加拿大', 'id' => 2],
+        ];
+        foreach ($list as $v) {
+            foreach ($arr as $k => $vv) {
+                if ($v->id == self::getCurrency($vv['id'])) {
+                    $arr[$k]['apirate'] = $v->apirate;
+                    $arr[$k]['rate']    = $v->rate;
+                    $arr[$k]['name']    = $v->name;
+                }
+            }
+        }
+        return $arr;
     }
 
     public function getCurrencyAttribute()

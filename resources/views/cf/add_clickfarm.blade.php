@@ -18,16 +18,20 @@
             height: 150px;
             position: fixed;
             padding: 10px;
-            display: flex;
             align-items:center;
             justify-content: center;
         }
         .ad img{
             width: 150px;
             height: 150px;
+            margin-bottom: 20px;
         }
         .layui-layer-page .layui-layer-content {
             padding: 20px 30px;
+        }
+        .rate{
+            font-size: 12px;
+            width: 210px;
         }
     </style>
 @endsection
@@ -45,7 +49,27 @@
                     <div class="panel-heading">添加代购任务</div>
                     <div class="panel-body">
                         <div class="ad">
-                            <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
+                            <div><a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a></div>
+                            <div>
+                                <table class="rate table table-bordered table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th>国家</th>
+                                        <th>单位</th>
+                                        <th>实时汇率</th>
+                                        <th>达购汇率</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(v,k) in ratetable">
+                                        <td v-text="v.c"></td>
+                                        <td v-text="v.name"></td>
+                                        <td v-text="v.apirate"></td>
+                                        <td v-text="v.rate"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <form id="dgform" class="form-horizontal" data-toggle="validator" role="form" method="POST" action="{{ url('addclickfarm') }}">
                             {{ csrf_field() }}
@@ -245,6 +269,7 @@
                 }
             },
             data: {
+                ratetable:{!! json_encode(\App\ExchangeRate::getPanel()) !!},
                 alltrans: 0,
                 rate:{{$rate}},
                 rmbtogold:{{$rmbtogold}},

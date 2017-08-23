@@ -82,21 +82,21 @@ class Order extends Model
             $amount      = $one->golds / $one->rate;
             //有效期
             if ($amount >= gconfig('cost.vip')) {
-                //有效期
-                $adddays = floor($amount / gconfig('cost.vip')) * gconfig('vip.days');
-                if ($user->validity == null || strtotime($user->validity) < time()) {
-                    $validity = date('Y-m-d', strtotime('+ ' . ($adddays + 1) . ' days')) . ' 00:00:00';
-                } else {
-                    $validity = date('Y-m-d H:i:s', strtotime('+ ' . $adddays . ' days', strtotime($user->validity)));
-                }
-                VipBill::create([
-                    'uid'      => $user->id,
-                    'oid'      => $one->id,
-                    'days'     => $adddays,
-                    'validity' => $validity,
-                ]);
+//                //有效期
+//                $adddays = floor($amount / gconfig('cost.vip')) * gconfig('vip.days');
+//                if ($user->validity == null || strtotime($user->validity) < time()) {
+//                    $validity = date('Y-m-d', strtotime('+ ' . ($adddays + 1) . ' days')) . ' 00:00:00';
+//                } else {
+//                    $validity = date('Y-m-d H:i:s', strtotime('+ ' . $adddays . ' days', strtotime($user->validity)));
+//                }
+//                VipBill::create([
+//                    'uid'      => $user->id,
+//                    'oid'      => $one->id,
+//                    'days'     => $adddays,
+//                    'validity' => $validity,
+//                ]);
                 $user->level    = 2;
-                $user->validity = $validity;
+//                $user->validity = $validity;
             }
             $user->save();
             Bill::create([
@@ -111,8 +111,7 @@ class Order extends Model
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
-            dd($e);
-            throw new MsgException('');
+            throw new MsgException();
         }
     }
 
