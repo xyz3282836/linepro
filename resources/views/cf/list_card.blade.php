@@ -155,12 +155,13 @@
             },
             methods: {
                 payall: function () {
+                    var ids = this.ids;
                     layer.confirm('确定支付？', {
                         btn: ['是','再想想'],
                         closeBtn: 0
                     }, function(index){
                         close(index);
-                        axios.post("{{url('pay')}}", {id: this.ids}).then(function (d) {
+                        axios.post("{{url('pay')}}", {id: ids}).then(function (d) {
                             var data = d.data;
                             if (!data.code) {
                                 layer.msg(data.msg, {icon: 2});
