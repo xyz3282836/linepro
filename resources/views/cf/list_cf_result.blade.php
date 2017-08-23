@@ -64,7 +64,7 @@
                                         <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
                                     </td>
                                     <td>{{$v->status_text}}</td>
-                                    <td data-estatus="{{$v->estatus}}" data-start="{{$v->start}}" data-title="{{$v->title}}" data-content="{{$v->content}}">
+                                    <td data-estatus="{{$v->estatus}}" data-star="{{$v->star}}" data-title="{{$v->title}}" data-content="{{$v->content}}">
                                         @if(in_array($v->estatus,[1,2,3]))
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
@@ -155,9 +155,7 @@
                 var star = td.data('star');
                 var title = td.data('title');
                 var content = td.data('content');
-                app.star = star;
-                if(estatus==1)
-                    app.star = 0;
+                app.star = estatus > 1?star:0;
                 app.title = title;
                 app.content = content;
             });
