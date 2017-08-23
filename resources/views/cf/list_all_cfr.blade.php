@@ -98,19 +98,19 @@
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">星级：</label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="1" v-model="start" required>一星
+                                <input type="radio" name="star" value="1" v-model="star" required>一星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="2" v-model="start" required>二星
+                                <input type="radio" name="star" value="2" v-model="star" required>二星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="3" v-model="start" required>三星
+                                <input type="radio" name="star" value="3" v-model="star" required>三星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="4" v-model="start" required>四星
+                                <input type="radio" name="star" value="4" v-model="star" required>四星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="5" v-model="start" required>五星
+                                <input type="radio" name="star" value="5" v-model="star" required>五星
                             </label>
                             <p class="help-block with-errors"></p>
                         </div>
@@ -181,7 +181,6 @@
                 start:0,
                 title:'',
                 content:''
-
             },
             methods: {
             },

@@ -64,7 +64,7 @@
                                         <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
                                     </td>
                                     <td>{{$v->status_text}}</td>
-                                    <td>
+                                    <td data-estatus="{{$v->estatus}}" data-start="{{$v->start}}" data-title="{{$v->title}}" data-content="{{$v->content}}">
                                         @if(in_array($v->estatus,[1,2,3]))
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
@@ -101,30 +101,30 @@
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">星级：</label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="1" required>一星
+                                <input type="radio" name="star" value="1" v-model="star" required>一星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="2" required>二星
+                                <input type="radio" name="star" value="2" v-model="star" required>二星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="3" required>三星
+                                <input type="radio" name="star" value="3" v-model="star" required>三星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="4" required>四星
+                                <input type="radio" name="star" value="4" v-model="star" required>四星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="5" required>五星
+                                <input type="radio" name="star" value="5" v-model="star" required>五星
                             </label>
                             <p class="help-block with-errors"></p>
                         </div>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">标题：</label>
-                            <input type="text" class="form-control" name="title" id="title" required>
+                            <input type="text" class="form-control" name="title" id="title"  v-model="title" required>
                             <p class="help-block with-errors"></p>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">正文：</label>
-                            <textarea class="form-control" name="content" id="content" minlength="30" required></textarea>
+                            <textarea class="form-control" name="content" id="content" v-model="content" minlength="30" required></textarea>
                             <p class="help-block with-errors"></p>
                         </div>
                         <input type="hidden" name="id" id="eid">
@@ -146,11 +146,18 @@
                 todayHighlight: true,
             });
             $('#evaluatecf').on('show.bs.modal', function (event) {
-                $('#eform')[0].reset();
                 var button = $(event.relatedTarget);
                 var id = button.data('id');
                 var modal = $(this);
                 modal.find('#eid').val(id);
+                var td = button.closest('td');
+                var estatus = Number(td.data('estatus'));
+                var star = td.data('star');
+                var title = td.data('title');
+                var content = td.data('content');
+                app.star = estatus > 1?star:0;
+                app.title = title;
+                app.content = content;
             });
 
             $('#eform').validator().on('submit', function (e) {
@@ -172,7 +179,9 @@
         new Vue({
             el: '#app',
             data:{
-
+                start:0,
+                title:'',
+                content:''
             },
             methods: {
             },
