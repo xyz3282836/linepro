@@ -65,7 +65,7 @@
                                         @if(in_array($v->estatus,[1,2,3]))
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
-                                            <button class="btn btn-primary btn-sm color-red" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
+                                            <button class="btn btn-primary btn-sm color-red" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">文字重复<br>修改评价</button>
                                         @endif
                                         <br>
                                         预计{{$v->etime}}后留评
