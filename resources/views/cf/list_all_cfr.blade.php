@@ -98,30 +98,30 @@
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">星级：</label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="1" required>一星
+                                <input type="radio" name="star" value="1" v-model="start" required>一星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="2" required>二星
+                                <input type="radio" name="star" value="2" v-model="start" required>二星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="3" required>三星
+                                <input type="radio" name="star" value="3" v-model="start" required>三星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="4" required>四星
+                                <input type="radio" name="star" value="4" v-model="start" required>四星
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="star" value="5" required>五星
+                                <input type="radio" name="star" value="5" v-model="start" required>五星
                             </label>
                             <p class="help-block with-errors"></p>
                         </div>
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">标题：</label>
-                            <input type="text" class="form-control" name="title" id="title" required>
+                            <input type="text" class="form-control" name="title" id="title"  v-model="title" required>
                             <p class="help-block with-errors"></p>
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">正文：</label>
-                            <textarea class="form-control" name="content" id="content" minlength="30" required></textarea>
+                            <textarea class="form-control" name="content" id="content" v-model="content" minlength="30" required></textarea>
                             <p class="help-block with-errors"></p>
                         </div>
                         <input type="hidden" name="id" id="eid">
