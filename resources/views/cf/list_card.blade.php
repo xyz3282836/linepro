@@ -62,10 +62,10 @@
                                 <th>站点</th>
                                 <th>配送方式</th>
                                 <th>送货地址</th>
-                                <th>下单方式</th>
+                                {{--<th>下单方式</th>--}}
                                 <th>单价</th>
                                 <th>数量</th>
-                                <th>当时汇率</th>
+                                <th>汇率</th>
                                 <th>手续费<img width="18" src="/img/gold.png" /></th>
                                 <th>国内转运费</th>
                                 <th>合计总价</th>
@@ -93,7 +93,7 @@
                                 <td><span class="flag-icon" :class="'flag-icon-'+one.flag"></span></td>
                                 <td v-text="one.delivery_type_text"></td>
                                 <td v-text="one.delivery_addr"></td>
-                                <td v-text="one.time_type_text"></td>
+                                {{--<td v-text="one.time_type_text"></td>--}}
                                 <td v-text="one.final_price_text"></td>
                                 <td v-text="one.task_num"></td>
                                 <td v-text="one.rate"></td>

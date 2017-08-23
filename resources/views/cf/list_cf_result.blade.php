@@ -39,7 +39,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>店铺id</th>
+                                    {{--<th>店铺id</th>--}}
                                     <th>ASIN</th>
                                     <th>亚马逊订单号</th>
                                     {{--<th>物流</th>--}}
@@ -53,7 +53,7 @@
                                 @forelse($list as $v)
                                 <tr>
                                     <td>{{$v->id}}</td>
-                                    <td>{{$v->shop_id}}</td>
+                                    {{--<td>{{$v->shop_id}}</td>--}}
                                     <td>{{$v->asin}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
 {{--                                    <td>{{$v->amazon_logistics_company}}</td>--}}
