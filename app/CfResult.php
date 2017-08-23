@@ -142,7 +142,7 @@ class CfResult extends Model
         return '';
     }
 
-    public function getEtime(){
+    public function getEtimeAttribute(){
         return date('Y-m-d',strtotime("+7 day",strtotime($this->updated_at)));
     }
 }
