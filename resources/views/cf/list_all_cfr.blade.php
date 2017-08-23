@@ -53,7 +53,7 @@
                                     <td>{{$v->shop_id}}</td>
                                     <td>{{$v->asin}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
-                                    <td>{{$v->amazon_logistics_company}}</td>
+{{--                                    <td>{{$v->amazon_logistics_company}}</td>--}}
                                     <td>{{$v->amazon_logistics_orderid}}</td>
                                     <td width="300" style="text-align: left">
                                         <p>评价星级：@if($v->estatus > 1){{$v->star}} @endif</p>

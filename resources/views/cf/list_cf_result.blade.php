@@ -42,7 +42,7 @@
                                     <th>店铺id</th>
                                     <th>ASIN</th>
                                     <th>亚马逊订单号</th>
-                                    <th>物流</th>
+                                    {{--<th>物流</th>--}}
                                     <th>物流单号</th>
                                     <th>评价详情</th>
                                     <th>状态</th>
@@ -56,7 +56,7 @@
                                     <td>{{$v->shop_id}}</td>
                                     <td>{{$v->asin}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
-                                    <td>{{$v->amazon_logistics_company}}</td>
+{{--                                    <td>{{$v->amazon_logistics_company}}</td>--}}
                                     <td>{{$v->amazon_logistics_orderid}}</td>
                                     <td width="300" style="text-align: left">
                                         <p>评价星级：@if($v->estatus > 1){{$v->star}} @endif</p>

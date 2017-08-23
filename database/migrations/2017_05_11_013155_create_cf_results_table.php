@@ -41,7 +41,9 @@ class CreateCfResultsTable extends Migration
             $table->index('oid');
             $table->index('cfid');
             $table->index('status');
-            $table->index('asin','status');
+            $table->index('estatus');
+            $table->index('asin');
+            $table->index('amazon_orderid');
         });
     }
 
