@@ -31,8 +31,8 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->orderid}}</td>
                                     <td>{{$v->alipay_orderid}}</td>
-                                    <td class="color-red">{{$v->golds/$v->rate}}</td>
-                                    <td class="color-red">{{$v->golds}}</td>
+                                    <td class="color-red">{{$v->golds/$v->rate}} 元</td>
+                                    <td class="color-red">{{$v->golds}} <img width="12" src="/img/gold.png" /></td>
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->payment_type_text}}</td>
                                     <td>{{$v->status_text}}</td>
