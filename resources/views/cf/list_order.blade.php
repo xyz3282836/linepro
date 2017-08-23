@@ -203,7 +203,7 @@
                     })
                 },
                 pay(id) {
-                    window.open('/jumppay?id='+ id);
+                    openUrl('/jumppay?id='+ id);
                     layer.confirm('支付完成？', {
                         btn: ['已完成支付','支付遇到问题'],
                         closeBtn: 0
