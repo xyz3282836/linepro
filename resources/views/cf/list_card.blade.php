@@ -169,7 +169,7 @@
                                 if(data.data == ''){
                                     window.location.href = "{{url('orderlist')}}";
                                 }else{
-                                    window.open('/jumppay?id='.data.data);
+                                    window.open('/jumppay?id='+ data.data);
                                     layer.confirm('支付完成？', {
                                         btn: ['已完成支付','支付遇到问题'],
                                         closeBtn: 0
@@ -203,7 +203,7 @@
                                 if(data.data == ''){
                                     window.location.href = "{{url('orderlist')}}";
                                 }else{
-                                    window.open(data.data);
+                                    window.open('/jumppay?id='+ data.data);
                                     layer.confirm('支付完成？', {
                                         btn: ['已完成支付','支付遇到问题'],
                                         closeBtn: 0
