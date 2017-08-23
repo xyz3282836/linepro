@@ -61,7 +61,7 @@
                                         <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
                                     </td>
                                     <td>{{$v->status_text}}</td>
-                                    <td>
+                                    <td data-estatus="{{$v->estatus}}" data-start="{{$v->start}}" data-title="{{$v->title}}" data-content="{{$v->content}}">
                                         @if(in_array($v->estatus,[1,2,3]))
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
@@ -143,11 +143,18 @@
                 todayHighlight: true,
             });
             $('#evaluatecf').on('show.bs.modal', function (event) {
-                $('#eform')[0].reset();
                 var button = $(event.relatedTarget);
                 var id = button.data('id');
                 var modal = $(this);
                 modal.find('#eid').val(id);
+                var tr = button.closest('tr');
+                var estatus = Number(tr.data('estatus'));
+                var star = tr.data('star');
+                var title = tr.data('title');
+                var content = tr.data('content');
+                app.star = estatus > 1?star:0;
+                app.title = title;
+                app.content = content;
             });
 
             $('#eform').validator().on('submit', function (e) {
@@ -166,11 +173,15 @@
             });
         });
 
-        new Vue({
+        var app = new Vue({
             el: '#app',
             data:{
                 type: "{{$type}}",
-                typec: {!! json_encode(config('linepro.cfr_typec')) !!}
+                typec: {!! json_encode(config('linepro.cfr_typec')) !!},
+                start:0,
+                title:'',
+                content:''
+
             },
             methods: {
             },
