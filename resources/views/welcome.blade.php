@@ -65,7 +65,7 @@
             <div class="col-xs-12">
                 <h1 class="text-center">一分钟快速入门，了解达购海淘</h1>
                 <div class="text-center">
-                    <embed src='http://player.youku.com/player.php/sid/XMjg0MDE4NDcxNg==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>
+                    <embed src='http://publish.youku.com/u/upload?spm=a2h28.8313471.nav.12' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>
                 </div>
             </div>
         </div>
