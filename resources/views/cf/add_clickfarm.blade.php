@@ -31,7 +31,7 @@
         }
         .rate{
             font-size: 12px;
-            width: 210px;
+            width: 150px;
         }
     </style>
 @endsection
@@ -65,7 +65,7 @@
                                         <td v-text="v.c"></td>
                                         <td v-text="v.name"></td>
                                         {{--<td v-text="v.apirate"></td>--}}
-                                        <td v-text="v.rate"></td>
+                                        <td width="60" v-text="v.rate"></td>
                                     </tr>
                                     </tbody>
                                 </table>
