@@ -220,6 +220,11 @@ class DatabaseSeeder extends Seeder
                 'desc'  => '会员时间',
                 'value' => '30',
             ],
+            [
+                'key'   => 'broadcast.video',
+                'desc'  => '宣传视频',
+                'value' => '',
+            ],
         ]);
         DB::table('faqs')->insert([
             [
