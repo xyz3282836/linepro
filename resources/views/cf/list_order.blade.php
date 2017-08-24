@@ -208,11 +208,10 @@
                         btn: ['已完成支付','支付遇到问题'],
                         closeBtn: 0
                     }, function(index){
-                        close(index);
+                        layer.close(index);
                         window.location.href = "{{url('orderlist')}}";
                     }, function(index){
-                        close(index);
-                        layer.msg('请联系管理员')
+                        layer.close(index);
                         window.location.href = "{{url('orderlist')}}";
                     });
                 },
