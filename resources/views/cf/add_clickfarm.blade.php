@@ -232,7 +232,7 @@
             el: '#app',
             methods: {
                 getOne(){
-                    var one = {!! \App\Faq::getFaq(1) !!};
+                    var one = {!! \App\Faq::getFaq(2) !!};
                     layer.open({
                         type: 1,
                         skin: 'layui-layer-rim', //加上边框
@@ -241,7 +241,7 @@
                     });
                 },
                 getTwo(){
-                    var one = {!! \App\Faq::getFaq(2) !!};
+                    var one = {!! \App\Faq::getFaq(4) !!};
                     layer.open({
                         type: 1,
                         skin: 'layui-layer-rim', //加上边框
