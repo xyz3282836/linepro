@@ -68,10 +68,12 @@
                                         @if(in_array($v->estatus,[1,2,3]))
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
-                                            <button class="btn btn-primary btn-sm color-red" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">文字重复<br>修改评价</button>
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @endif
                                         <br>
                                         预计{{$v->etime}}后留评
+                                        <br>
+                                        <span class="color-red">评价文字重复</span>
                                     </td>
                                 </tr>
                                 @empty
@@ -124,7 +126,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">正文：</label>
-                            <textarea class="form-control" name="content" id="content" v-model="content" minlength="30" required></textarea>
+                            <textarea class="form-control" name="content" id="content" v-model="content" required></textarea>
                             <p class="help-block with-errors"></p>
                         </div>
                         <input type="hidden" name="id" id="eid">

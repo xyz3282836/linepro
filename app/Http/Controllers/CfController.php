@@ -248,8 +248,8 @@ class CfController extends Controller
     {
         $id      = request('id', 0);
         $star    = request('star');
-        $title   = request('title');
-        $content = request('content');
+        $title   = trim(request('title'));
+        $content = trim(request('content'));
 
         $model = CfResult::find($id);
         if (!$model) {
@@ -261,6 +261,21 @@ class CfController extends Controller
         }
         if (in_array($model->estatus, [4, 5, 6])) {
             return error('评价已经提交同步，不可更改');
+        }
+        $site = $model->cf->from_site;
+        if ($site == 6) {
+            if(mb_strlen($content,'utf-8') < 70){
+                return error('大于60日文字符');
+            }
+        } elseif (in_array($site, [3, 4, 5, 8, 10])) {
+            $p = '/^([^\s]+[\s]){19,}/';
+            if (!preg_match($p,$content)){
+                return error('大于20个词语');
+            }
+        } else {
+            if(mb_strlen($content,'utf-8') >= 1024){
+                return error('评价字数超出限制');
+            }
         }
         if ($model->estatus == 1) {
             $model->estatus = CfResult::ESTATUS_SUBMIT;
