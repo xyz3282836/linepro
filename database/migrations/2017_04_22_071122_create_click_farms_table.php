@@ -20,6 +20,7 @@ class CreateClickFarmsTable extends Migration
 
             //2.0
             $table->char('asin',24)->default('');//购买的asin
+            $table->string('bd',1024)->default('');//asin变体
             $table->char('delivery_addr',50)->default('');//送货地址
             //amazon
             $table->string('amazon_url',500)->default('');//亚马逊详情页

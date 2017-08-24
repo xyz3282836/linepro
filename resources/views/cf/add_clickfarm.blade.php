@@ -78,6 +78,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 购买的ASIN</label>
                                 <div class="col-md-6">
                                     <input readonly type="text" placeholder="" class="form-control" minlength="1" maxlength="24" name="asin" value="{{request('asin')}}" required>
+                                    <input type="hidden" name="bd" value="{{request('bd')}}">
                                     <p class="help-block with-errors">{{ $errors->first('asin') }}</p>
                                 </div>
                             </div>

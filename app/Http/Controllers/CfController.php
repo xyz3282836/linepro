@@ -71,7 +71,7 @@ class CfController extends Controller
         if ($pdata['delivery_type'] == 1) {
             $pdata['delivery_addr'] = '';
         }
-
+        $pdata['bd']      = request('bd') == null ? '' : request('bd');
         $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
             'key_word'              => '',
@@ -112,6 +112,7 @@ class CfController extends Controller
         $model->from_site     = $pdata['from_site'];
         $model->delivery_type = $pdata['delivery_type'];
         $model->shop_name     = $pdata['shop_name'];
+        $model->bd            = $pdata['bd'];
         //1.0
         $model->time_type        = 1;
         $model->is_fba           = 1;
