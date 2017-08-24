@@ -72,8 +72,10 @@
                                         @endif
                                         <br>
                                         预计{{$v->etime}}后留评
-                                        <br>
-                                        <span class="color-red">评价文字重复</span>
+                                        @if($v->estatus == 7)
+                                            <br>
+                                            <span class="color-red">评价文字重复</span>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty
