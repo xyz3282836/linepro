@@ -56,7 +56,7 @@
                                     <tr>
                                         <th>国家</th>
                                         <th>单位</th>
-                                        <th>实时汇率</th>
+                                        {{--<th>实时汇率</th>--}}
                                         <th>达购汇率</th>
                                     </tr>
                                     </thead>
@@ -64,7 +64,7 @@
                                     <tr v-for="(v,k) in ratetable">
                                         <td v-text="v.c"></td>
                                         <td v-text="v.name"></td>
-                                        <td v-text="v.apirate"></td>
+                                        {{--<td v-text="v.apirate"></td>--}}
                                         <td v-text="v.rate"></td>
                                     </tr>
                                     </tbody>
