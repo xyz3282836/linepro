@@ -160,7 +160,7 @@
                         btn: ['是','再想想'],
                         closeBtn: 0
                     }, function(index){
-                        close(index);
+                        layer.close(index);
                         axios.post("{{url('pay')}}", {id: ids}).then(function (d) {
                             var data = d.data;
                             if (!data.code) {
@@ -187,7 +187,7 @@
                             }
                         })
                     }, function(index){
-                        close(index);
+                        layer.close(index);
                     });
                 },
                 pay: function (id) {
@@ -195,7 +195,7 @@
                         btn: ['是','再想想'],
                         closeBtn: 0
                     }, function(index){
-                        close(index);
+                        layer.close(index);
                         axios.post("{{url('pay')}}", {id: [id]}).then(function (d) {
                             var data = d.data;
                             if (!data.code) {
@@ -222,7 +222,7 @@
                             }
                         })
                     }, function(index){
-                        close(index);
+                        layer.close(index);
                     });
                 },
                 cancle: function (id) {
