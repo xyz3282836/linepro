@@ -66,15 +66,19 @@
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
-                                        @else
+                                        @elseif($v->estatus == 5)
                                             {{$v->estatus_text}} <a href="{{$v->amazon_review_id}}" target="_blank">查看</a>
+                                        @else
+                                            {{$v->estatus_text}}
                                         @endif
+                                            @if($v->estatus != 5)
                                         <br>
                                         预计{{$v->etime}}后留评
-                                         @if($v->estatus == 7)
+                                            @endif
+                                        @if($v->estatus == 7)
                                             <br>
                                             <span class="color-red">评价文字重复</span>
-                                         @endif
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty
