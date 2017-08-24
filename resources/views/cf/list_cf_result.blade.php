@@ -69,6 +69,8 @@
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
                                         @elseif($v->estatus == 7)
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#evaluatecf" data-id="{{$v->id}}">{{$v->estatus_text}}</button>
+                                        @else
+                                            {{$v->estatus_text}} <a href="{{$v->amazon_review_id}}" target="_blank">查看</a>
                                         @endif
                                         <br>
                                         预计{{$v->etime}}后留评
