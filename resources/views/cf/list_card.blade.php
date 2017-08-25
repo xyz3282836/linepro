@@ -174,7 +174,7 @@
                                 if(data.data == ''){
                                     window.location.href = "{{url('orderlist')}}";
                                 }else{
-                                    layer.confirm('即将前往支付包扫描付款？', {
+                                    layer.confirm('即将前往支付宝扫描付款？', {
                                         btn: ['是'],
                                         closeBtn: 0
                                     }, function(index){
