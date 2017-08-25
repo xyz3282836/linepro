@@ -16,7 +16,7 @@
         table .limit{
             word-wrap: break-word;
             text-align: left;
-            max-height: 60px;
+            height: 60px;
             line-height: 20px;
 
             overflow: hidden;
