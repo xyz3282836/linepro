@@ -41,8 +41,10 @@ class Kernel extends ConsoleKernel
         $list = CfResult::with('cf')->get();
         foreach ($list as $v) {
             if($v->cf){
-                $v->from_site = $v->cf->from_site;
-                $v->save();
+                if($v->from_site != $v->cf->from_site){
+                    $v->from_site = $v->cf->from_site;
+                    $v->save();
+                }
             }
         }
     }
