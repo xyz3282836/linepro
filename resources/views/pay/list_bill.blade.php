@@ -35,7 +35,7 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                {{--<th>#</th>--}}
                                 <th>时间</th>
                                 <th>类型</th>
                                 <th>订单号</th>
@@ -49,7 +49,7 @@
                             <tbody>
                             @forelse($list as $v)
                                 <tr>
-                                    <td>{{$v->id}}</td>
+{{--                                    <td>{{$v->id}}</td>--}}
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->type_text}}</td>
                                     <td class="break">{{$v->orderid}}</td>

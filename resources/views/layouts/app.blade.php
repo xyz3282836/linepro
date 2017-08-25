@@ -87,6 +87,9 @@
         .panel-default {
             border-color: rgb(222,236,245);
         }
+        table th,table td{
+            border-color: rgb(222,236,245);!important;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->

@@ -15,7 +15,7 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                {{--<th>#</th>--}}
                                 <th>充值单号</th>
                                 <th>支付宝单号</th>
                                 <th>充值金额</th>
@@ -28,7 +28,7 @@
                             <tbody>
                             @forelse($list as $v)
                                 <tr>
-                                    <td>{{$v->id}}</td>
+{{--                                    <td>{{$v->id}}</td>--}}
                                     <td class="break">{{$v->orderid}}</td>
                                     <td class="break">{{$v->alipay_orderid}}</td>
                                     <td class="color-red">{{$v->golds/$v->rate}} 元</td>
