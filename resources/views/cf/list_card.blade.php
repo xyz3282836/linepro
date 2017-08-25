@@ -142,6 +142,8 @@
 
 @section('js')
     <script>
+
+
         new Vue({
             el: '#app',
             data: {
@@ -172,19 +174,24 @@
                                 if(data.data == ''){
                                     window.location.href = "{{url('orderlist')}}";
                                 }else{
-                                    window.location.href = '/jumppay?id='+ data.data;
-//                                    openUrl('/jumppay?id='+ data.data);
-                                    {{--layer.confirm('支付完成？', {--}}
-                                        {{--btn: ['已完成支付','支付遇到问题'],--}}
-                                        {{--closeBtn: 0--}}
-                                    {{--}, function(index){--}}
-                                        {{--close(index);--}}
-                                        {{--window.location.href = "{{url('orderlist')}}";--}}
-                                    {{--}, function(index){--}}
-                                        {{--close(index);--}}
-                                        {{--layer.msg('请联系管理员')--}}
-                                        {{--window.location.href = "{{url('orderlist')}}";--}}
-                                    {{--});--}}
+                                    layer.confirm('即将前往支付包扫描付款？', {
+                                        btn: ['是'],
+                                        closeBtn: 0
+                                    }, function(index){
+                                        layer.close(index);
+                                        window.open('/jumppay?id='+ data.data)
+                                        layer.confirm('支付完成？', {
+                                            btn: ['已完成支付','支付遇到问题'],
+                                            closeBtn: 0
+                                        }, function(index){
+                                            close(index);
+                                            window.location.href = "{{url('orderlist')}}";
+                                        }, function(index){
+                                            close(index);
+                                            layer.msg('请联系管理员')
+                                            window.location.href = "{{url('orderlist')}}";
+                                        });
+                                    });
                                 }
                             }
                         })
@@ -207,22 +214,27 @@
                                 if(data.data == ''){
                                     window.location.href = "{{url('orderlist')}}";
                                 }else{
-//                                    openUrl('/jumppay?id='+ data.data);
-                                    window.location.href = '/jumppay?id='+ data.data;
-                                    {{--layer.confirm('支付完成？', {--}}
-                                        {{--btn: ['已完成支付','支付遇到问题'],--}}
-                                        {{--closeBtn: 0--}}
-                                    {{--}, function(index){--}}
-                                        {{--close(index);--}}
-                                        {{--window.location.href = "{{url('orderlist')}}";--}}
-                                    {{--}, function(index){--}}
-                                        {{--close(index);--}}
-                                        {{--layer.msg('请联系管理员')--}}
-                                        {{--window.location.href = "{{url('orderlist')}}";--}}
-                                    {{--});--}}
+                                    layer.confirm('即将前往支付包扫描付款？', {
+                                        btn: ['是'],
+                                        closeBtn: 0
+                                    }, function(index){
+                                        layer.close(index);
+                                        window.open('/jumppay?id='+ data.data)
+                                        layer.confirm('支付完成？', {
+                                            btn: ['已完成支付','支付遇到问题'],
+                                            closeBtn: 0
+                                        }, function(index){
+                                            close(index);
+                                            window.location.href = "{{url('orderlist')}}";
+                                        }, function(index){
+                                            close(index);
+                                            layer.msg('请联系管理员')
+                                            window.location.href = "{{url('orderlist')}}";
+                                        });
+                                    });
                                 }
                             }
-                        })
+                        });
                     }, function(index){
                         layer.close(index);
                     });
