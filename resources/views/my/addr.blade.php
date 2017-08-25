@@ -48,10 +48,10 @@
                                     <label class="col-md-4 control-label">身份证件图</label>
                                     <label class="col-md-6 control-label">已上传</label>
                                 </div>
-                                {{--<div class="form-group">--}}
-                                    {{--<label class="col-md-4 control-label">收货地址</label>--}}
-                                    {{--<label class="col-md-6 control-label">{{$user->shipping_addr}}</label>--}}
-                                {{--</div>--}}
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">收货地址</label>
+                                    <label class="col-md-6 control-label">{{$user->shipping_addr}}</label>
+                                </div>
                             @endif
 
                             @if($user->idcardpic == '')

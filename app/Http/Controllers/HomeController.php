@@ -85,19 +85,26 @@ class HomeController extends Controller
      */
     public function postAddr()
     {
-        $this->validate(request(), [
-            'mobile'        => 'required|regex:/^1[345789][0-9]{9}$/|unique:users',
-            'shipping_addr' => 'required|min:5|max:50',
-            'real_name'     => 'required|min:2|max:6',
-            'idcardpic'     => 'required',
-            'idcardno'      => ['required', 'regex:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/'],
-        ]);
-        $pdata['mobile']        = request('mobile');
-        $pdata['shipping_addr'] = request('shipping_addr');
-        $pdata['real_name']     = request('real_name');
-        $pdata['idcardpic']     = request('idcardpic');
-        $pdata['idcardno']      = request('idcardno');
         $user                   = Auth::user();
+        if($user->idcardpic == ''){
+            $this->validate(request(), [
+                'mobile'        => 'required|regex:/^1[345789][0-9]{9}$/|unique:users',
+                'shipping_addr' => 'required|min:5|max:50',
+                'real_name'     => 'required|min:2|max:6',
+                'idcardpic'     => 'required',
+                'idcardno'      => ['required', 'regex:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/'],
+            ]);
+            $pdata['mobile']        = request('mobile');
+            $pdata['shipping_addr'] = request('shipping_addr');
+            $pdata['real_name']     = request('real_name');
+            $pdata['idcardpic']     = request('idcardpic');
+            $pdata['idcardno']      = request('idcardno');
+        }else{
+            $this->validate(request(), [
+                'shipping_addr' => 'required|min:5|max:50',
+            ]);
+            $pdata['shipping_addr'] = request('shipping_addr');
+        }
         $user->update($pdata);
         return redirect('addr')
             ->with(['status' => '资料修改成功']);
