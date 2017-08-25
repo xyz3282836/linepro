@@ -297,6 +297,9 @@ class CfController extends Controller
         if ($model->estatus == 1) {
             $model->estatus = CfResult::ESTATUS_SUBMIT;
         }
+        if ($model->estatus == 7) {
+            $model->estatus = CfResult::ESTATUS_SUBMIT;
+        }
         $model->star    = $star;
         $model->title   = $title;
         $model->content = $content;
