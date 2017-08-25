@@ -60,6 +60,27 @@
             width: 4em;
             line-height: 4em;
         }
+        table .pic{
+            width: 190px;
+        }
+        table .site{
+            width: 150px;
+        }
+        table .asin{
+            width: 130px;
+        }
+        table .ymxorderid{
+            width: 190px;
+        }
+        table .yunid{
+            width: 200px;
+        }
+        table .status{
+            width: 100px;
+        }
+        table .action{
+            width: 200px;
+        }
     </style>
     @yield('css')
     <!-- Scripts -->
