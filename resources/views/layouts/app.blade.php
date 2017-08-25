@@ -110,7 +110,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{App\Banner::getLogo()}}" alt="">
+                        <img src="{{App\Banner::getLogo()}}" alt="" style="margin-left: 25px">
                     </a>
                 </div>
 
