@@ -87,7 +87,7 @@
                             </thead>
                             <tbody>
                             @forelse($list as $v)
-                                <tr id="o-{{$v-id}}">
+                                <tr id="o-{{$v->id}}">
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td class="break">{{$v->orderid}}</td>
