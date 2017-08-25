@@ -48,10 +48,10 @@
                                     <label class="col-md-4 control-label">身份证件图</label>
                                     <label class="col-md-6 control-label">已上传</label>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">收货地址</label>
-                                    <label class="col-md-6 control-label">{{$user->shipping_addr}}</label>
-                                </div>
+                                {{--<div class="form-group">--}}
+                                    {{--<label class="col-md-4 control-label">收货地址</label>--}}
+                                    {{--<label class="col-md-6 control-label">{{$user->shipping_addr}}</label>--}}
+                                {{--</div>--}}
                             @endif
 
                             @if($user->idcardpic == '')
@@ -88,7 +88,7 @@
                                     <p class="help-block with-errors">{{ $errors->first('mobile') }}</p>
                                 </div>
                             </div>
-
+                            @endif
                             <div class="form-group {{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
                                 <label for="shipping_addr" class="col-md-4 control-label">收货地址</label>
 
@@ -97,7 +97,6 @@
                                     <p class="help-block with-errors">{{ $errors->first('shipping_addr') }}</p>
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary ladda-button" data-style="contract">
@@ -105,7 +104,7 @@
                                     </button>
                                 </div>
                             </div>
-                            @endif
+
                         </form>
                     </div>
                 </div>
