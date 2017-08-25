@@ -38,8 +38,8 @@
                                 <th>#</th>
                                 <th>时间</th>
                                 <th>类型</th>
-                                <th>订单号</th>
-                                <th>支付宝订单号</th>
+                                <th class="break">订单号</th>
+                                <th class="break">支付宝订单号</th>
                                 <th>人民币收入</th>
                                 <th>人民币支出</th>
                                 <th>金币收入</th>

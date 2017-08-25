@@ -77,7 +77,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>时间</th>
-                                <th>订单号</th>
+                                <th class="break">订单号</th>
                                 <th>总价</th>
                                 <th>余额支出</th>
                                 <th>充值支出</th>

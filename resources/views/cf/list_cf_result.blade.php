@@ -53,13 +53,13 @@
                                 <tr>
                                     {{--<th>#</th>--}}
                                     {{--<th>店铺id</th>--}}
-                                    <th>ASIN</th>
-                                    <th>亚马逊订单号</th>
+                                    <th class="asin">ASIN</th>
+                                    <th class="ymxorderid">亚马逊订单号</th>
                                     {{--<th>物流</th>--}}
-                                    <th>物流单号</th>
+                                    <th class="yunid">物流单号</th>
                                     <th>评价详情</th>
-                                    <th>状态</th>
-                                    <th>评价</th>
+                                    <th class="status">状态</th>
+                                    <th class="action">评价</th>
                                 </tr>
                             </thead>
                             <tbody>

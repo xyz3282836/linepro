@@ -16,8 +16,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>充值单号</th>
-                                <th>支付宝单号</th>
+                                <th class="break">充值单号</th>
+                                <th class="break">支付宝单号</th>
                                 <th>充值金额</th>
                                 <th>等价金币</th>
                                 <th>充值时间</th>

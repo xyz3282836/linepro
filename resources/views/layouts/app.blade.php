@@ -61,10 +61,10 @@
             line-height: 4em;
         }
         table .pic{
-            width: 190px;
+            width: 170px;
         }
         table .site{
-            width: 150px;
+            width: 130px;
         }
         table .asin{
             width: 130px;
@@ -80,6 +80,9 @@
         }
         table .action{
             width: 200px;
+        }
+        table .break{
+            word-break: break-all;
         }
     </style>
     @yield('css')
