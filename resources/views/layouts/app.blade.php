@@ -84,6 +84,9 @@
         table .break{
             word-break: break-all;
         }
+        .panel-default {
+            border-color: rgb(222,236,245);
+        }
     </style>
     @yield('css')
     <!-- Scripts -->
