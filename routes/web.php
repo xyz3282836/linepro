@@ -69,5 +69,7 @@ Route::get('refereshcapcha', 'IndexController@captcha');
 //faq
 Route::get('faqs', 'IndexController@faqs');
 
-//download
-Route::get('download', 'IndexController@download');
+//current.version
+Route::get('current.version', function(){
+    return 1;
+});
