@@ -237,6 +237,7 @@ class Order extends Model
                 $model->save();
                 event(new CfResults($model));
             }
+            return $one;
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();

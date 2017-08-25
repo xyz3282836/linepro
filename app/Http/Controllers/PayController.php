@@ -213,11 +213,11 @@ class PayController extends Controller
         if ($price > $balance) {
             //余额+充值 跳转 不生成bill
             $one          = Order::consumeByPartRecharge($price, $golds, $balance, $list);
-            return success($one->id);
+            return success(['type'=>'p','id'=>$one->id]);
         }
         //余额 生成bill
-        Order::consumeByBalance($price, $golds, $list);
-        return success();
+        $one = Order::consumeByBalance($price, $golds, $list);
+        return success(['type'=>'b','id'=>$one->id]);
     }
 
     /**

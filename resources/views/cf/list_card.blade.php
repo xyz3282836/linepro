@@ -171,10 +171,10 @@
                                 layer.msg(data.msg, {icon: 2});
                             } else {
                                 layer.msg('操作成功', {icon: 1});
-                                if(data.data == ''){
-                                    window.location.href = "{{url('orderlist')}}";
+                                if(data.data.type == 'b'){
+                                    window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
                                 }else{
-                                    layer.confirm('即将前往支付宝扫描付款？', {
+                                    layer.confirm('即将前往支付包扫描付款？', {
                                         btn: ['是'],
                                         closeBtn: 0
                                     }, function(index){
@@ -189,7 +189,7 @@
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
-                                            window.location.href = "{{url('orderlist')}}";
+                                            window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
                                         });
                                     });
                                 }
@@ -211,8 +211,8 @@
                                 layer.msg(data.msg, {icon: 2});
                             } else {
                                 layer.msg('操作成功', {icon: 1});
-                                if(data.data == ''){
-                                    window.location.href = "{{url('orderlist')}}";
+                                if(data.data.type == 'b'){
+                                    window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
                                 }else{
                                     layer.confirm('即将前往支付包扫描付款？', {
                                         btn: ['是'],
@@ -229,7 +229,7 @@
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
-                                            window.location.href = "{{url('orderlist')}}";
+                                            window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
                                         });
                                     });
                                 }
