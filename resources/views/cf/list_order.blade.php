@@ -131,7 +131,7 @@
                                             <tbody>
                                             @foreach($v->cfs as $vv)
                                                 <tr>
-                                                    <td><a href="{{$vv->amazon_pic}}"><img src="{{$vv->amazon_pic}}" width="100" alt=""></a></td>
+                                                    <td><a href="{{$vv->amazon_pic}}" target="_blank"><img src="{{$vv->amazon_pic}}" width="100" alt=""></a></td>
                                                     <td>
                                                         <div class="limit">
                                                             <a href="{{$vv->amazon_url}}">{{$vv->amazon_title}}</a>

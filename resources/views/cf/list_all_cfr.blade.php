@@ -77,7 +77,7 @@
                                 @forelse($list as $v)
                                 <tr>
                                     {{--<td>{{$v->id}}</td>--}}
-                                    <td><a href="{{$v->cf->amazon_pic}}"><img src="{{$v->cf->amazon_pic}}" width="100" alt=""></a></td>
+                                    <td><a href="{{$v->cf->amazon_pic}}" target="_blank"><img src="{{$v->cf->amazon_pic}}" width="100" alt=""></a></td>
                                     <td><span class="flag-icon flag-icon-{{$v->cf->flag}}"></span></td>
 {{--                                    <td>{{$v->shop_id}}</td>--}}
                                     <td>{{$v->asin}}</td>

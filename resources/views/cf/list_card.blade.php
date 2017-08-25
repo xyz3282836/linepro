@@ -84,7 +84,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td><a :href="one.amazon_pic"><img :src="one.amazon_pic" width="100" alt=""></a></td>
+                                <td><a :href="one.amazon_pic" target="_blank"><img :src="one.amazon_pic" width="100" alt=""></a></td>
                                 <td v-text="one.asin"></td>
                                 <td>
                                     <div class="limit">

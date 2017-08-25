@@ -41,7 +41,7 @@
                         <div class="media margin-bottom-15">
                             <div class="media-left media-middle">
                                 <a href="#">
-                                    <a href="{{$cf->amazon_pic}}"><img src="{{$cf->amazon_pic}}" width="100" alt=""></a>
+                                    <a href="{{$cf->amazon_pic}}" target="_blank"><img src="{{$cf->amazon_pic}}" width="100" alt=""></a>
                                 </a>
                             </div>
                             <div class="media-body">
