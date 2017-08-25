@@ -193,7 +193,7 @@ class CfController extends Controller
             return error(NO_ACCESS);
         }
         if ($model->status != 1) {
-            return error(NO_ACCESS);
+            return error('已经删除，请刷新页面');
         }
         $model->status = 0;
         $model->save();
