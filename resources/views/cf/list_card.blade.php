@@ -184,10 +184,10 @@
                                             btn: ['已完成支付','支付遇到问题'],
                                             closeBtn: 0
                                         }, function(index){
-                                            close(index);
+                                            layer.close(index);
                                             window.location.href = "/orderlist#o-"+data.data.id;
                                         }, function(index){
-                                            close(index);
+                                            layer.close(index);
                                             layer.msg('请联系管理员')
                                             window.location.href = "/orderlist?type=1#o-"+data.data.id;
                                         });
@@ -224,10 +224,10 @@
                                             btn: ['已完成支付','支付遇到问题'],
                                             closeBtn: 0
                                         }, function(index){
-                                            close(index);
+                                            layer.close(index);
                                             window.location.href = "/orderlist#o-"+data.data.id;
                                         }, function(index){
-                                            close(index);
+                                            layer.close(index);
                                             layer.msg('请联系管理员')
                                             window.location.href = "/orderlist?type=1#o-"+data.data.id;
                                         });
