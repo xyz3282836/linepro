@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('csslib')
     <link href="https://cdn.bootcss.com/bootstrap-datepicker/1.7.0-RC2/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="{{url('flagicon/css/flag-icon.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('jslib')
@@ -10,21 +11,45 @@
 @endsection
 @section('css')
     <style type="text/css">
+        .breadcrumb{
+            margin-bottom: 0;
+        }
+        table .limit{
+            word-wrap: break-word;
+            text-align: left;
+            max-height: 80px;
+            line-height: 20px;
 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">首页</a></li>
-                    <li class="active">所有评价任务</li>
-                </ol>
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{$tname}}</div>
+                    {{--<div class="panel-heading">--}}
+                        {{----}}
+                    {{--</div>--}}
+                    <ol class="breadcrumb">
+                        <li><a href="/">首页</a></li>
+                        <li class="active">所有评价任务</li>
+                    </ol>
                     <div class="panel-body">
                         <form class="form-inline margin-bottom-30" action="{{url('mycfrlist')}}" method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="ASIN" name="asin" value="{{$asin}}">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control select-sm" name="site" required v-model="site">
+                                    <option v-for="(v,k) in sitec" v-text="v" :value="k"></option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <select class="form-control select-sm" name="type" required v-model="type">
                                     <option v-for="(v,k) in typec" v-text="v" :value="k"></option>
@@ -36,6 +61,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>商品图片</th>
+                                    <th>站点</th>
                                     {{--<th>店铺id</th>--}}
                                     <th>ASIN</th>
                                     <th>亚马逊订单号</th>
@@ -50,6 +77,8 @@
                                 @forelse($list as $v)
                                 <tr>
                                     <td>{{$v->id}}</td>
+                                    <td><a href="{{$v->cf->amazon_pic}}"><img src="{{$v->cf->amazon_pic}}" width="100" alt=""></a></td>
+                                    <td><span class="flag-icon flag-icon-{{$v->cf->flag}}"></span></td>
 {{--                                    <td>{{$v->shop_id}}</td>--}}
                                     <td>{{$v->asin}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
@@ -58,7 +87,9 @@
                                     <td width="300" style="text-align: left">
                                         <p>评价星级：@if($v->estatus > 1){{$v->star}} @endif</p>
                                         <p>评价标题：{{$v->title}}</p>
-                                        <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
+                                        <div class="limit">
+                                            评价内容：{{$v->content}}
+                                        </div>
                                     </td>
                                     <td>{{$v->status_text}}</td>
                                     <td data-estatus="{{$v->estatus}}" data-star="{{$v->star}}" data-title="{{$v->title}}" data-content="{{$v->content}}">
@@ -89,7 +120,7 @@
                             </tbody>
                         </table>
                         @if($list)
-                            {!!  $list->appends(['type'=>$type])->links() !!}
+                            {!!  $list->appends(['type'=>$type,'asin'=>$asin,'site'=>$site])->links() !!}
                         @endif
                     </div>
                 </div>
@@ -188,6 +219,8 @@
             data:{
                 type: "{{$type}}",
                 typec: {!! json_encode(config('linepro.cfr_typec')) !!},
+                site:"{{$site}}",
+                sitec: {!! json_encode(config('linepro.cfr_sitec')) !!},
                 star:0,
                 title:'',
                 content:''

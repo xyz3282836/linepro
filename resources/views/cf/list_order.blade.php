@@ -38,21 +38,23 @@
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
         }
+        .breadcrumb{
+            margin-bottom: 0;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">首页</a></li>
-                    <li class="active">订单管理</li>
-                </ol>
                 <div class="panel panel-default">
                     <div class="ad">
                         <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
                     </div>
-                    <div class="panel-heading">{{$tname}}</div>
+                    <ol class="breadcrumb">
+                        <li><a href="/">首页</a></li>
+                        <li class="active">订单管理</li>
+                    </ol>
                     <div class="panel-body">
                         <form class="form-inline margin-bottom-30" action="{{url('orderlist')}}" method="get">
                             <div class="form-group">

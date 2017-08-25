@@ -10,20 +10,33 @@
 @endsection
 @section('css')
     <style type="text/css">
+        .breadcrumb{
+            margin-bottom: 0;
+        }
+        table .limit{
+            word-wrap: break-word;
+            text-align: left;
+            max-height: 80px;
+            line-height: 20px;
 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">首页</a></li>
-                    <li><a href="{{url('orderlist')}}">订单管理</a></li>
-                    <li class="active">订单详情</li>
-                </ol>
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{$tname}}</div>
+                    <ol class="breadcrumb">
+                        <li><a href="/">首页</a></li>
+                        <li><a href="{{url('orderlist')}}">订单管理</a></li>
+                        <li class="active">订单详情</li>
+                    </ol>
                     <div class="panel-body">
                         <div class="media margin-bottom-15">
                             <div class="media-left media-middle">
@@ -61,7 +74,9 @@
                                     <td width="300" style="text-align: left">
                                         <p>评价星级：@if($v->estatus > 1){{$v->star}} @endif</p>
                                         <p>评价标题：{{$v->title}}</p>
-                                        <p style="word-wrap: break-word;">评价内容：{{$v->content}}</p>
+                                        <div class="limit">
+                                            评价内容：{{$v->content}}
+                                        </div>
                                     </td>
                                     <td>{{$v->status_text}}</td>
                                     <td data-estatus="{{$v->estatus}}" data-star="{{$v->star}}" data-title="{{$v->title}}" data-content="{{$v->content}}">

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\CfResult;
 use App\ExchangeRate;
+use App\Order;
 use GuzzleHttp\Client;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -32,7 +33,18 @@ class Kernel extends ConsoleKernel
         })->daily();
         $schedule->call(function () {
             $this->dealRefund();
+            $this->tmp();
         })->everyFiveMinutes();
+    }
+
+    private function tmp(){
+        $list = CfResult::with('cf')->get();
+        foreach ($list as $v) {
+            if($v->cf){
+                $v->from_site = $v->cf->from_site;
+                $v->save();
+            }
+        }
     }
 
     /**

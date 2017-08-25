@@ -26,6 +26,9 @@
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
         }
+        .breadcrumb{
+            margin-bottom: 0;
+        }
     </style>
 @endsection
 @section('csslib')
@@ -35,15 +38,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <ol class="breadcrumb">
-                    <li><a href="/">首页</a></li>
-                    <li class="active">购物车</li>
-                </ol>
                 <div class="panel panel-default">
                     <div class="ad">
                         <a href="{{$ad['link']}}"><img src="{{$ad['pic']}}" alt=""></a>
                     </div>
-                    <div class="panel-heading">{{$tname}}</div>
+                    <ol class="breadcrumb">
+                        <li><a href="/">首页</a></li>
+                        <li class="active">购物车</li>
+                    </ol>
                     <div class="panel-body">
                         <table class="table table-bordered">
                             <thead>

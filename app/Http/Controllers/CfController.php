@@ -169,7 +169,7 @@ class CfController extends Controller
                 $list = $list->where('status', '>', 0);
         }
 
-        $list = $list->whereBetween('created_at', [$start, $dend])->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
+        $list = $list->whereBetween('created_at', [$start, $dend])->orderBy('status', 'asc')->orderBy('id', 'desc')->paginate(config('linepro.perpage'));
         return view('cf.list_order')->with('tname', '订单管理')->with('list', $list)->with([
             'start' => $start,
             'end'   => $end,
@@ -225,19 +225,36 @@ class CfController extends Controller
     public function listMycfr()
     {
         $type = request('type', 1);
-        $list = CfResult::where('uid', Auth::user()->id);
+        $asin = request('asin', '');
+        $site = request('site', 0);
+        $asin = $asin == null ? '' : $asin;
+        $list = CfResult::with('cf')->where('uid', Auth::user()->id);
+        if ($asin != '') {
+            $list = $list->where('asin', $asin);
+        }
+        if($site > 0){
+            $list = $list->where('from_site', $site);
+        }
         switch ($type) {
             case 2:
-                $list = $list->where('status', 1);
+                $list = $list->where('estatus', 1);
+                break;
+            case 3:
+                $list = $list->whereIn('estatus', [2,3,4]);
+                break;
+            case 4:
+                $list = $list->where('estatus', 5);
                 break;
             case 1:
             default:
-                $list = $list->where('status', '>', 1);
+
         }
-        $list = $list->orderBy('id', 'created_at')->paginate(config('linepro.perpage'));
+        $list = $list->where('status', '>', 0)->orderBy('id', 'created_at')->paginate(config('linepro.perpage'));
         return view('cf.list_all_cfr')->with('tname', '评价任务列表')->with([
             'list' => $list,
-            'type' => $type
+            'type' => $type,
+            'asin' => $asin,
+            'site' => $site,
         ]);
     }
 
@@ -264,16 +281,16 @@ class CfController extends Controller
         }
         $site = $model->cf->from_site;
         if ($site == 6) {
-            if(mb_strlen($content,'utf-8') < 70){
+            if (mb_strlen($content, 'utf-8') < 70) {
                 return error('大于60日文字符');
             }
         } elseif (in_array($site, [3, 4, 5, 8, 10])) {
             $p = '/^([^\s]+[\s]){19,}/';
-            if (!preg_match($p,$content)){
+            if (!preg_match($p, $content)) {
                 return error('大于20个词语');
             }
         } else {
-            if(mb_strlen($content,'utf-8') >= 1024){
+            if (mb_strlen($content, 'utf-8') >= 1024) {
                 return error('评价字数超出限制');
             }
         }
