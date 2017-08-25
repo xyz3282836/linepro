@@ -33,20 +33,7 @@ class Kernel extends ConsoleKernel
         })->daily();
         $schedule->call(function () {
             $this->dealRefund();
-            $this->tmp();
         })->everyFiveMinutes();
-    }
-
-    private function tmp(){
-        $list = CfResult::with('cf')->get();
-        foreach ($list as $v) {
-            if($v->cf){
-                if($v->from_site != $v->cf->from_site){
-                    $v->from_site = $v->cf->from_site;
-                    $v->save();
-                }
-            }
-        }
     }
 
     /**
