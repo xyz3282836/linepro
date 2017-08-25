@@ -241,7 +241,7 @@
                     });
                 },
                 getTwo(){
-                    var one = {!! \App\Faq::getFaq(12) !!};
+                    var one = {!! \App\Faq::getFaq(3) !!};
                     layer.open({
                         type: 1,
                         skin: 'layui-layer-rim', //加上边框
