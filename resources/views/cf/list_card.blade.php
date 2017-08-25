@@ -185,7 +185,7 @@
                                             closeBtn: 0
                                         }, function(index){
                                             close(index);
-                                            window.location.href = "{{url('orderlist')}}";
+                                            window.location.href = "/orderlist#o-"+data.data.id;
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
@@ -225,7 +225,7 @@
                                             closeBtn: 0
                                         }, function(index){
                                             close(index);
-                                            window.location.href = "{{url('orderlist')}}";
+                                            window.location.href = "/orderlist#o-"+data.data.id;
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
