@@ -87,8 +87,8 @@
         .panel-default {
             border-color: rgb(222,236,245);
         }
-        table th,table td{
-            border-color: rgb(222,236,245)!important;
+        .table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+            border: 1px solid rgb(222,236,245);
         }
     </style>
     @yield('css')
