@@ -77,7 +77,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>时间</th>
-                                <th class="break">订单号</th>
+                                <th>订单号</th>
                                 <th>总价</th>
                                 <th>余额支出</th>
                                 <th>充值支出</th>
@@ -90,7 +90,7 @@
                                 <tr>
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->created_at}}</td>
-                                    <td>{{$v->orderid}}</td>
+                                    <td class="break">{{$v->orderid}}</td>
                                     <td>{{$v->price}} 元</td>
                                     <td>{{$v->balance}} 元</td>
                                     <td>{{$v->pay}} 元</td>

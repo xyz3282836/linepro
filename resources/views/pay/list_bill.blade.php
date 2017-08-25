@@ -38,8 +38,8 @@
                                 <th>#</th>
                                 <th>时间</th>
                                 <th>类型</th>
-                                <th class="break">订单号</th>
-                                <th class="break">支付宝订单号</th>
+                                <th>订单号</th>
+                                <th>支付宝订单号</th>
                                 <th>人民币收入</th>
                                 <th>人民币支出</th>
                                 <th>金币收入</th>
@@ -52,8 +52,8 @@
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->type_text}}</td>
-                                    <td>{{$v->orderid}}</td>
-                                    <td>{{$v->alipay_orderid}}</td>
+                                    <td class="break">{{$v->orderid}}</td>
+                                    <td class="break">{{$v->alipay_orderid}}</td>
                                     <td :class="{'color-red': {{$v->in}}>0.00}">+ {{$v->in}}</td>
                                     <td :class="{'color-green': {{$v->out}}>0.00}">- {{$v->out}}</td>
                                     <td :class="{'color-red': {{$v->gin}}>0.00}">+ {{$v->gin}}</td>
