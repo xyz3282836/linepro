@@ -172,14 +172,14 @@
                             } else {
                                 layer.msg('操作成功', {icon: 1});
                                 if(data.data.type == 'b'){
-                                    window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
+                                    window.location.href = "/orderlist#o-"+data.data.id;
                                 }else{
                                     layer.confirm('即将前往支付包扫描付款？', {
                                         btn: ['是'],
                                         closeBtn: 0
                                     }, function(index){
                                         layer.close(index);
-                                        window.open('/jumppay?id='+ data.data)
+                                        window.open('/jumppay?id='+ data.data.id)
                                         layer.confirm('支付完成？', {
                                             btn: ['已完成支付','支付遇到问题'],
                                             closeBtn: 0
@@ -189,7 +189,7 @@
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
-                                            window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
+                                            window.location.href = "/orderlist#o-"+data.data.id;
                                         });
                                     });
                                 }
@@ -212,14 +212,14 @@
                             } else {
                                 layer.msg('操作成功', {icon: 1});
                                 if(data.data.type == 'b'){
-                                    window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
+                                    window.location.href = "/orderlist#o-"+data.data.id;
                                 }else{
                                     layer.confirm('即将前往支付包扫描付款？', {
                                         btn: ['是'],
                                         closeBtn: 0
                                     }, function(index){
                                         layer.close(index);
-                                        window.open('/jumppay?id='+ data.data)
+                                        window.open('/jumppay?id='+ data.data.id)
                                         layer.confirm('支付完成？', {
                                             btn: ['已完成支付','支付遇到问题'],
                                             closeBtn: 0
@@ -229,7 +229,7 @@
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
-                                            window.location.href = "{{url('orderlist#o-'.data.data.id)}}";
+                                            window.location.href = "/orderlist#o-"+data.data.id;
                                         });
                                     });
                                 }
