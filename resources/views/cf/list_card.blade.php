@@ -189,7 +189,7 @@
                                         }, function(index){
                                             close(index);
                                             layer.msg('请联系管理员')
-                                            window.location.href = "/orderlist#o-"+data.data.id;
+                                            window.location.href = "/orderlist?type=1#o-"+data.data.id;
                                         });
                                     });
                                 }
