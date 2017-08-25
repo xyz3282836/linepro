@@ -60,7 +60,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    {{--<th>#</th>--}}
                                     <th>商品图片</th>
                                     <th>站点</th>
                                     {{--<th>店铺id</th>--}}
@@ -76,7 +76,7 @@
                             <tbody>
                                 @forelse($list as $v)
                                 <tr>
-                                    <td>{{$v->id}}</td>
+                                    {{--<td>{{$v->id}}</td>--}}
                                     <td><a href="{{$v->cf->amazon_pic}}"><img src="{{$v->cf->amazon_pic}}" width="100" alt=""></a></td>
                                     <td><span class="flag-icon flag-icon-{{$v->cf->flag}}"></span></td>
 {{--                                    <td>{{$v->shop_id}}</td>--}}

@@ -51,7 +51,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    {{--<th>#</th>--}}
                                     {{--<th>店铺id</th>--}}
                                     <th>ASIN</th>
                                     <th>亚马逊订单号</th>
@@ -65,7 +65,7 @@
                             <tbody>
                                 @forelse($list as $v)
                                 <tr>
-                                    <td>{{$v->id}}</td>
+{{--                                    <td>{{$v->id}}</td>--}}
                                     {{--<td>{{$v->shop_id}}</td>--}}
                                     <td>{{$v->asin}}</td>
                                     <td>{{$v->amazon_orderid}}</td>
