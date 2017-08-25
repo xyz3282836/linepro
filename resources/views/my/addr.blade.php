@@ -88,7 +88,6 @@
                                     <p class="help-block with-errors">{{ $errors->first('mobile') }}</p>
                                 </div>
                             </div>
-                            @endif
                             <div class="form-group {{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
                                 <label for="shipping_addr" class="col-md-4 control-label">收货地址</label>
 
@@ -97,6 +96,16 @@
                                     <p class="help-block with-errors">{{ $errors->first('shipping_addr') }}</p>
                                 </div>
                             </div>
+                             @else
+                                <hr>
+                            <div class="form-group {{ $errors->has('shipping_addr') ? ' has-error' : '' }}">
+                                <label for="shipping_addr" class="col-md-4 control-label">修改 收货地址</label>
+                                <div class="col-md-6">
+                                    <input id="shipping_addr" type="text" class="form-control" name="shipping_addr" value="{{ old('shipping_addr') }}" minlength="5" maxlength="50" required>
+                                    <p class="help-block with-errors">{{ $errors->first('shipping_addr') }}</p>
+                                </div>
+                            </div>
+                            @endif
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary ladda-button" data-style="contract">
