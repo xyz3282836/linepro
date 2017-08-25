@@ -16,13 +16,13 @@
         table .limit{
             word-wrap: break-word;
             text-align: left;
-            max-height: 80px;
+            max-height: 60px;
             line-height: 20px;
 
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 4;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
     </style>
