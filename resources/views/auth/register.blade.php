@@ -81,8 +81,8 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="yes" required> 免责申明
-                                    </label>
+                                        <input type="checkbox" name="yes" required>
+                                    </label><a href="JavaScript:;" @click="mzsm">免责申明</a>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +112,15 @@
                         $('.refereshrecapcha').html(d.data);
                     })
                 },
+                mzsm:function () {
+                    var one = {!! \App\Faq::getFaq(15) !!};
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['800px', '600px'], //宽高
+                        content: one.a
+                    });
+                }
             },
             mounted: function () {
                 this.$nextTick(()=>{
