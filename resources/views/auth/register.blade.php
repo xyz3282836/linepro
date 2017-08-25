@@ -1,5 +1,14 @@
 @extends('layouts.app')
-
+@section('css')
+    <style type="text/css">
+        .layui-layer-page .layui-layer-content {
+            padding: 20px 30px;
+        }
+        .one{
+            display: inline;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
@@ -80,7 +89,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
-                                    <label>
+                                    <label class="one">
                                         <input type="checkbox" name="yes" required>
                                     </label><a href="JavaScript:;" @click="mzsm">免责申明</a>
                                 </div>
