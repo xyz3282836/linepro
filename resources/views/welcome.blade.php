@@ -60,12 +60,12 @@
             </div>
         </div>
     </div>
-    <div class="container vedio">
+    <div class="container-fluid vedio">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 col-md-4 col-md-offset-4">
                 <h1 class="text-center">一分钟快速入门，了解达购海淘</h1>
                 <div class="text-center">
-                    <iframe height=400 width=480 src='{{gconfig('broadcast.video')}}' frameborder=0 'allowfullscreen'></iframe>
+                    <iframe width='100%' height=400 src='{{gconfig('broadcast.video')}}' frameborder=0 'allowfullscreen'></iframe>
                 </div>
             </div>
         </div>
