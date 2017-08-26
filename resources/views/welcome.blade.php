@@ -65,7 +65,7 @@
             <div class="col-xs-12">
                 <h1 class="text-center">一分钟快速入门，了解达购海淘</h1>
                 <div class="text-center">
-                    <embed src='{{gconfig('broadcast.video')}}' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'></embed>
+                    <iframe height=400 width=480 src='{{gconfig('broadcast.video')}}' frameborder=0 'allowfullscreen'></iframe>
                 </div>
             </div>
         </div>
