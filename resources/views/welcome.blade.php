@@ -56,7 +56,7 @@
                     <span class="sr-only">Next</span>
                 </a>
 
-                <a id="download" class="btn btn-danger btn-lg" href="http://pan.baidu.com/s/1slhWacP" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 下载达购浏览器</a>
+                <a id="download" class="btn btn-danger btn-lg" href="{{gconfig('download.brower.url')}}" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 下载达购浏览器</a>
             </div>
         </div>
     </div>
