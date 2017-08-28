@@ -40,7 +40,7 @@ class ConfigController extends Controller
             $grid->disableFilter();
             $grid->disableExport();
             $grid->disablePagination();
-            $grid->disableCreation();
+//            $grid->disableCreation();
             $grid->disableRowSelector();
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
