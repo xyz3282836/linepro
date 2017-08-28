@@ -56,7 +56,7 @@
                     <span class="sr-only">Next</span>
                 </a>
 
-                <a id="download" class="btn btn-danger btn-lg" href="http://pan.baidu.com/s/1kVQh1eZ" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 立即下载</a>
+                <a id="download" class="btn btn-danger btn-lg" href="http://pan.baidu.com/s/1slhWacP" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> 立即下载</a>
             </div>
         </div>
     </div>
