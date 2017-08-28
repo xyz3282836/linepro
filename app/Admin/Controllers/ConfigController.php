@@ -60,8 +60,8 @@ class ConfigController extends Controller
     protected function form()
     {
         return Admin::form(Gconfig::class, function (Form $form) {
-            $form->input('key', '标识')->rules('required');
-            $form->input('desc', '描述')->rules('required');
+            $form->text('key', '标识')->rules('required');
+            $form->text('desc', '描述')->rules('required');
             $form->textarea('value', '值')->rules('required');
         });
     }
