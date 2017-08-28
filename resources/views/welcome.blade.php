@@ -62,7 +62,7 @@
     </div>
     <div class="container-fluid vedio">
         <div class="row">
-            <div class="col-xs-12 col-md-4 col-md-offset-4">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <h1 class="text-center">一分钟快速入门，了解达购海淘</h1>
                 <div class="text-center">
                     <iframe width='100%' height=400 src='{{gconfig('broadcast.video')}}' frameborder=0 'allowfullscreen'></iframe>
