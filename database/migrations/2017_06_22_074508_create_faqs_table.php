@@ -17,7 +17,7 @@ class CreateFaqsTable extends Migration
             $table->increments('id');
             $table->integer('order')->default(1);
             $table->string('q',100);
-            $table->string('a',1000);
+            $table->text('a');
             $table->timestamps();
         });
     }
