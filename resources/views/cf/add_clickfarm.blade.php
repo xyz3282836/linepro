@@ -138,7 +138,7 @@
                             {{--单价--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span>
-                                    最终价格(包含亚马逊运费)</label>
+                                    商品价格</label>
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <input readonly type="number" required class="form-control" name="final_price" min="0" max="999999" v-model="final_price">
