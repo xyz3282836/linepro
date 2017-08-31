@@ -28,6 +28,7 @@ class CfResult extends Model
     const ESTATUS_LOCK          = 4;//锁定
     const ESTATUS_SUCCESS       = 5;//评价成功
     const ESTATUS_FAILURE       = 6;//评价失败
+    const ESTATUS_REPEAT        = 7;//评价重复
 
     /**
      * The attributes that are mass assignable.
@@ -106,11 +107,11 @@ class CfResult extends Model
         } else {
             $weight = gconfig('vip.evaluate');
         }
-        $waitcount = CfResult::where('cfid', $this->cfid)->whereIn('status', [1, 2, 6])->count();
-        $failcount = CfResult::where('cfid', $this->cfid)->where('status', 0)->count();
-        $count     = CfResult::where('cfid', $this->cfid)->count() - $failcount;
-        if ($waitcount >= 0) {
-            if (($one->golds / $one->grate / ($count - $waitcount) - gconfig('evaluate.cost') - $weight) <= 0) {
+        $nosubmitcount = CfResult::where('cfid', $this->cfid)->where('estatus', 1)->count();
+        $allcount      = CfResult::where('cfid', $this->cfid)->count();
+        $submitcount   = $allcount - $nosubmitcount;
+        if ($submitcount > 0) {
+            if (($one->golds / $one->grate / ($submitcount) - gconfig('evaluate.cost') - $weight) <= 0) {
                 $user->is_evaluate = 0;
                 $user->save();
             }
@@ -136,13 +137,14 @@ class CfResult extends Model
     public function getStatusTextAttribute()
     {
         $arr = config('linepro.cfresult_statuss');
-        if(isset($arr[$this->status])){
+        if (isset($arr[$this->status])) {
             return $arr[$this->status];
         }
         return '';
     }
 
-    public function getEtimeAttribute(){
-        return date('Y-m-d',strtotime("+7 day",strtotime($this->updated_at)));
+    public function getEtimeAttribute()
+    {
+        return date('Y-m-d', strtotime("+7 day", strtotime($this->updated_at)));
     }
 }

@@ -232,7 +232,7 @@ class CfController extends Controller
         if ($asin != '') {
             $list = $list->where('asin', $asin);
         }
-        if($site > 0){
+        if ($site > 0) {
             $list = $list->where('from_site', $site);
         }
         switch ($type) {
@@ -240,7 +240,7 @@ class CfController extends Controller
                 $list = $list->where('estatus', 1);
                 break;
             case 3:
-                $list = $list->whereIn('estatus', [2,3,4]);
+                $list = $list->whereIn('estatus', [2, 3, 4]);
                 break;
             case 4:
                 $list = $list->where('estatus', 5);
@@ -276,6 +276,11 @@ class CfController extends Controller
         if ($model->uid != $user->id) {
             return error(NO_ACCESS);
         }
+        if ($model->estatus == 1) {
+            if (!$user->is_evaluate) {
+                return error('系统检测您的留评率过高，存在刷单风险，已暂停本账号评价能力');
+            }
+        }
         if (in_array($model->estatus, [4, 5, 6])) {
             return error('评价已经提交同步，不可更改');
         }
@@ -294,16 +299,14 @@ class CfController extends Controller
                 return error('评价字数超出限制');
             }
         }
-        if ($model->estatus == 1) {
-            $model->estatus = CfResult::ESTATUS_SUBMIT;
-        }
-        if ($model->estatus == 7) {
+        if ($model->estatus == 1 || $model->estatus == 7) {
             $model->estatus = CfResult::ESTATUS_SUBMIT;
         }
         $model->star    = $star;
         $model->title   = $title;
         $model->content = $content;
         $model->save();
+        $model->evaluate($user);
         return success();
     }
 
