@@ -282,12 +282,12 @@ class CfController extends Controller
         $site = $model->cf->from_site;
         if ($site == 6) {
             if (mb_strlen($content, 'utf-8') < 70) {
-                return error('大于60日文字符');
+                return error('评价文字必须大于60日文字符');
             }
         } elseif (in_array($site, [3, 4, 5, 8, 10])) {
             $p = '/^([^\s]+[\s]){19,}/';
             if (!preg_match($p, $content)) {
-                return error('大于20个词语');
+                return error('评价文字必须大于20个单词');
             }
         } else {
             if (mb_strlen($content, 'utf-8') >= 1024) {
