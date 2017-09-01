@@ -15,20 +15,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class CfResult extends Model
 {
-    const STATUS_REFUND    = -1;//购买失败,已退款
-    const STATUS_ERROR     = 0;//购买失败
-    const STATUS_WAITING   = 1;//代购中
+    const STATUS_REFUND = -1;//购买失败,已退款
+    const STATUS_ERROR = 0;//购买失败
+    const STATUS_WAITING = 1;//代购中
     const STATUS_DELIVERED = 2;//已发货
-    const STATUS_SUCCESS   = 3;//成功送达
-    const STATUS_WAITSEND  = 4;//待发货
+    const STATUS_SUCCESS = 3;//成功送达
+    const STATUS_WAITSEND = 4;//待发货
 
     const ESTATUS_BEFORE_SUBMIT = 1;//未提交
-    const ESTATUS_SUBMIT        = 2;//已提交
-    const ESTATUS_SYNC          = 3;//同步
-    const ESTATUS_LOCK          = 4;//锁定
-    const ESTATUS_SUCCESS       = 5;//评价成功
-    const ESTATUS_FAILURE       = 6;//评价失败
-    const ESTATUS_REPEAT        = 7;//评价重复
+    const ESTATUS_SUBMIT = 2;//已提交
+    const ESTATUS_SYNC = 3;//同步
+    const ESTATUS_LOCK = 4;//锁定
+    const ESTATUS_SUCCESS = 5;//评价成功
+    const ESTATUS_FAILURE = 6;//评价失败
+    const ESTATUS_REPEAT = 7;//评价重复
 
     /**
      * The attributes that are mass assignable.
@@ -108,7 +108,7 @@ class CfResult extends Model
             $weight = gconfig('vip.evaluate');
         }
         $nosubmitcount = CfResult::where('cfid', $this->cfid)->where('estatus', 1)->count();
-        $allcount      = CfResult::where('cfid', $this->cfid)->count();
+        $allcount      = $one->task_num;
         $submitcount   = $allcount - $nosubmitcount;
         if ($submitcount > 0) {
             if (($one->golds / $one->grate / ($submitcount) - gconfig('evaluate.cost') - $weight) <= 0) {
