@@ -261,7 +261,7 @@
                 },
                 getservice: function () {
                     var tmp = (this.task_num * this.final_price * this.rate * this.rmbtogold * this.srate[this.time_type].rate).toFixed(0);
-                    tmp = tmp < Number(this.srate[this.time_type].mingolds) ? this.srate[this.time_type].mingolds : tmp
+                    tmp = tmp < Number(this.srate[this.time_type].mingolds) * this.task_num ? this.srate[this.time_type].mingolds * this.task_num : tmp;
                     return tmp ;
                 },
                 gettrans: function () {

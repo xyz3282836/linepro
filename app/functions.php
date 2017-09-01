@@ -138,7 +138,7 @@ function gconfig($key)
     return $value;
 }
 
-function set_gconfig($id,$value)
+function set_gconfig($id, $value)
 {
     $key = App\Gconfig::where('id', $id)->value('key');
     Cache::forever($key, $value);
@@ -161,7 +161,7 @@ function get_cf_price($cf)
     $rate          = get_rate($cf->from_site);
     $srate         = get_srate();
     $tmp           = round($cf->task_num * $cf->final_price * $rate * $srate[$cf->time_type]['rate'] * $rmbtogold);
-    $tmp           = $tmp < $srate[$cf->time_type]['mingolds'] ? $srate[$cf->time_type]['mingolds'] : $tmp;
+    $tmp           = $tmp < $srate[$cf->time_type]['mingolds'] * $cf->task_num ? $srate[$cf->time_type]['mingolds'] * $cf->task_num : $tmp;
     $cf->golds     = $tmp;
     $cf->rate      = $rate;
     $cf->srate     = $srate[$cf->time_type]['rate'];
