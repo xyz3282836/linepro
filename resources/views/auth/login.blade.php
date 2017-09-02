@@ -77,7 +77,7 @@
                                         忘记密码?
                                     </a>
 
-                                    <a class="btn btn-link pull-right" href="{{ route('register') }}">
+                                    <a class="btn btn-link" href="{{ route('register') }}">
                                         尚未注册？
                                     </a>
                                 </div>
