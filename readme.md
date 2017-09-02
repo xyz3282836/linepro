@@ -50,3 +50,8 @@ location / {
 php artisan migrate
 php artisan db:seed
 ```
+
+## sql
+```sql
+alter table `click_farms` add `keyword` varchar(100) DEFAULT '' after `bd`;
+```

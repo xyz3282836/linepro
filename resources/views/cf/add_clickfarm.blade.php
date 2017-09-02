@@ -114,6 +114,16 @@
                                 </div>
                             </div>
 
+                            {{--keyword--}}
+                            <div class="form-group {{ $errors->has('keyword') ? ' has-error' : '' }}" v-if="level == 2">
+                                <label class="col-md-4 control-label">
+                                    使用指定关键词搜索</label>
+                                <div class="col-md-6">
+                                    <input readonly type="text" placeholder="" maxlength="100" value="" class="form-control" name="keyword" style="border: 1px solid #f7820a;">
+                                    <p class="help-block with-errors">{{ $errors->first('keyword') }}</p>
+                                </div>
+                            </div>
+
                             {{--店铺id--}}
                             <div class="form-group">
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 店铺名称</label>
@@ -185,6 +195,7 @@
                                 <label class="col-md-4 control-label"><span class="color-red">*</span> 代购件数</label>
                                 <div class="col-md-6">
                                     <input type="number" placeholder="" class="form-control" name="task_num" min="1" max="9999" v-model="task_num" required>
+                                    <span>多件商品时，为保护您的隐私，我们会使用不同账号进行代购</span>
                                     <p class="help-block with-errors"></p>
                                 </div>
                             </div>
@@ -270,6 +281,7 @@
                 }
             },
             data: {
+                level:{{$level}},
                 ratetable:{!! json_encode(\App\ExchangeRate::getPanel()) !!},
                 alltrans: 0,
                 rate:{{$rate}},
@@ -277,7 +289,7 @@
                 trans:{{$trans}},
                 srate: {!! $srate !!},
                 final_price:{{request('totalPrice')}},
-                task_num: 1,
+                task_num: 0,
                 time_type: 1,
                 is_fba: {{request('isFba')}},
                 is_fbac: {!! json_encode(config('linepro.is_fba')) !!},

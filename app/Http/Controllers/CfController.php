@@ -40,6 +40,7 @@ class CfController extends Controller
             'trans'     => $trans,
             'rmbtogold' => $rmbtogold,
             'ad'        => Banner::getAd(4),
+            'level'     => Auth::user()->level
         ]);
     }
 
@@ -63,6 +64,7 @@ class CfController extends Controller
             'final_price'   => 'required',
             'task_num'      => 'required|integer',
             'delivery_addr' => 'max:50',
+            'keyword'       => 'max:100',
             'from_site'     => 'required|integer',
             'delivery_type' => 'required|integer',
         ]);
@@ -72,9 +74,9 @@ class CfController extends Controller
             $pdata['delivery_addr'] = '';
         }
         $pdata['bd']      = request('bd') == null ? '' : request('bd');
+        $pdata['keyword'] = request('keyword') == null ? '' : request('keyword');
         $pdata['amount']  = get_amount_clickfarm($pdata);
         $pdata['mixdata'] = json_encode([
-            'key_word'              => '',
             'lower_classification1' => '',
             'lower_classification2' => '',
             'lower_classification3' => '',
@@ -113,6 +115,7 @@ class CfController extends Controller
         $model->delivery_type = $pdata['delivery_type'];
         $model->shop_name     = $pdata['shop_name'];
         $model->bd            = $pdata['bd'];
+        $model->keyword       = $pdata['keyword'];
         //1.0
         $model->time_type        = 1;
         $model->is_fba           = 1;

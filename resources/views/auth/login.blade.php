@@ -78,7 +78,7 @@
                                     </a>
 
                                     <a class="btn btn-link pull-right" href="{{ route('register') }}">
-                                        注册
+                                        尚未注册？
                                     </a>
                                 </div>
                             </div>
