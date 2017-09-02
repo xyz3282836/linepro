@@ -119,7 +119,7 @@
                                 <label class="col-md-4 control-label">
                                     使用指定关键词搜索</label>
                                 <div class="col-md-6">
-                                    <input readonly type="text" placeholder="" maxlength="100" value="" class="form-control" name="keyword" style="border: 1px solid #f7820a;">
+                                    <input type="text" placeholder="" maxlength="100" value="" class="form-control" name="keyword" style="border: 1px solid #f7820a;">
                                     <p class="help-block with-errors">{{ $errors->first('keyword') }}</p>
                                 </div>
                             </div>
