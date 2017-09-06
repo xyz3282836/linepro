@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Bill;
 use App\Events\ESendGold;
 use App\Exceptions\MsgException;
-use App\User;
 use App\Http\Controllers\Controller;
+use App\User;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -57,7 +57,7 @@ class RegisterController extends Controller
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'captcha'  => 'required|captcha',
-            'mobile'=>'required|regex:/^1[345789][0-9]{9}/',
+            'mobile'   => 'required|regex:/^1[345789][0-9]{9}/',
         ]);
     }
 
