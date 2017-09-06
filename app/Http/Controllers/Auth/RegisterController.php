@@ -57,6 +57,7 @@ class RegisterController extends Controller
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'captcha'  => 'required|captcha',
+            'mobile'=>'required|regex:/^1[345789][0-9]{9}/',
         ]);
     }
 
@@ -73,6 +74,7 @@ class RegisterController extends Controller
             $user = User::create([
                 'name'            => $data['name'],
                 'email'           => $data['email'],
+                'mobile'          => $data['mobile'],
                 'password'        => bcrypt($data['password']),
                 'last_login_time' => Carbon::now()
             ]);
