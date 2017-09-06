@@ -51,7 +51,7 @@
                             <label for="mobile" class="col-md-4 control-label">手机号</label>
                             <div class="col-md-6">
                                 <input id="mobile" pattern="1[345789][0-9]{9}" type="text" class="form-control" name="mobile" value="{{ old('mobile') }}" required>
-                                <span>用于追踪代购进度</span>
+                                <span>重要，订单异常时客服会电话联系您</span>
                                 @if ($errors->has('mobile'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('mobile') }}</strong>
